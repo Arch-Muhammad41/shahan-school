@@ -96,7 +96,12 @@ body.locked{overflow:hidden}
 @keyframes gleam{0%,60%{background-position:-150% 0}85%,100%{background-position:150% 0}}
 .hero h1{margin:0;font-family:Cinzel,serif;font-size:clamp(26px,5.5vw,46px);color:var(--maroon);letter-spacing:.08em}
 .sub{color:#7a5f3a;font-weight:600;letter-spacing:2px;font-size:12px;margin-top:8px;text-transform:uppercase}
-.by{font-size:13px;color:#5a4a3e;margin-top:12px}
+.by{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 0;margin:18px auto 0;max-width:820px}
+.by span{display:flex;flex-direction:column;align-items:center;padding:0 18px;border-left:1px solid #dccfb5;white-space:nowrap}
+.by span:first-child{border-left:0}
+.by small{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9a7f55;margin-bottom:3px}
+.by b{font-size:13px;color:var(--ink);font-weight:600}
+@media (max-width:600px){.by span{flex:1 1 50%;border-left:0;padding:4px 6px;white-space:normal;text-align:center}}
 .hero h1,.hero .sub,.hero .by{opacity:0;animation:up .9s ease-out forwards}
 .hero h1{animation-delay:.25s}.hero .sub{animation-delay:.45s}.hero .by{animation-delay:.65s}
 .cue{display:inline-block;margin-top:26px;width:26px;height:42px;border:2px solid var(--gold);border-radius:14px;position:relative;opacity:0;animation:up .8s ease-out 1s forwards}
@@ -246,7 +251,12 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
     </div>
     <h1>Shahan School Project</h1>
     <div class="sub">Schools &amp; Kindergarten · Architecture &amp; Interior Design</div>
-    <div class="by">Prepared by <b>Arch. Muhammad Mudhafer Khoshnaw</b> · Project Manager <b>Eng. Ako Ahmad</b> · Company Manager <b>Eng. Sherzad Jahfar</b> · Supervised by <b>Home Engineering</b></div>
+    <div class="by">
+      <span><small>Prepared by</small><b>Arch. Muhammad Mudhafer Khoshnaw</b></span>
+      <span><small>Project Manager</small><b>Eng. Ako Ahmad</b></span>
+      <span><small>Company Manager</small><b>Eng. Sherzad Jahfar</b></span>
+      <span><small>Supervised by</small><b>Home Engineering</b></span>
+    </div>
     <a class="cue" href="#exterior" aria-label="Scroll to the project"><span></span></a>
   </div>
 </header>
