@@ -498,11 +498,6 @@ const EXTERIOR_TABS = [
     { name: "Courtyard & Playground", from: 8, to: 8 } ] },
 ];
 const INTERIOR_TABS = [
-  { name: "Receptions", wide: true, areas: [
-    { name: "Main Lobby", pick: [63, 65, 69] },
-    { name: "Kindergarten Reception & Corridor", pick: [71, 72, 73, 74, 76, 77] },
-    { name: "Primary School Reception & Corridor", pick: [83, 86, 88] },
-    { name: "Primary Activity Room", pick: [89, 91] } ] },
   { name: "Ground Floor", areas: [
     { name: "Reception", from: 1, to: 3 },
     { name: "Kindergarten Corridors", from: 4, to: 6 },
@@ -537,6 +532,11 @@ const INTERIOR_TABS = [
     { name: "Drawing Hall", from: 54, to: 54 },
     { name: "Swimming Pool", from: 55, to: 57 },
     { name: "School Restaurant", from: 58, to: 61 } ] },
+  { name: "Option 2 · Receptions", wide: true, note: "Option 2 — an alternative design for the main lobby, the receptions and the corridors.", areas: [
+    { name: "Main Lobby", pick: [63, 65, 69] },
+    { name: "Kindergarten Reception & Corridor", pick: [71, 72, 73, 74, 76, 77] },
+    { name: "Primary School Reception & Corridor", pick: [83, 86, 88] },
+    { name: "Primary Activity Room", pick: [89, 91] } ] },
 ];
 
 /* Construction stages — one block per stage, in order.
@@ -981,7 +981,7 @@ const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawin
   const CARDS = [
     { id: "exterior", title: "Exterior", sub: "Façades, entrance & courtyard",
       meta: `${shownCounts.exterior || EXTERIOR.length} renders`, img: EXTERIOR[0] && (EXTERIOR[0].thumb || EXTERIOR[0].src) },
-    { id: "interior", title: "Interior", sub: `Receptions, ${INTERIOR_TABS.filter(t => !t.wide).length} floors & conference hall`,
+    { id: "interior", title: "Interior", sub: `${INTERIOR_TABS.filter(t => !t.wide).length} floors, conference hall & option 2`,
       meta: `${shownCounts.interior || INTERIOR.length} renders`, img: INTERIOR[0] && (INTERIOR[0].thumb || INTERIOR[0].src) },
     { id: "shop-drawing", title: "Shop Drawing", sub: "Plans, elevations, sections & details",
       meta: DRAWINGS.length ? `${DRAWINGS.length} drawings` : "Coming soon · under revision", glyph: "⌗" },
