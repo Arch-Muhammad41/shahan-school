@@ -439,10 +439,10 @@ const EXTERIOR_TABS = [
 ];
 const INTERIOR_TABS = [
   { name: "Receptions", wide: true, areas: [
-    { name: "Main Lobby", from: 62, to: 69 },
-    { name: "Kindergarten Reception & Corridor", from: 70, to: 81 },
-    { name: "Primary School Reception & Corridor", from: 82, to: 88 },
-    { name: "Primary Activity Room", from: 89, to: 91 } ] },
+    { name: "Main Lobby", pick: [63, 65, 69] },
+    { name: "Kindergarten Reception & Corridor", pick: [71, 72, 73, 74, 76, 77] },
+    { name: "Primary School Reception & Corridor", pick: [83, 86, 88] },
+    { name: "Primary Activity Room", pick: [89, 91] } ] },
   { name: "Ground Floor", areas: [
     { name: "Reception", from: 1, to: 3 },
     { name: "Kindergarten Corridors", from: 4, to: 6 },
@@ -467,7 +467,7 @@ const INTERIOR_TABS = [
     { name: "Girls' Classroom", from: 39, to: 40 },
     { name: "Computer Lab", from: 43, to: 44 } ] },
   { name: "Conference Hall", wide: true, areas: [
-    { name: "Shots", from: 92, to: 103 },
+    { name: "Shots", pick: [92, 93, 94, 97, 99, 100, 101] },
     { name: "Set Drawing", from: 104, to: 110, contain: true } ] },
   { name: "Basement", areas: [
     { name: "Biology Lab", from: 45, to: 46 },
@@ -558,11 +558,13 @@ const emptyText = {
 const isPdf = s => /\.pdf$/i.test(s);
 
 /* Tabbed sections: tab bar -> panels -> areas (sub-sections) -> image grid */
+// An area lists its images either as a range (from/to) or as hand-picked numbers (pick)
+const areaNums = a => a.pick || Array.from({ length: a.to - a.from + 1 }, (_, i) => a.from + i);
 const tabbed = { exterior: EXTERIOR_TABS, interior: INTERIOR_TABS };
 function buildTabbed(key) {
   const list = groups[key], tabs = tabbed[key];
   const holder = document.querySelector(`[data-group="${key}"]`);
-  const shownCount = new Set(tabs.flatMap(t => t.areas.flatMap(a => Array.from({ length: a.to - a.from + 1 }, (_, i) => a.from + i)))).size;
+  const shownCount = new Set(tabs.flatMap(t => t.areas.flatMap(areaNums))).size;
   window.shownCounts = Object.assign(window.shownCounts || {}, { [key]: shownCount });
   document.getElementById("c-" + key).textContent = shownCount ? `(${shownCount})` : "";
   if (!list.length) { holder.outerHTML = `<div class="empty"><b>${emptyText[key][0]}</b>${emptyText[key][1]}</div>`; return; }
@@ -572,7 +574,7 @@ function buildTabbed(key) {
   wrap.appendChild(bar);
   const panels = [], buttons = [];
   tabs.forEach((t, ti) => {
-    const count = t.areas.reduce((n, a) => n + (a.to - a.from + 1), 0);
+    const count = t.areas.reduce((n, a) => n + areaNums(a).length, 0);
     const b = document.createElement("button");
     b.type = "button"; b.setAttribute("role", "tab");
     b.innerHTML = `${t.name}<small>${count}</small>`;
@@ -581,7 +583,7 @@ function buildTabbed(key) {
     if (t.note) p.innerHTML = `<p class="tab-note">${t.note}</p>`;
     t.areas.forEach((a, ai) => {
       const akey = `${key}-${ti}-${ai}`;
-      groups[akey] = list.slice(a.from - 1, a.to);
+      groups[akey] = areaNums(a).map(n => list[n - 1]);
       labels[akey] = `${labels[key]} · ${t.name} · ${a.name}`;
       const area = document.createElement("div"); area.className = "area";
       area.innerHTML = `<h3>${a.name}<span>${groups[akey].length}</span></h3>`;
