@@ -225,6 +225,7 @@ figcaption{padding:8px 10px;font-size:13px;font-weight:600}
 [data-group="exterior"] figure:first-child img{aspect-ratio:2.04/1}
 [data-group="interior"]{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
 [data-group="interior"] figure img{aspect-ratio:1/1}
+.tab-note{margin:-6px 0 18px;padding:10px 14px;border-left:3px solid var(--gold);background:#fffdf8;border-radius:0 8px 8px 0;font-size:13px;color:#5a4a3e}
 [data-group="interior"].wide{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
 [data-group="interior"].wide figure img{aspect-ratio:4/3}
 .dwg{display:flex;flex-direction:column;text-decoration:none;color:inherit;cursor:pointer}
@@ -451,6 +452,13 @@ const INTERIOR_TABS = [
     { name: "Girls' Section Corridors", from: 35, to: 38 },
     { name: "Girls' Classroom", from: 39, to: 42 },
     { name: "Computer Lab", from: 43, to: 44 } ] },
+  // The second floor repeats the first-floor design (typical floor), so it shows the same renders.
+  { name: "Second Floor", note: "Typical floor — the Second Floor follows the same interior design as the First Floor.", areas: [
+    { name: "Boys' Section Corridors", from: 27, to: 30 },
+    { name: "Boys' Classroom", from: 31, to: 34 },
+    { name: "Girls' Section Corridors", from: 35, to: 38 },
+    { name: "Girls' Classroom", from: 39, to: 42 },
+    { name: "Computer Lab", from: 43, to: 44 } ] },
   { name: "Basement", areas: [
     { name: "Biology Lab", from: 45, to: 46 },
     { name: "Physics Lab", from: 47, to: 48 },
@@ -558,6 +566,7 @@ function buildTabbed(key) {
     b.innerHTML = `${t.name}<small>${count}</small>`;
     bar.appendChild(b); buttons.push(b);
     const p = document.createElement("div"); p.className = "panel"; p.setAttribute("role", "tabpanel");
+    if (t.note) p.innerHTML = `<p class="tab-note">${t.note}</p>`;
     t.areas.forEach((a, ai) => {
       const akey = `${key}-${ti}-${ai}`;
       groups[akey] = list.slice(a.from - 1, a.to);
