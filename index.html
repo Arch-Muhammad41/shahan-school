@@ -445,19 +445,19 @@ const INTERIOR_TABS = [
     { name: "Indoor Game Room", from: 15, to: 17 },
     { name: "Kurdish Classroom", from: 18, to: 19 },
     { name: "Drama Room", from: 20, to: 20 },
-    { name: "Primary Classroom", from: 21, to: 26 } ] },
+    { name: "Primary Classroom", from: 21, to: 23 } ] },
   { name: "First Floor", areas: [
     { name: "Boys' Section Corridors", from: 27, to: 30 },
-    { name: "Boys' Classroom", from: 31, to: 34 },
+    { name: "Boys' Classroom", from: 31, to: 32 },
     { name: "Girls' Section Corridors", from: 35, to: 38 },
-    { name: "Girls' Classroom", from: 39, to: 42 },
+    { name: "Girls' Classroom", from: 39, to: 40 },
     { name: "Computer Lab", from: 43, to: 44 } ] },
   // The second floor repeats the first-floor design (typical floor), so it shows the same renders.
   { name: "Second Floor", note: "Typical floor — the Second Floor follows the same interior design as the First Floor.", areas: [
     { name: "Boys' Section Corridors", from: 27, to: 30 },
-    { name: "Boys' Classroom", from: 31, to: 34 },
+    { name: "Boys' Classroom", from: 31, to: 32 },
     { name: "Girls' Section Corridors", from: 35, to: 38 },
-    { name: "Girls' Classroom", from: 39, to: 42 },
+    { name: "Girls' Classroom", from: 39, to: 40 },
     { name: "Computer Lab", from: 43, to: 44 } ] },
   { name: "Basement", areas: [
     { name: "Biology Lab", from: 45, to: 46 },
@@ -552,7 +552,9 @@ const tabbed = { exterior: EXTERIOR_TABS, interior: INTERIOR_TABS };
 function buildTabbed(key) {
   const list = groups[key], tabs = tabbed[key];
   const holder = document.querySelector(`[data-group="${key}"]`);
-  document.getElementById("c-" + key).textContent = list.length ? `(${list.length})` : "";
+  const shownCount = new Set(tabs.flatMap(t => t.areas.flatMap(a => Array.from({ length: a.to - a.from + 1 }, (_, i) => a.from + i)))).size;
+  window.shownCounts = Object.assign(window.shownCounts || {}, { [key]: shownCount });
+  document.getElementById("c-" + key).textContent = shownCount ? `(${shownCount})` : "";
   if (!list.length) { holder.outerHTML = `<div class="empty"><b>${emptyText[key][0]}</b>${emptyText[key][1]}</div>`; return; }
   const wrap = document.createElement("div");
   const bar = document.createElement("div"); bar.className = "tabs"; bar.setAttribute("role", "tablist");
@@ -761,9 +763,9 @@ const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawin
   const totalPhotos = STAGES.reduce((n, s) => n + (s.images || []).length, 0);
   const CARDS = [
     { id: "exterior", title: "Exterior", sub: "Façades, entrance & courtyard",
-      meta: `${EXTERIOR.length} renders`, img: EXTERIOR[0] && (EXTERIOR[0].thumb || EXTERIOR[0].src) },
+      meta: `${shownCounts.exterior || EXTERIOR.length} renders`, img: EXTERIOR[0] && (EXTERIOR[0].thumb || EXTERIOR[0].src) },
     { id: "interior", title: "Interior", sub: `Receptions & ${INTERIOR_TABS.filter(t => !t.wide).length} floors · classrooms, labs & halls`,
-      meta: `${INTERIOR.length} renders`, img: INTERIOR[0] && (INTERIOR[0].thumb || INTERIOR[0].src) },
+      meta: `${shownCounts.interior || INTERIOR.length} renders`, img: INTERIOR[0] && (INTERIOR[0].thumb || INTERIOR[0].src) },
     { id: "shop-drawing", title: "Shop Drawing", sub: "Plans, elevations, sections & details",
       meta: DRAWINGS.length ? `${DRAWINGS.length} drawings` : "Coming soon", glyph: "⌗" },
     { id: "construction", title: "Construction Stages", sub: "From groundbreaking to handover",
