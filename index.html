@@ -363,25 +363,30 @@ const INTERIOR_TABS = [
      images: ["img/construction/foundation-1.jpg", "img/construction/foundation-2.jpg"] },
 */
 // status: "done" (gold), "current" (maroon, In progress) or leave out (not started)
+// photos(folder, count) -> img/construction/<folder>/01.jpg … with small previews in /thumb
+const photos = (f, n) => Array.from({ length: n }, (_, i) => {
+  const k = String(i + 1).padStart(2, "0");
+  return { src: `img/construction/${f}/${k}.jpg`, thumb: `img/construction/${f}/thumb/${k}.jpg` };
+});
 const STAGES = [
-  { title: "Site Preparation",
+  { title: "Site Preparation", status: "done", date: "July – August 2025",
     note: "Site survey, clearing and levelling, excavation and setting out the building lines.",
-    images: [] },
-  { title: "Structure",
+    images: photos("s1", 11) },
+  { title: "Structure", status: "done", date: "July – December 2025",
     note: "Foundations, columns, beams and concrete slabs — the load-bearing frame of the school.",
-    images: [] },
-  { title: "Building Shell Development",
+    images: photos("s2", 40) },
+  { title: "Building Shell Development", status: "done", date: "Photos · August 2026",
     note: "Developing the school from its structural frame: block walls, partitions, openings and the roof.",
-    images: [] },
-  { title: "Exterior Finishing",
+    images: photos("s3", 6) },
+  { title: "Exterior Finishing", status: "current", date: "Photos · August 2026",
     note: "Façade cladding, stone and paint, windows and glazing, entrance, fence and landscape.",
-    images: [] },
-  { title: "Interior Finishing",
+    images: photos("s4", 10) },
+  { title: "Interior Finishing", status: "current", date: "Photos · August 2026",
     note: "Plastering, flooring, false ceilings, paint, doors and the fit-out of classrooms, labs and halls.",
-    images: [] },
-  { title: "Mechanical & Electrical Works",
+    images: photos("s5", 3) },
+  { title: "Mechanical & Electrical Works", status: "current", date: "Photos · August 2026",
     note: "HVAC, plumbing and drainage, fire fighting, power, lighting and low-current systems.",
-    images: [] },
+    images: photos("s6", 2) },
 ];
 
 /* ---------- INTRO ---------- */
@@ -511,7 +516,7 @@ for (const [key, items] of Object.entries(groups)) {
     tl.className = "timeline";
     STAGES.forEach((s, si) => {
       const key = "stage" + si;
-      groups[key] = (s.images || []).map(src => ({ src }));
+      groups[key] = (s.images || []).map(x => typeof x === "string" ? { src: x } : x);
       labels[key] = `Stage ${si + 1} · ${s.title}`;
       const el = document.createElement("div");
       el.className = "tl-stage" + (s.status ? " " + s.status : "");
@@ -525,7 +530,7 @@ for (const [key, items] of Object.entries(groups)) {
       if (!groups[key].length) ph.outerHTML = `<div class="soon">Photos coming soon</div>`;
       groups[key].forEach((it, i) => {
         const f = document.createElement("figure");
-        f.innerHTML = `<img src="${it.src}" alt="${s.title} photo ${i + 1}" loading="lazy">`;
+        f.innerHTML = `<img src="${it.thumb || it.src}" alt="${s.title} photo ${i + 1}" loading="lazy">`;
         f.addEventListener("click", () => openLb(key, i));
         ph.appendChild(f);
       });
