@@ -182,6 +182,28 @@ figcaption{padding:8px 10px;font-size:13px;font-weight:600}
 .dwg .thumb{aspect-ratio:3/2;background:#fff repeating-linear-gradient(0deg,transparent 0 23px,#efe6d6 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,#efe6d6 23px 24px);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:28px;color:var(--maroon);letter-spacing:2px}
 .dwg .thumb img{width:100%;height:100%;object-fit:contain;background:#fff}
 .dwg figcaption small{display:block;font-weight:400;color:#7a6a5c;margin-top:2px}
+/* Cost */
+.cost-sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:18px}
+.cost-sum .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;position:relative;overflow:hidden}
+.cost-sum .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gold)}
+.cost-sum .card:first-child::before{background:var(--maroon)}
+.cost-sum small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9a7f55}
+.cost-sum b{display:block;font-family:Cinzel,serif;font-size:clamp(19px,3vw,25px);color:var(--maroon);margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.cost-sum span{font-size:12px;color:#7a6a5c}
+.cost-row{display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.cost-row .n{width:36px;height:36px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--maroon);font-size:14px}
+.cost-row h3{margin:0;font-family:Cinzel,serif;font-size:16px;color:var(--maroon)}
+.cost-row .dates{font-size:12px;color:#7a6a5c;margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cost-row .dates i{font-style:normal;color:var(--gold);font-weight:700}
+.cost-row .bar{height:6px;background:#f1e8d6;border-radius:999px;margin-top:8px;overflow:hidden}
+.cost-row .bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--maroon));border-radius:999px;transition:width 1s var(--ease)}
+.cost-row .amt{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cost-row .amt b{display:block;font-size:15px;color:var(--ink)}
+.cost-row .amt span{display:block;font-size:13px;color:#6a5a4c;margin-top:2px}
+.cost-row .amt em{font-style:normal;font-size:11px;color:#9a8a7a;display:block;margin-top:3px}
+.cost-row .tba{font-size:12px;color:#9a8a7a;font-style:italic}
+.cost-note{font-size:12px;color:#9a8a7a;font-style:italic;margin:6px 0 0}
+@media (max-width:600px){.cost-row{grid-template-columns:36px 1fr}.cost-row .amt{grid-column:2;text-align:left}}
 /* Construction timeline */
 .timeline{position:relative;padding-left:44px}
 .timeline::before{content:"";position:absolute;left:17px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--gold),var(--maroon))}
@@ -266,6 +288,7 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
   <a href="#interior">Interior<span id="c-interior"></span></a>
   <a href="#shop-drawing">Shop Drawing<span id="c-drawings"></span></a>
   <a href="#construction">Construction Stages<span id="c-stages"></span></a>
+  <a href="#cost">Cost</a>
 </div></nav>
 
 <main>
@@ -289,6 +312,17 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
   <section id="construction">
     <div class="head"><span class="num">04</span><h2>Construction Stages</h2><p>From groundbreaking to handover</p></div>
     <div id="timeline"></div>
+  </section>
+
+  <section id="cost">
+    <div class="head"><span class="num">05</span><h2>Cost</h2><p>Estimated cost of the 10 main phases</p></div>
+    <div class="cost-sum">
+      <div class="card"><small>Total estimated cost</small><b id="tot-iqd">—</b><span>Iraqi Dinar (IQD)</span></div>
+      <div class="card"><small>Total estimated cost</small><b id="tot-usd">—</b><span>US Dollar (USD)</span></div>
+      <div class="card"><small>Project period</small><b id="tot-dates">—</b><span id="rate-note"></span></div>
+    </div>
+    <div id="cost-list"></div>
+    <p class="cost-note">All figures are estimates and may change as the project progresses.</p>
   </section>
 </main>
 
@@ -545,6 +579,74 @@ for (const [key, items] of Object.entries(groups)) {
   }
 }
 
+/* ---------- COST (10 main phases) ----------
+   Fill in for each phase:
+     from / to : start and end date, e.g. "2025-07" or "2025-07-09"
+     iqd       : estimated cost in Iraqi Dinar, e.g. 1250000000
+     usd       : estimated cost in US Dollar,   e.g. 954000
+   If only one currency is given, the other is calculated with RATE below.
+*/
+const RATE = 1310;   // IQD per 1 USD, used only when one of the two amounts is missing
+const COST = [
+  { name: "Site Preparation & Earthworks",               from: "", to: "", iqd: null, usd: null },
+  { name: "Foundations & Basement",                       from: "", to: "", iqd: null, usd: null },
+  { name: "Superstructure — Columns, Beams & Slabs",      from: "", to: "", iqd: null, usd: null },
+  { name: "Masonry & Building Shell",                     from: "", to: "", iqd: null, usd: null },
+  { name: "Roofing & Waterproofing",                      from: "", to: "", iqd: null, usd: null },
+  { name: "Mechanical Works — HVAC, Plumbing & Fire",     from: "", to: "", iqd: null, usd: null },
+  { name: "Electrical & Low-Current Works",               from: "", to: "", iqd: null, usd: null },
+  { name: "Exterior Finishing, Windows & Curtain Wall",   from: "", to: "", iqd: null, usd: null },
+  { name: "Interior Finishing & Fit-out",                 from: "", to: "", iqd: null, usd: null },
+  { name: "External Works & Landscape",                   from: "", to: "", iqd: null, usd: null },
+];
+{
+  const fmt = n => Math.round(n).toLocaleString("en-US");
+  const fmtDate = s => {
+    if (!s) return "";
+    const [y, m, d] = s.split("-").map(Number);
+    const dt = new Date(y, (m || 1) - 1, d || 1);
+    return dt.toLocaleDateString("en-GB", d ? { day: "numeric", month: "short", year: "numeric" } : { month: "short", year: "numeric" });
+  };
+  const rows = COST.map(c => {
+    let iqd = c.iqd, usd = c.usd, calc = "";
+    if (iqd == null && usd != null) { iqd = usd * RATE; calc = "iqd"; }
+    if (usd == null && iqd != null) { usd = iqd / RATE; calc = "usd"; }
+    return { ...c, iqd, usd, calc };
+  });
+  const totIqd = rows.reduce((s, r) => s + (r.iqd || 0), 0);
+  const totUsd = rows.reduce((s, r) => s + (r.usd || 0), 0);
+  const anyCalc = rows.some(r => r.calc);
+  document.getElementById("tot-iqd").textContent = totIqd ? fmt(totIqd) + " IQD" : "To be announced";
+  document.getElementById("tot-usd").textContent = totUsd ? "$ " + fmt(totUsd) : "To be announced";
+  const starts = rows.map(r => r.from).filter(Boolean).sort(), ends = rows.map(r => r.to).filter(Boolean).sort();
+  document.getElementById("tot-dates").textContent = starts.length && ends.length ? `${fmtDate(starts[0])} – ${fmtDate(ends[ends.length - 1])}` : "To be announced";
+  document.getElementById("rate-note").textContent = anyCalc ? `Converted at 1 USD = ${fmt(RATE)} IQD` : "Start to handover";
+  const list = document.getElementById("cost-list");
+  rows.forEach((r, i) => {
+    const share = totIqd && r.iqd ? r.iqd / totIqd : 0;
+    const el = document.createElement("div");
+    el.className = "cost-row";
+    const dates = r.from || r.to
+      ? `<span>${fmtDate(r.from) || "—"}</span><i>→</i><span>${fmtDate(r.to) || "—"}</span>`
+      : `<span class="tba">Dates to be announced</span>`;
+    const amt = r.iqd != null
+      ? `<b>${fmt(r.iqd)} IQD</b><span>$ ${fmt(r.usd)}</span>${share ? `<em>${(share * 100).toFixed(1)}% of total${r.calc ? " · converted" : ""}</em>` : ""}`
+      : `<span class="tba">Cost to be announced</span>`;
+    el.innerHTML = `<div class="n">${i + 1}</div>
+      <div><h3>${r.name}</h3><div class="dates">${dates}</div>${share ? `<div class="bar"><span data-w="${(share * 100).toFixed(2)}"></span></div>` : ""}</div>
+      <div class="amt">${amt}</div>`;
+    list.appendChild(el);
+  });
+  // grow the share bars when the section scrolls into view
+  const bars = [...list.querySelectorAll(".bar span")];
+  if (bars.length) {
+    const grow = () => bars.forEach(b => b.style.width = b.dataset.w + "%");
+    "IntersectionObserver" in window
+      ? new IntersectionObserver((es, o) => { if (es.some(e => e.isIntersecting)) { grow(); o.disconnect(); } }).observe(list)
+      : grow();
+  }
+}
+
 /* ---------- LIGHTBOX ---------- */
 const lb = document.getElementById("lb"), lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".cap");
 let cur = { key: null, list: [], i: 0 };
@@ -572,7 +674,7 @@ lb.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - 
 
 /* ---------- ACTIVE NAV ---------- */
 const links = [...document.querySelectorAll("nav a")];
-const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawing,#construction")];
+const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawing,#construction,#cost")];
 function updateNav() {
   let active = null;
   if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) active = sections[sections.length - 1];
@@ -583,7 +685,8 @@ addEventListener("scroll", updateNav, { passive: true }); addEventListener("resi
 
 /* ---------- SCROLL-REVEAL ANIMATIONS ---------- */
 // Headings, empty boxes, stages and drawings fade up once; image areas replay each time their tab opens.
-const revealEls = [...document.querySelectorAll("main .head, main .empty, main .tl-stage, main .tabs, #video:not([hidden]), [data-group='drawings'] > *")];
+const revealEls = [...document.querySelectorAll("main .head, main .empty, main .tl-stage, main .tabs, #video:not([hidden]), [data-group='drawings'] > *, .cost-sum .card, .cost-row")];
+document.querySelectorAll(".cost-row").forEach((r, i) => r.style.transitionDelay = (i % 5) * 60 + "ms");
 document.querySelectorAll(".tl-stage").forEach((s, i) => s.style.transitionDelay = (i % 3) * 90 + "ms");
 if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
   revealEls.forEach(el => el.classList.add("rv"));
