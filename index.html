@@ -70,6 +70,14 @@ body.locked{overflow:hidden}
 #intro .enter:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(162,41,72,.4)}
 #intro .enter::after{content:"";position:absolute;inset:0;border-radius:inherit;border:1.5px solid var(--gold-l);opacity:.6}
 #intro .skip{position:absolute;right:18px;bottom:16px;background:none;border:0;color:#8a7a6a;font:12px Inter,sans-serif;letter-spacing:.15em;cursor:pointer;opacity:0;animation:up .6s ease-out 1s forwards}
+#intro .sound-on{position:absolute;left:18px;bottom:14px;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.75);border:1.5px solid var(--gold);color:var(--maroon);
+  font:600 12px Inter,sans-serif;letter-spacing:.08em;border-radius:999px;padding:7px 14px 7px 10px;cursor:pointer;opacity:0;animation:up .6s ease-out .8s forwards}
+#intro .sound-on span{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--maroon);color:#fff;align-items:center;justify-content:center;font-size:13px;animation:pulseNote 2s ease-in-out infinite}
+#intro .sound-on.playing{display:none}
+#mute{position:fixed;right:16px;bottom:16px;z-index:45;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--gold);background:rgba(251,247,239,.95);
+  box-shadow:0 6px 16px rgba(42,29,34,.15);font-size:17px;cursor:pointer;transition:transform .3s var(--ease,ease)}
+#mute:hover{transform:scale(1.08)}
+body.locked #mute{display:none}
 #intro .bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--gold);animation:bar 7.5s linear forwards}
 @keyframes bar{to{width:100%}}
 #curtain{position:fixed;inset:0;z-index:60;pointer-events:none;background:var(--maroon);transform:translateY(100%)}
@@ -318,9 +326,11 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
     </div>
     <button class="enter up" style="animation-delay:3.1s">Explore the project</button>
   </div>
+  <button class="sound-on" type="button" aria-label="Play intro music"><span>♪</span> Tap for sound</button>
   <button class="skip">SKIP ›</button>
   <div class="bar"></div>
 </div>
+<button id="mute" type="button" aria-label="Sound on/off" title="Sound on/off">🔊</button>
 <div id="curtain"><img src="img/logo.png" alt=""></div>
 
 <!-- =================== SITE =================== -->
@@ -525,11 +535,97 @@ const STAGES = [
     images: photos("ext", 5) },
 ];
 
+/* ---------- SOUND: intro music + click sounds, generated live with Web Audio ---------- */
+const Sound = (() => {
+  let ctx = null, master = null, intro = null;
+  let muted = localStorage.getItem("shahanMuted") === "1";
+  const muteBtn = () => document.getElementById("mute");
+  function ensure() {
+    if (!ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = muted ? 0 : 1; master.connect(ctx.destination);
+    }
+    if (ctx.state === "suspended") ctx.resume().catch(() => {});
+    return ctx;
+  }
+  // soft bell: sine + quiet octave, quick attack, long decay
+  function bell(freq, t, dur = 2.6, vol = .09, out = master) {
+    const g = ctx.createGain(); g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vol, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    [[1, 1], [2, .25], [3, .08]].forEach(([m, a]) => {
+      const o = ctx.createOscillator(), og = ctx.createGain();
+      o.type = "sine"; o.frequency.value = freq * m; og.gain.value = a;
+      o.connect(og).connect(g); o.start(t); o.stop(t + dur + .05);
+    });
+    g.connect(out);
+  }
+  function playIntro() {
+    if (!ensure() || intro) return;
+    const t0 = ctx.currentTime + .05;
+    const bus = ctx.createGain(); bus.gain.setValueAtTime(0, t0); bus.gain.linearRampToValueAtTime(1, t0 + 1.2);
+    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1800;
+    bus.connect(lp).connect(master);
+    // warm pad: A major add9, slow swell
+    const pads = [110, 164.81, 220, 277.18, 329.63, 493.88].map((f, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = i < 2 ? "sine" : "triangle"; o.frequency.value = f; o.detune.value = (i % 2 ? 5 : -5);
+      g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(i < 2 ? .06 : .025, t0 + 2.5);
+      o.connect(g).connect(bus); o.start(t0); return o;
+    });
+    // gentle pentatonic melody
+    const notes = [659.25, 554.37, 493.88, 440, 493.88, 554.37, 659.25, 739.99, 880, 739.99, 659.25, 554.37];
+    notes.forEach((f, i) => bell(f, t0 + .6 + i * .55, 2.4, .07, bus));
+    bell(880, t0 + .6 + notes.length * .55 + .2, 4, .08, bus);
+    intro = { bus, pads };
+    markPlaying();
+  }
+  // hide the "Tap for sound" button only once the browser really plays audio
+  function markPlaying() {
+    const b = document.querySelector("#intro .sound-on");
+    if (!b || !ctx) return;
+    if (ctx.state === "running") b.classList.add("playing");
+    else ctx.resume().then(() => { if (ctx.state === "running") b.classList.add("playing"); }).catch(() => {});
+  }
+  function stopIntro(fade = 1.6) {
+    if (!ctx || !intro) return;
+    const t = ctx.currentTime, { bus, pads } = intro; intro = null;
+    bus.gain.cancelScheduledValues(t); bus.gain.setValueAtTime(bus.gain.value, t); bus.gain.linearRampToValueAtTime(0, t + fade);
+    pads.forEach(o => o.stop(t + fade + .1));
+    setTimeout(() => bus.disconnect(), (fade + .3) * 1000);
+  }
+  function click(kind = "tap") {
+    if (muted || !ensure()) return;
+    const t = ctx.currentTime;
+    if (kind === "open") { bell(659.25, t, .9, .05); bell(987.77, t + .07, 1.1, .04); return; }
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = "triangle"; o.frequency.setValueAtTime(1046.5, t); o.frequency.exponentialRampToValueAtTime(740, t + .08);
+    g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.06, t + .008); g.gain.exponentialRampToValueAtTime(.0001, t + .16);
+    o.connect(g).connect(master); o.start(t); o.stop(t + .2);
+  }
+  function setMuted(m) {
+    muted = m; localStorage.setItem("shahanMuted", m ? "1" : "0");
+    if (master) master.gain.setTargetAtTime(m ? 0 : 1, ctx.currentTime, .05);
+    const b = muteBtn(); if (b) b.textContent = m ? "🔇" : "🔊";
+  }
+  return { playIntro, stopIntro, click, setMuted, markPlaying, get muted() { return muted; } };
+})();
+document.getElementById("mute").textContent = Sound.muted ? "🔇" : "🔊";
+document.getElementById("mute").addEventListener("click", e => { e.stopPropagation(); Sound.setMuted(!Sound.muted); if (!Sound.muted) Sound.click(); });
+// tap sound for links, buttons, cards and images; a brighter chime when opening a section
+document.addEventListener("click", e => {
+  const el = e.target.closest("a, button, figure");
+  if (!el || el.id === "mute" || el.classList.contains("sound-on")) return;
+  Sound.click(el.classList.contains("hub-card") || el.classList.contains("enter") ? "open" : "tap");
+});
+
 /* ---------- INTRO ---------- */
 const intro = document.getElementById("intro"), curtain = document.getElementById("curtain");
 let introDone = false, autoTimer;
 function endIntro() {
   if (introDone) return; introDone = true; clearTimeout(autoTimer);
+  Sound.stopIntro();
   curtain.classList.remove("go"); void curtain.offsetWidth; curtain.classList.add("go");
   setTimeout(() => {
     intro.style.display = "none"; document.body.classList.remove("locked"); scrollTo(0, 0);
@@ -542,6 +638,8 @@ function endIntro() {
 }
 function startIntro() {
   introDone = false;
+  document.querySelector("#intro .sound-on")?.classList.remove("playing");
+  if (!Sound.muted) Sound.playIntro();   // works when the browser already allows sound (e.g. after Replay intro)
   intro.style.display = "flex"; document.body.classList.add("locked");
   // restart CSS animations
   intro.querySelectorAll("*").forEach(el => { el.style.animation = "none"; void el.offsetWidth; el.style.animation = ""; });
@@ -549,6 +647,9 @@ function startIntro() {
 }
 intro.querySelector(".enter").onclick = endIntro;
 intro.querySelector(".skip").onclick = endIntro;
+intro.querySelector(".sound-on").onclick = e => { e.stopPropagation(); if (Sound.muted) Sound.setMuted(false); Sound.playIntro(); Sound.markPlaying(); };
+// any tap on the intro background also starts the music (browsers need one tap before sound can play)
+intro.addEventListener("pointerdown", e => { if (!e.target.closest("button") && !Sound.muted) { Sound.playIntro(); Sound.markPlaying(); } });
 addEventListener("keydown", e => { if (!introDone && intro.style.display !== "none" && (e.key === "Enter" || e.key === "Escape" || e.key === " ")) { e.preventDefault(); endIntro(); } });
 document.getElementById("replay").onclick = startIntro;
 if (sessionStorage.getItem("shahanIntroSeen")) { introDone = true; intro.style.display = "none"; document.body.classList.remove("locked"); }
