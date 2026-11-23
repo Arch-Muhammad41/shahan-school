@@ -271,6 +271,14 @@ figcaption{padding:8px 10px;font-size:13px;font-weight:600}
 .tl-stage .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
 .tl-stage .photos figure img{aspect-ratio:4/3}
 .tl-stage .soon{font-size:12px;color:#9a8a7a;font-style:italic;border-top:1px dashed var(--line);padding-top:8px}
+.soon-banner{position:relative;overflow:hidden;text-align:center;border-radius:16px;padding:clamp(48px,9vw,96px) 24px;color:#fff;
+  background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(227,207,138,.14) 31px 32px),repeating-linear-gradient(90deg,transparent 0 31px,rgba(227,207,138,.14) 31px 32px),radial-gradient(circle at 50% 30%,#b8344f,var(--maroon-d));
+  box-shadow:0 12px 30px rgba(110,26,49,.25)}
+.soon-banner .ico{display:block;font-family:Cinzel,serif;font-size:48px;color:var(--gold-l);line-height:1;margin-bottom:8px}
+.soon-banner h3{margin:0;font-family:Cinzel,serif;font-size:clamp(38px,8vw,72px);letter-spacing:.08em;line-height:1.05}
+.soon-banner p{margin:14px auto 18px;max-width:520px;font-size:clamp(14px,2vw,17px);opacity:.9}
+.soon-banner .pill-note{display:inline-block;background:var(--gold);color:var(--maroon-d);font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase;border-radius:999px;padding:7px 16px;animation:pulseNote 2.4s ease-in-out infinite}
+@keyframes pulseNote{0%,100%{box-shadow:0 0 0 0 rgba(227,207,138,.6)}50%{box-shadow:0 0 0 10px rgba(227,207,138,0)}}
 .empty{border:2px dashed var(--gold);border-radius:8px;padding:34px 20px;text-align:center;color:#6a5a4c;background:#fffdf8}
 .empty b{display:block;color:var(--maroon);font-size:16px;margin-bottom:6px}
 #lb{position:fixed;inset:0;background:rgba(20,10,14,.93);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:40}
@@ -619,6 +627,12 @@ for (const [key, items] of Object.entries(groups)) {
   if (key in tabbed || key.includes("-")) continue;
   const grid = document.querySelector(`[data-group="${key}"]`);
   document.getElementById("c-" + key).textContent = items.length ? `(${items.length})` : "";
+  if (!items.length && key === "drawings") {
+    grid.outerHTML = `<div class="soon-banner"><span class="ico">⌗</span><h3>Coming Soon</h3>
+      <p>The shop drawings are currently being revised and will be published here shortly.</p>
+      <span class="pill-note">Under revision</span></div>`;
+    continue;
+  }
   if (!items.length) { grid.outerHTML = `<div class="empty"><b>${emptyText[key][0]}</b>${emptyText[key][1]}</div>`; continue; }
   items.forEach((it, i) => {
     let el;
@@ -779,7 +793,7 @@ const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawin
     { id: "interior", title: "Interior", sub: `Receptions, ${INTERIOR_TABS.filter(t => !t.wide).length} floors & conference hall`,
       meta: `${shownCounts.interior || INTERIOR.length} renders`, img: INTERIOR[0] && (INTERIOR[0].thumb || INTERIOR[0].src) },
     { id: "shop-drawing", title: "Shop Drawing", sub: "Plans, elevations, sections & details",
-      meta: DRAWINGS.length ? `${DRAWINGS.length} drawings` : "Coming soon", glyph: "⌗" },
+      meta: DRAWINGS.length ? `${DRAWINGS.length} drawings` : "Coming soon · under revision", glyph: "⌗" },
     { id: "construction", title: "Construction Stages", sub: "From groundbreaking to handover",
       meta: `${STAGES.length} stages · ${totalPhotos} photos`, img: "img/construction/s2/thumb/09.jpg" },
     { id: "cost", title: "Cost", sub: "Estimated cost of the 10 main phases",
