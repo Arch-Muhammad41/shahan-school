@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://arch-muhammad41.github.io/shahan-school/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600;800&family=Noto+Kufi+Arabic:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --maroon:#a22948; --maroon-d:#6e1a31; --gold:#bea145; --gold-l:#e3cf8a;
@@ -105,7 +105,7 @@ footer{padding-bottom:64px}
 @keyframes wOut{to{opacity:0;visibility:hidden}}
 #welcome .w-card{text-align:center;max-width:620px}
 #welcome img{width:74px;opacity:0;animation:up .7s ease-out .15s forwards}
-#welcome .w-ku{font-family:"Noto Kufi Arabic",Inter,sans-serif;font-weight:800;color:var(--gold);font-size:clamp(40px,9vw,72px);line-height:1.3;margin-top:6px;
+#welcome .w-big{font-family:Cinzel,serif;font-weight:700;color:var(--gold);font-size:clamp(44px,10vw,84px);letter-spacing:.08em;line-height:1.15;margin-top:8px;
   opacity:0;transform:scale(.8);animation:wPop .9s cubic-bezier(.2,.9,.3,1.3) .3s forwards}
 @keyframes wPop{to{opacity:1;transform:none}}
 #welcome h2{margin:4px 0 8px;font-family:Cinzel,serif;color:var(--maroon);font-size:clamp(20px,4vw,30px);letter-spacing:.05em;opacity:0;animation:up .8s ease-out .65s forwards}
@@ -367,8 +367,8 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
 <div id="welcome" aria-live="polite" hidden>
   <div class="w-card">
     <img src="img/logo.png" alt="">
-    <div class="w-ku" dir="rtl" lang="ckb">بەخێربێن</div>
-    <h2>Welcome to the Shahan School Project</h2>
+    <div class="w-big">Welcome</div>
+    <h2>to the Shahan School Project</h2>
     <p>Explore the designs and follow the construction of the school, step by step.</p>
     <span class="w-line"></span>
   </div>
@@ -693,7 +693,7 @@ const Sound = (() => {
     const t = ctx.currentTime;                              // curtain sweep + resolve
     whoosh(t, .9, 2600, 220, .045); bell(n(12), t + .55, 2.6, .045); bell(n(4), t + .62, 2.6, .035);
   }
-  function welcome() {                                      // with the "بەخێربێن" pop
+  function welcome() {                                      // with the "Welcome" card
     if (muted || !ensure()) return;
     const t = ctx.currentTime + .25;
     boom(t, .1); [0, 4, 7, 12].forEach((s, i) => bell(n(s), t + i * .09, 2.4, .04));
@@ -714,12 +714,33 @@ const Sound = (() => {
     g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.05, t + .008); g.gain.exponentialRampToValueAtTime(.0001, t + .16);
     o.connect(g); o.start(t); o.stop(t + .2); out(g);
   }
+  // opening an image: a short phrase from the intro (harp run + bell over a soft chord)
+  let stepIx = 0;
+  function openImage() {
+    if (muted || !ensure()) return;
+    const t = ctx.currentTime + .01; stepIx = 0;
+    [0, 4, 7, 12].forEach((s, i) => pluck(n(s), t + i * .06, .04));
+    bell(n(16), t + .26, 2.2, .035);
+    pad([n(-24), n(-12), n(-8), n(-5)], t, .25, .5, 1.3, .035);
+  }
+  // next / previous image: one note of the intro melody, walking up or down the scale
+  function stepImage(dir) {
+    if (muted || !ensure()) return;
+    stepIx = (stepIx + (dir > 0 ? 1 : -1) + I.length) % I.length;
+    const t = ctx.currentTime + .01;
+    pluck(n(I[stepIx]), t, .045); bell(n(I[stepIx] + 12), t + .02, 1.2, .012);
+  }
+  function closeImage() {
+    if (muted || !ensure()) return;
+    const t = ctx.currentTime + .01;
+    [12, 7, 4].forEach((s, i) => pluck(n(s), t + i * .05, .03));
+  }
   function setMuted(m) {
     muted = m; localStorage.setItem("shahanMuted", m ? "1" : "0");
     if (master) master.gain.setTargetAtTime(m ? 0 : .9, ctx.currentTime, .05);
     const b = document.getElementById("mute"); if (b) b.textContent = m ? "🔇" : "🔊";
   }
-  return { playIntro, stopIntro, welcome, click, setMuted, markPlaying, mark() { introT0 = performance.now(); intro = null; },
+  return { playIntro, stopIntro, welcome, click, openImage, stepImage, closeImage, setMuted, markPlaying, mark() { introT0 = performance.now(); intro = null; },
            get muted() { return muted; } };
 })();
 document.getElementById("mute").textContent = Sound.muted ? "🔇" : "🔊";
@@ -728,6 +749,7 @@ document.getElementById("mute").addEventListener("click", e => { e.stopPropagati
 document.addEventListener("click", e => {
   const el = e.target.closest("a, button, figure");
   if (!el || el.id === "mute" || el.classList.contains("sound-on")) return;
+  if (el.tagName === "FIGURE" || el.closest("#lb")) return;   // images have their own music (see lightbox)
   Sound.click(el.classList.contains("hub-card") || el.classList.contains("enter") ? "open" : "tap");
 });
 
@@ -1021,13 +1043,14 @@ let cur = { key: null, list: [], i: 0 };
 function openLb(key, i) {
   cur = { key, list: groups[key].filter(x => !isPdf(x.src)), i: 0 };
   cur.i = cur.list.indexOf(groups[key][i]); show(); lb.classList.add("on"); lb.setAttribute("aria-hidden", "false");
+  Sound.openImage();
 }
 function show() { const it = cur.list[cur.i]; lbImg.src = it.src; lbImg.alt = it.title || "";
   lbImg.classList.remove("swap"); void lbImg.offsetWidth; lbImg.classList.add("swap");
   lbCap.innerHTML = `<small>${labels[cur.key]} · ${cur.i + 1} / ${cur.list.length}</small>${it.title || ""}`;
   const nx = cur.list[(cur.i + 1) % cur.list.length]; if (nx) new Image().src = nx.src; }
-function step(d) { cur.i = (cur.i + d + cur.list.length) % cur.list.length; show(); }
-function closeLb() { lb.classList.remove("on"); lb.setAttribute("aria-hidden", "true"); }
+function step(d) { cur.i = (cur.i + d + cur.list.length) % cur.list.length; show(); Sound.stepImage(d); }
+function closeLb() { if (lb.classList.contains("on")) Sound.closeImage(); lb.classList.remove("on"); lb.setAttribute("aria-hidden", "true"); }
 lb.querySelector(".prev").onclick = e => { e.stopPropagation(); step(-1); };
 lb.querySelector(".next").onclick = e => { e.stopPropagation(); step(1); };
 lb.querySelector(".close").onclick = closeLb;
