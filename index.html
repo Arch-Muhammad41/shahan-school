@@ -1064,17 +1064,33 @@ fetch(FILM, { method: "HEAD" }).then(r => {
 /* ---------- PROGRESS ----------
    Fill in percentages when known, e.g.  overall: 68  and  "Structure": 100
    Until then the panel shows each stage's status only. */
+// Estimated from the site photos (November 2026). Overall = weighted by the usual share of each stage in a school building.
 const PROGRESS = {
-  overall: null,
+  estimated: true,
+  asOf: "November 2026",
   stages: {
-    // "Site Preparation": 100, "Structure": 100, "Building Shell Development": 85, ...
+    "Site Preparation": 100,
+    "Structure": 100,
+    "Waterproofing & Backfilling": 100,
+    "Building Shell Development": 90,
+    "Exterior Finishing": 45,
+    "Windows & Curtain Wall": 35,
+    "Interior Finishing": 30,
+    "Mechanical & Electrical Works": 50,
+    "External Works & Site Development": 25,
+  },
+  weights: {   // share of the whole job, %
+    "Site Preparation": 5, "Structure": 30, "Waterproofing & Backfilling": 5, "Building Shell Development": 12,
+    "Exterior Finishing": 10, "Windows & Curtain Wall": 6, "Interior Finishing": 15, "Mechanical & Electrical Works": 12,
+    "External Works & Site Development": 5,
   },
 };
+PROGRESS.overall = Math.round(Object.entries(PROGRESS.weights).reduce((s, [k, w]) => s + w * (PROGRESS.stages[k] || 0) / 100, 0));
 {
   const ov = document.getElementById("prog-overall"), list = document.getElementById("prog-list");
   const hasNumbers = PROGRESS.overall != null || Object.keys(PROGRESS.stages).length > 0;
   if (PROGRESS.overall != null) {
-    ov.innerHTML = `<div class="big"><b>${PROGRESS.overall}%</b><span>overall progress</span></div><div class="pbar"><i data-w="${PROGRESS.overall}"></i></div>`;
+    ov.innerHTML = `<div class="big"><b>${PROGRESS.overall}%</b><span>overall progress${PROGRESS.estimated ? " · estimated" : ""}${PROGRESS.asOf ? " · " + PROGRESS.asOf : ""}</span></div><div class="pbar"><i data-w="${PROGRESS.overall}"></i></div>`;
   } else {
     const done = STAGES.filter(s => s.status === "done").length;
     ov.innerHTML = `<div class="big"><b>${done} / ${STAGES.length}</b><span>stages completed · ${STAGES.filter(s => s.status === "current").length} in progress</span></div>
@@ -1088,7 +1104,9 @@ const PROGRESS = {
       <div class="pbar"><i data-w="${pct != null ? pct : (s.status === "done" ? 100 : 0)}"></i></div>`;
     list.appendChild(el);
   });
-  if (!hasNumbers) list.insertAdjacentHTML("afterend", `<p class="prog-note">Detailed percentages for each stage will be added soon.</p>`);
+  list.insertAdjacentHTML("afterend", hasNumbers
+    ? (PROGRESS.estimated ? `<p class="prog-note">Percentages are estimates based on the latest site photos and will be updated as work continues.</p>` : "")
+    : `<p class="prog-note">Detailed percentages for each stage will be added soon.</p>`);
   const grow = () => document.querySelectorAll("#progress-block .pbar i").forEach(i => i.style.width = i.dataset.w + "%");
   "IntersectionObserver" in window
     ? new IntersectionObserver((es, o) => { if (es.some(e => e.isIntersecting)) { grow(); o.disconnect(); } }, { threshold: .2 }).observe(document.getElementById("progress-block"))
