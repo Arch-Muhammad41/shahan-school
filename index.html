@@ -328,6 +328,16 @@ figcaption{padding:8px 10px;font-size:13px;font-weight:600}
 .prog-item .chip{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:999px;padding:3px 9px;white-space:nowrap}
 .prog-item .chip.done{background:var(--gold);color:#fff}.prog-item .chip.current{background:var(--maroon);color:#fff}.prog-item .chip.todo{background:#eee;color:#888}
 .prog-note{font-size:12px;color:#9a8a7a;font-style:italic;margin-top:8px}
+/* Shop drawings */
+[data-group="drawings"] figure{background:#fff;border:1px solid var(--line)}
+[data-group="drawings"] figure img{aspect-ratio:1.42;object-fit:contain;background:#fff;padding:6px}
+[data-group="drawings"] figcaption{font-size:12px;font-weight:600;color:var(--ink);padding:8px 10px;border-top:1px solid var(--line);background:#fffdf8;line-height:1.3}
+#lb.drawing img{background:#fff;cursor:zoom-in}
+#lb.zoom{overflow:auto;display:block;padding:0}
+#lb.zoom img{max-width:none;max-height:none;width:240%;cursor:zoom-out;display:block;margin:0 auto;border-radius:0}
+#lb.zoom .cap,#lb.zoom .prev,#lb.zoom .next{display:none}
+#lb.zoom .close{position:fixed;z-index:3;background:rgba(110,26,49,.9)}
+.lb-hint{color:var(--gold-l);font-size:11px;margin-top:4px;display:none}#lb.drawing .lb-hint{display:block}
 /* Construction options */
 .cx-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 14px;scroll-margin-top:80px}
 .cx-menu button{position:relative;aspect-ratio:4/3;border:0;padding:0;border-radius:14px;overflow:hidden;cursor:pointer;color:#fff;text-align:left;background:var(--maroon-d);
@@ -487,7 +497,7 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
   </section>
 
   <section id="shop-drawing">
-    <div class="head"><span class="num">03</span><h2>Shop Drawing</h2><p>Plans, elevations, sections &amp; details</p></div>
+    <div class="head"><span class="num">03</span><h2>Shop Drawing</h2><p>Architectural, finishes, structural &amp; mechanical drawings</p></div>
     <div class="grid" data-group="drawings"></div>
   </section>
 
@@ -579,7 +589,505 @@ const INTERIOR = Array.from({ length: 61 }, (_, i) => {
     return { src: `img/conference/${n}.jpg`, thumb: `img/conference/thumb/${n}.jpg` };
   })
 );
-const DRAWINGS = [];
+const DRAWINGS = [
+ {
+  "src": "img/drawings/001.jpg",
+  "thumb": "img/drawings/thumb/001.jpg",
+  "title": "A00 · Index of Drawings (1/2)"
+ },
+ {
+  "src": "img/drawings/002.jpg",
+  "thumb": "img/drawings/thumb/002.jpg",
+  "title": "A00 · Index of Drawings (2/2)"
+ },
+ {
+  "src": "img/drawings/003.jpg",
+  "thumb": "img/drawings/thumb/003.jpg",
+  "title": "Site Plan"
+ },
+ {
+  "src": "img/drawings/004.jpg",
+  "thumb": "img/drawings/thumb/004.jpg",
+  "title": "A01 · Top View"
+ },
+ {
+  "src": "img/drawings/005.jpg",
+  "thumb": "img/drawings/thumb/005.jpg",
+  "title": "A02 · Top View"
+ },
+ {
+  "src": "img/drawings/006.jpg",
+  "thumb": "img/drawings/thumb/006.jpg",
+  "title": "A08 · Basement Plan"
+ },
+ {
+  "src": "img/drawings/007.jpg",
+  "thumb": "img/drawings/thumb/007.jpg",
+  "title": "A09 · Ground Floor Plan"
+ },
+ {
+  "src": "img/drawings/008.jpg",
+  "thumb": "img/drawings/thumb/008.jpg",
+  "title": "A10 · First Floor Plan"
+ },
+ {
+  "src": "img/drawings/009.jpg",
+  "thumb": "img/drawings/thumb/009.jpg",
+  "title": "A11 · Second Floor Plan"
+ },
+ {
+  "src": "img/drawings/010.jpg",
+  "thumb": "img/drawings/thumb/010.jpg",
+  "title": "A12 · Penthouse Plan"
+ },
+ {
+  "src": "img/drawings/011.jpg",
+  "thumb": "img/drawings/thumb/011.jpg",
+  "title": "A03 · Basement – Furniture Plans"
+ },
+ {
+  "src": "img/drawings/012.jpg",
+  "thumb": "img/drawings/thumb/012.jpg",
+  "title": "A04 · Ground Floor – Furniture Plan"
+ },
+ {
+  "src": "img/drawings/013.jpg",
+  "thumb": "img/drawings/thumb/013.jpg",
+  "title": "A05 · First Floor – Furniture Plan"
+ },
+ {
+  "src": "img/drawings/014.jpg",
+  "thumb": "img/drawings/thumb/014.jpg",
+  "title": "A06 · Second Floor – Furniture Plan"
+ },
+ {
+  "src": "img/drawings/015.jpg",
+  "thumb": "img/drawings/thumb/015.jpg",
+  "title": "A07 · Penthouse Furniture Plan"
+ },
+ {
+  "src": "img/drawings/016.jpg",
+  "thumb": "img/drawings/thumb/016.jpg",
+  "title": "A80 · Elevation (1/4)"
+ },
+ {
+  "src": "img/drawings/017.jpg",
+  "thumb": "img/drawings/thumb/017.jpg",
+  "title": "A81 · Elevation (2/4)"
+ },
+ {
+  "src": "img/drawings/018.jpg",
+  "thumb": "img/drawings/thumb/018.jpg",
+  "title": "A82 · Elevation (3/4)"
+ },
+ {
+  "src": "img/drawings/019.jpg",
+  "thumb": "img/drawings/thumb/019.jpg",
+  "title": "A83 · Elevation (4/4)"
+ },
+ {
+  "src": "img/drawings/020.jpg",
+  "thumb": "img/drawings/thumb/020.jpg",
+  "title": "Exterior Elevations & Sections"
+ },
+ {
+  "src": "img/drawings/021.jpg",
+  "thumb": "img/drawings/thumb/021.jpg",
+  "title": "Architectural Plan for Exterior (1/3)"
+ },
+ {
+  "src": "img/drawings/022.jpg",
+  "thumb": "img/drawings/thumb/022.jpg",
+  "title": "Architectural Plan for Exterior (2/3)"
+ },
+ {
+  "src": "img/drawings/023.jpg",
+  "thumb": "img/drawings/thumb/023.jpg",
+  "title": "Architectural Plan for Exterior (3/3)"
+ },
+ {
+  "src": "img/drawings/024.jpg",
+  "thumb": "img/drawings/thumb/024.jpg",
+  "title": "A18 · Basement – Dimension Plan"
+ },
+ {
+  "src": "img/drawings/025.jpg",
+  "thumb": "img/drawings/thumb/025.jpg",
+  "title": "A19 · Ground Floor – Dimension Plan"
+ },
+ {
+  "src": "img/drawings/026.jpg",
+  "thumb": "img/drawings/thumb/026.jpg",
+  "title": "A20 · First Floor – Dimension Plan"
+ },
+ {
+  "src": "img/drawings/027.jpg",
+  "thumb": "img/drawings/thumb/027.jpg",
+  "title": "A21 · Second Floor – Dimension Plan"
+ },
+ {
+  "src": "img/drawings/028.jpg",
+  "thumb": "img/drawings/thumb/028.jpg",
+  "title": "A22 · Penthouse – Dimension Plan"
+ },
+ {
+  "src": "img/drawings/029.jpg",
+  "thumb": "img/drawings/thumb/029.jpg",
+  "title": "A49 · Basement – Stair Plan"
+ },
+ {
+  "src": "img/drawings/030.jpg",
+  "thumb": "img/drawings/thumb/030.jpg",
+  "title": "A50 · Ground Floor – Stair Plan"
+ },
+ {
+  "src": "img/drawings/031.jpg",
+  "thumb": "img/drawings/thumb/031.jpg",
+  "title": "A51 · First Floor – Stair Plan"
+ },
+ {
+  "src": "img/drawings/032.jpg",
+  "thumb": "img/drawings/thumb/032.jpg",
+  "title": "A52 · Second Floor – Stair Plan"
+ },
+ {
+  "src": "img/drawings/033.jpg",
+  "thumb": "img/drawings/thumb/033.jpg",
+  "title": "A53 · Penthouse – Stair Plan"
+ },
+ {
+  "src": "img/drawings/034.jpg",
+  "thumb": "img/drawings/thumb/034.jpg",
+  "title": "A54 · Penthouse – Stair Plan"
+ },
+ {
+  "src": "img/drawings/035.jpg",
+  "thumb": "img/drawings/thumb/035.jpg",
+  "title": "A13 · Basement – Ceiling Plan"
+ },
+ {
+  "src": "img/drawings/036.jpg",
+  "thumb": "img/drawings/thumb/036.jpg",
+  "title": "A14 · Ground Floor – Ceiling Plan"
+ },
+ {
+  "src": "img/drawings/037.jpg",
+  "thumb": "img/drawings/thumb/037.jpg",
+  "title": "A15 · First Floor – Ceiling Plan"
+ },
+ {
+  "src": "img/drawings/038.jpg",
+  "thumb": "img/drawings/thumb/038.jpg",
+  "title": "A16 · Second Floor – Ceiling Plan"
+ },
+ {
+  "src": "img/drawings/039.jpg",
+  "thumb": "img/drawings/thumb/039.jpg",
+  "title": "A17 · Penthouse – Ceiling Plan"
+ },
+ {
+  "src": "img/drawings/040.jpg",
+  "thumb": "img/drawings/thumb/040.jpg",
+  "title": "A23 · Basement – Floor Finishing Plan"
+ },
+ {
+  "src": "img/drawings/041.jpg",
+  "thumb": "img/drawings/thumb/041.jpg",
+  "title": "A24 · Ground Floor – Floor Finishing Plan"
+ },
+ {
+  "src": "img/drawings/042.jpg",
+  "thumb": "img/drawings/thumb/042.jpg",
+  "title": "A25 · First Floor – Floor Finishing Plan"
+ },
+ {
+  "src": "img/drawings/043.jpg",
+  "thumb": "img/drawings/thumb/043.jpg",
+  "title": "A26 · Second Floor – Floor Finishing Plan"
+ },
+ {
+  "src": "img/drawings/044.jpg",
+  "thumb": "img/drawings/thumb/044.jpg",
+  "title": "A27 · Penthouse – Floor Finishing Plan"
+ },
+ {
+  "src": "img/drawings/045.jpg",
+  "thumb": "img/drawings/thumb/045.jpg",
+  "title": "A28 · Basement Floor – Floor Tile Finishing Plan"
+ },
+ {
+  "src": "img/drawings/046.jpg",
+  "thumb": "img/drawings/thumb/046.jpg",
+  "title": "A29 · Ground Floor – Floor Tile Finishing Plan"
+ },
+ {
+  "src": "img/drawings/047.jpg",
+  "thumb": "img/drawings/thumb/047.jpg",
+  "title": "A30 · First Floor – Floor Tile Finishing Plan"
+ },
+ {
+  "src": "img/drawings/048.jpg",
+  "thumb": "img/drawings/thumb/048.jpg",
+  "title": "A31 · Second Floor – Floor Tile Finishing Plan"
+ },
+ {
+  "src": "img/drawings/049.jpg",
+  "thumb": "img/drawings/thumb/049.jpg",
+  "title": "A32 · Penthouse – Floor Tile Finishing Plan"
+ },
+ {
+  "src": "img/drawings/050.jpg",
+  "thumb": "img/drawings/thumb/050.jpg",
+  "title": "Floor & Wall Tile Areas (1/3)"
+ },
+ {
+  "src": "img/drawings/051.jpg",
+  "thumb": "img/drawings/thumb/051.jpg",
+  "title": "Floor & Wall Tile Areas (2/3)"
+ },
+ {
+  "src": "img/drawings/052.jpg",
+  "thumb": "img/drawings/thumb/052.jpg",
+  "title": "Floor & Wall Tile Areas (3/3)"
+ },
+ {
+  "src": "img/drawings/053.jpg",
+  "thumb": "img/drawings/thumb/053.jpg",
+  "title": "A35 · Basement – Plastering Plan"
+ },
+ {
+  "src": "img/drawings/054.jpg",
+  "thumb": "img/drawings/thumb/054.jpg",
+  "title": "A36 · Ground Floor – Plastering Plan"
+ },
+ {
+  "src": "img/drawings/055.jpg",
+  "thumb": "img/drawings/thumb/055.jpg",
+  "title": "A37 · First Floor – Plastering Plan"
+ },
+ {
+  "src": "img/drawings/056.jpg",
+  "thumb": "img/drawings/thumb/056.jpg",
+  "title": "A38 · Second Floor – Plastering Plan"
+ },
+ {
+  "src": "img/drawings/057.jpg",
+  "thumb": "img/drawings/thumb/057.jpg",
+  "title": "A39 · Penthouse – Plastering Plan"
+ },
+ {
+  "src": "img/drawings/058.jpg",
+  "thumb": "img/drawings/thumb/058.jpg",
+  "title": "A40 · Basement – Door and Window Plan"
+ },
+ {
+  "src": "img/drawings/059.jpg",
+  "thumb": "img/drawings/thumb/059.jpg",
+  "title": "A41 · Ground Floor – Door and Window Plan"
+ },
+ {
+  "src": "img/drawings/060.jpg",
+  "thumb": "img/drawings/thumb/060.jpg",
+  "title": "A42 · First Floor – Door and Window Plan"
+ },
+ {
+  "src": "img/drawings/061.jpg",
+  "thumb": "img/drawings/thumb/061.jpg",
+  "title": "A43 · Second Floor – Door and Window Plan"
+ },
+ {
+  "src": "img/drawings/062.jpg",
+  "thumb": "img/drawings/thumb/062.jpg",
+  "title": "A44 · Penthouse – Door and Window Plan"
+ },
+ {
+  "src": "img/drawings/063.jpg",
+  "thumb": "img/drawings/thumb/063.jpg",
+  "title": "A45 · Door and Window Details"
+ },
+ {
+  "src": "img/drawings/064.jpg",
+  "thumb": "img/drawings/thumb/064.jpg",
+  "title": "A46 · Legends – Window"
+ },
+ {
+  "src": "img/drawings/065.jpg",
+  "thumb": "img/drawings/thumb/065.jpg",
+  "title": "A47 · Legends – Window"
+ },
+ {
+  "src": "img/drawings/066.jpg",
+  "thumb": "img/drawings/thumb/066.jpg",
+  "title": "A48 · Legends – Door"
+ },
+ {
+  "src": "img/drawings/067.jpg",
+  "thumb": "img/drawings/thumb/067.jpg",
+  "title": "General Structural Notes"
+ },
+ {
+  "src": "img/drawings/068.jpg",
+  "thumb": "img/drawings/thumb/068.jpg",
+  "title": "Foundation Plan"
+ },
+ {
+  "src": "img/drawings/069.jpg",
+  "thumb": "img/drawings/thumb/069.jpg",
+  "title": "Basement Column Key Plan"
+ },
+ {
+  "src": "img/drawings/070.jpg",
+  "thumb": "img/drawings/thumb/070.jpg",
+  "title": "Ground Floor Column Key Plan"
+ },
+ {
+  "src": "img/drawings/071.jpg",
+  "thumb": "img/drawings/thumb/071.jpg",
+  "title": "First Floor Column Key Plan"
+ },
+ {
+  "src": "img/drawings/072.jpg",
+  "thumb": "img/drawings/thumb/072.jpg",
+  "title": "Second Floor Column Key Plan"
+ },
+ {
+  "src": "img/drawings/073.jpg",
+  "thumb": "img/drawings/thumb/073.jpg",
+  "title": "Basement Beam Layout Plan"
+ },
+ {
+  "src": "img/drawings/074.jpg",
+  "thumb": "img/drawings/thumb/074.jpg",
+  "title": "Ground Floor Beam Layout Plan"
+ },
+ {
+  "src": "img/drawings/075.jpg",
+  "thumb": "img/drawings/thumb/075.jpg",
+  "title": "First Floor Beam Layout Plan"
+ },
+ {
+  "src": "img/drawings/076.jpg",
+  "thumb": "img/drawings/thumb/076.jpg",
+  "title": "Second Floor Beam Layout Plan"
+ },
+ {
+  "src": "img/drawings/077.jpg",
+  "thumb": "img/drawings/thumb/077.jpg",
+  "title": "Slab, Stair & Expansion Joint Details"
+ },
+ {
+  "src": "img/drawings/078.jpg",
+  "thumb": "img/drawings/thumb/078.jpg",
+  "title": "Beam Details & Schedule"
+ },
+ {
+  "src": "img/drawings/079.jpg",
+  "thumb": "img/drawings/thumb/079.jpg",
+  "title": "Footing, Wall & Elevator Details"
+ },
+ {
+  "src": "img/drawings/080.jpg",
+  "thumb": "img/drawings/thumb/080.jpg",
+  "title": "Steel Roof Truss Details"
+ },
+ {
+  "src": "img/drawings/081.jpg",
+  "thumb": "img/drawings/thumb/081.jpg",
+  "title": "Additional Concrete Wall"
+ },
+ {
+  "src": "img/drawings/082.jpg",
+  "thumb": "img/drawings/thumb/082.jpg",
+  "title": "Tie Beams of Joint 4 & Fence Plan"
+ },
+ {
+  "src": "img/drawings/083.jpg",
+  "thumb": "img/drawings/thumb/083.jpg",
+  "title": "A55 · Basement Floor – Fire Fighting Plan"
+ },
+ {
+  "src": "img/drawings/084.jpg",
+  "thumb": "img/drawings/thumb/084.jpg",
+  "title": "A56 · Ground Floor – Fire Fighting Plan"
+ },
+ {
+  "src": "img/drawings/085.jpg",
+  "thumb": "img/drawings/thumb/085.jpg",
+  "title": "A57 · First Floor – Fire Fighting Plan"
+ },
+ {
+  "src": "img/drawings/086.jpg",
+  "thumb": "img/drawings/thumb/086.jpg",
+  "title": "A58 · Second Floor – Fire Fighting Plan"
+ },
+ {
+  "src": "img/drawings/087.jpg",
+  "thumb": "img/drawings/thumb/087.jpg",
+  "title": "A59 · Fire Fighting – All Systems"
+ },
+ {
+  "src": "img/drawings/088.jpg",
+  "thumb": "img/drawings/thumb/088.jpg",
+  "title": "A60 · Basement VRF Plan"
+ },
+ {
+  "src": "img/drawings/089.jpg",
+  "thumb": "img/drawings/thumb/089.jpg",
+  "title": "A61 · Ground Floor – VRF Plan"
+ },
+ {
+  "src": "img/drawings/090.jpg",
+  "thumb": "img/drawings/thumb/090.jpg",
+  "title": "A62 · First Floor – VRF Plan"
+ },
+ {
+  "src": "img/drawings/091.jpg",
+  "thumb": "img/drawings/thumb/091.jpg",
+  "title": "A63 · Second Floor – VRF Plan"
+ },
+ {
+  "src": "img/drawings/092.jpg",
+  "thumb": "img/drawings/thumb/092.jpg",
+  "title": "A64 · Penthouse – VRF Plan"
+ },
+ {
+  "src": "img/drawings/093.jpg",
+  "thumb": "img/drawings/thumb/093.jpg",
+  "title": "A65 · Table of Unit"
+ },
+ {
+  "src": "img/drawings/094.jpg",
+  "thumb": "img/drawings/thumb/094.jpg",
+  "title": "A66 · HVAC System (1/5)"
+ },
+ {
+  "src": "img/drawings/095.jpg",
+  "thumb": "img/drawings/thumb/095.jpg",
+  "title": "A67 · HVAC System (2/5)"
+ },
+ {
+  "src": "img/drawings/096.jpg",
+  "thumb": "img/drawings/thumb/096.jpg",
+  "title": "A68 · HVAC System (3/5)"
+ },
+ {
+  "src": "img/drawings/097.jpg",
+  "thumb": "img/drawings/thumb/097.jpg",
+  "title": "A69 · HVAC System (4/5)"
+ },
+ {
+  "src": "img/drawings/098.jpg",
+  "thumb": "img/drawings/thumb/098.jpg",
+  "title": "A70 · HVAC System (5/5)"
+ },
+ {
+  "src": "img/drawings/099.jpg",
+  "thumb": "img/drawings/thumb/099.jpg",
+  "title": "A89 · Basement – Pipe Plan"
+ }
+];
+// Shop drawing tabs -> areas; pick = numbers in DRAWINGS (1-based)
+const DRAWING_TABS = [{"name": "Architectural", "wide": true, "contain": true, "areas": [{"name": "Index & Site", "pick": [1, 2, 3, 4, 5]}, {"name": "Architectural Plans", "pick": [6, 7, 8, 9, 10]}, {"name": "Furniture Plans", "pick": [11, 12, 13, 14, 15]}, {"name": "Elevations", "pick": [16, 17, 18, 19, 20]}, {"name": "Exterior Plans", "pick": [21, 22, 23]}, {"name": "Dimension Plans", "pick": [24, 25, 26, 27, 28]}, {"name": "Stair Plans", "pick": [29, 30, 31, 32, 33, 34]}]}, {"name": "Finishes", "wide": true, "contain": true, "areas": [{"name": "Ceiling Plans", "pick": [35, 36, 37, 38, 39]}, {"name": "Floor Finishing", "pick": [40, 41, 42, 43, 44]}, {"name": "Floor Tile Finishing", "pick": [45, 46, 47, 48, 49]}, {"name": "Floor & Wall Tile Areas", "pick": [50, 51, 52]}, {"name": "Plastering Plans", "pick": [53, 54, 55, 56, 57]}, {"name": "Doors & Windows", "pick": [58, 59, 60, 61, 62, 63, 64, 65, 66]}]}, {"name": "Structural", "wide": true, "contain": true, "areas": [{"name": "General Notes", "pick": [67]}, {"name": "Foundation", "pick": [68]}, {"name": "Column Key Plans", "pick": [69, 70, 71, 72]}, {"name": "Beam Layout Plans", "pick": [73, 74, 75, 76]}, {"name": "Structural Details", "pick": [77, 78, 79, 80]}, {"name": "Retaining Walls & Fence", "pick": [81, 82]}]}, {"name": "Mechanical", "wide": true, "contain": true, "areas": [{"name": "Fire Fighting", "pick": [83, 84, 85, 86, 87]}, {"name": "VRF Air Conditioning", "pick": [88, 89, 90, 91, 92, 93]}, {"name": "HVAC Ventilation", "pick": [94, 95, 96, 97, 98]}, {"name": "Plumbing", "pick": [99]}]}];
 
 
 /* Sub-sections: each tab holds areas; "from"/"to" are image numbers (01–61 etc.) */
@@ -944,7 +1452,7 @@ const isPdf = s => /\.pdf$/i.test(s);
 /* Tabbed sections: tab bar -> panels -> areas (sub-sections) -> image grid */
 // An area lists its images either as a range (from/to) or as hand-picked numbers (pick)
 const areaNums = a => a.pick || Array.from({ length: a.to - a.from + 1 }, (_, i) => a.from + i);
-const tabbed = { exterior: EXTERIOR_TABS, interior: INTERIOR_TABS };
+const tabbed = { exterior: EXTERIOR_TABS, interior: INTERIOR_TABS, drawings: DRAWING_TABS };
 function buildTabbed(key) {
   const list = groups[key], tabs = tabbed[key];
   const holder = document.querySelector(`[data-group="${key}"]`);
@@ -975,7 +1483,8 @@ function buildTabbed(key) {
       groups[akey].forEach((it, i) => {
         const f = document.createElement("figure");
         f.style.setProperty("--i", i % 8);
-        f.innerHTML = `<img src="${it.thumb || it.src}" alt="${a.name} render ${i + 1}" loading="lazy">`;
+        f.innerHTML = `<img src="${it.thumb || it.src}" alt="${key === "drawings" ? it.title : a.name + " render " + (i + 1)}" loading="lazy">`
+          + (key === "drawings" ? `<figcaption>${it.title}</figcaption>` : "");
         f.addEventListener("click", () => openLb(akey, i));
         g.appendChild(f);
       });
@@ -1252,15 +1761,24 @@ function openLb(key, i) {
   Sound.openImage();
 }
 function show() { const it = cur.list[cur.i]; lbImg.src = it.src; lbImg.alt = it.title || "";
+  lb.classList.toggle("drawing", cur.key.startsWith("drawings")); lb.classList.remove("zoom");
   lbImg.classList.remove("swap"); void lbImg.offsetWidth; lbImg.classList.add("swap");
-  lbCap.innerHTML = `<small>${labels[cur.key]} · ${cur.i + 1} / ${cur.list.length}</small>${it.title || ""}`;
+  lbCap.innerHTML = `<small>${labels[cur.key]} · ${cur.i + 1} / ${cur.list.length}</small>${it.title || ""}<span class="lb-hint">Click the drawing to zoom in</span>`;
   const nx = cur.list[(cur.i + 1) % cur.list.length]; if (nx) new Image().src = nx.src; }
 function step(d) { cur.i = (cur.i + d + cur.list.length) % cur.list.length; show(); Sound.stepImage(d); }
-function closeLb() { if (lb.classList.contains("on")) Sound.closeImage(); lb.classList.remove("on"); lb.setAttribute("aria-hidden", "true"); }
+function closeLb() { lb.classList.remove("zoom"); if (lb.classList.contains("on")) Sound.closeImage(); lb.classList.remove("on"); lb.setAttribute("aria-hidden", "true"); }
 lb.querySelector(".prev").onclick = e => { e.stopPropagation(); step(-1); };
 lb.querySelector(".next").onclick = e => { e.stopPropagation(); step(1); };
 lb.querySelector(".close").onclick = closeLb;
 lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+// shop drawings: click to zoom in / out, centred on the click point
+lbImg.addEventListener("click", e => {
+  if (!lb.classList.contains("drawing")) return;
+  e.stopPropagation();
+  const r = lbImg.getBoundingClientRect(), fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+  const z = lb.classList.toggle("zoom");
+  if (z) requestAnimationFrame(() => { lb.scrollLeft = fx * lbImg.offsetWidth - innerWidth / 2; lb.scrollTop = fy * lbImg.offsetHeight - innerHeight / 2; });
+});
 document.addEventListener("keydown", e => {
   if (!lb.classList.contains("on")) return;
   if (e.key === "Escape") closeLb(); if (e.key === "ArrowRight") step(1); if (e.key === "ArrowLeft") step(-1);
