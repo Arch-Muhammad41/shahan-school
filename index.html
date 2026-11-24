@@ -294,6 +294,40 @@ figcaption{padding:8px 10px;font-size:13px;font-weight:600}
 .cost-row .tba{font-size:12px;color:#9a8a7a;font-style:italic}
 .cost-note{font-size:12px;color:#9a8a7a;font-style:italic;margin:6px 0 0}
 @media (max-width:600px){.cost-row{grid-template-columns:36px 1fr}.cost-row .amt{grid-column:2;text-align:left}}
+/* Construction extras: compare slider, film, progress */
+.cx-block{margin-bottom:34px}
+.cx-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.cx-title h3{margin:0;font-family:Cinzel,serif;font-size:19px;color:var(--maroon)}
+.cx-title p{margin:0;font-size:13px;color:#7a6a5c}
+.tl-title{margin-top:6px}
+.ba{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#ddd;box-shadow:0 10px 28px rgba(42,29,34,.16);user-select:none;touch-action:pan-y}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ba-top{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
+.ba-handle{position:absolute;top:0;bottom:0;left:var(--x,50%);width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 10px rgba(0,0,0,.35);pointer-events:none}
+.ba-handle span{position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--maroon);color:#fff;
+  border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+.ba-range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize}
+.ba-tag{position:absolute;top:12px;padding:5px 12px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;pointer-events:none}
+.ba-tag.l{left:12px;background:rgba(255,255,255,.9);color:var(--maroon)}
+.ba-tag.r{right:12px;background:var(--maroon);color:#fff}
+.ba.hint .ba-top{transition:clip-path 1.2s var(--ease)}.ba.hint .ba-handle{transition:left 1.2s var(--ease)}
+.ba-dots{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.ba-dots button{width:64px;height:40px;border-radius:8px;border:2px solid transparent;padding:0;overflow:hidden;cursor:pointer;opacity:.6;background:#eee;transition:.3s var(--ease)}
+.ba-dots button img{width:100%;height:100%;object-fit:cover;display:block}
+.ba-dots button.on{border-color:var(--maroon);opacity:1}
+#cfilm{width:100%;border-radius:14px;background:#000;display:block;box-shadow:0 10px 28px rgba(42,29,34,.16)}
+.prog-overall{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px}
+.prog-overall .big{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.prog-overall .big b{font-family:Cinzel,serif;font-size:34px;color:var(--maroon)}
+.prog-overall .big span{font-size:13px;color:#7a6a5c}
+.pbar{height:10px;background:#f1e8d6;border-radius:999px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--maroon));transition:width 1.4s var(--ease)}
+.prog-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.prog-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.prog-item .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;font-size:13px;font-weight:700}
+.prog-item .chip{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.prog-item .chip.done{background:var(--gold);color:#fff}.prog-item .chip.current{background:var(--maroon);color:#fff}.prog-item .chip.todo{background:#eee;color:#888}
+.prog-note{font-size:12px;color:#9a8a7a;font-style:italic;margin-top:8px}
 /* Construction timeline */
 .timeline{position:relative;padding-left:44px}
 .timeline::before{content:"";position:absolute;left:17px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--gold),var(--maroon))}
@@ -432,6 +466,27 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
 
   <section id="construction">
     <div class="head"><span class="num">04</span><h2>Construction Stages</h2><p>From groundbreaking to handover</p></div>
+    <div class="cx-block" id="compare-block">
+      <div class="cx-title"><h3>Design vs Today</h3><p>Drag the handle to compare the design render with the site</p></div>
+      <div class="ba" id="ba">
+        <img class="ba-site" alt="The building on site today">
+        <div class="ba-top"><img class="ba-design" alt="Design render"></div>
+        <span class="ba-tag l">Design</span><span class="ba-tag r">On site</span>
+        <div class="ba-handle" aria-hidden="true"><span>⟷</span></div>
+        <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare design and site">
+      </div>
+      <div class="ba-dots" id="ba-dots"></div>
+    </div>
+    <div class="cx-block" id="video-block" hidden>
+      <div class="cx-title"><h3>Construction Film</h3><p>From the first excavation to today</p></div>
+      <video id="cfilm" controls playsinline preload="metadata"></video>
+    </div>
+    <div class="cx-block" id="progress-block">
+      <div class="cx-title"><h3>Project Progress</h3><p id="prog-sub">Progress of each construction stage</p></div>
+      <div class="prog-overall" id="prog-overall"></div>
+      <div class="prog-list" id="prog-list"></div>
+    </div>
+    <div class="cx-title tl-title"><h3>Stages &amp; Site Photos</h3><p>Every stage with its photos, in date order</p></div>
     <div id="timeline"></div>
   </section>
 
@@ -970,6 +1025,74 @@ for (const [key, items] of Object.entries(groups)) {
       tl.appendChild(el);
     });
   }
+}
+
+/* ---------- DESIGN vs TODAY (before / after slider) ---------- */
+const COMPARE = [
+  { design: "img/compare/1-design.jpg", site: "img/compare/1-site.jpg", name: "Corner block" },
+  { design: "img/compare/2-design.jpg", site: "img/compare/2-site.jpg", name: "Classroom wing" },
+  { design: "img/compare/3-design.jpg", site: "img/compare/3-site.jpg", name: "Whole site" },
+];
+{
+  const ba = document.getElementById("ba"), range = ba.querySelector(".ba-range"), dots = document.getElementById("ba-dots");
+  const set = v => ba.style.setProperty("--x", v + "%");
+  function load(i) {
+    ba.querySelector(".ba-design").src = COMPARE[i].design;
+    ba.querySelector(".ba-site").src = COMPARE[i].site;
+    [...dots.children].forEach((d, k) => d.classList.toggle("on", k === i));
+    // small hint animation so visitors see it can be dragged
+    ba.classList.add("hint"); set(72); range.value = 72;
+    setTimeout(() => { set(38); range.value = 38; }, 650);
+    setTimeout(() => { set(50); range.value = 50; ba.classList.remove("hint"); }, 1400);
+  }
+  COMPARE.forEach((c, i) => {
+    const b = document.createElement("button"); b.type = "button"; b.title = c.name;
+    b.innerHTML = `<img src="${c.design}" alt="${c.name}">`; b.onclick = () => load(i); dots.appendChild(b);
+  });
+  range.addEventListener("input", () => set(range.value));
+  load(0);
+}
+
+/* ---------- CONSTRUCTION FILM (shown once the video file exists) ---------- */
+const FILM = "video/construction-film.mp4";
+fetch(FILM, { method: "HEAD" }).then(r => {
+  if (!r.ok) return;
+  const v = document.getElementById("cfilm"); v.src = FILM; v.poster = "video/construction-film.jpg";
+  document.getElementById("video-block").hidden = false;
+}).catch(() => {});
+
+/* ---------- PROGRESS ----------
+   Fill in percentages when known, e.g.  overall: 68  and  "Structure": 100
+   Until then the panel shows each stage's status only. */
+const PROGRESS = {
+  overall: null,
+  stages: {
+    // "Site Preparation": 100, "Structure": 100, "Building Shell Development": 85, ...
+  },
+};
+{
+  const ov = document.getElementById("prog-overall"), list = document.getElementById("prog-list");
+  const hasNumbers = PROGRESS.overall != null || Object.keys(PROGRESS.stages).length > 0;
+  if (PROGRESS.overall != null) {
+    ov.innerHTML = `<div class="big"><b>${PROGRESS.overall}%</b><span>overall progress</span></div><div class="pbar"><i data-w="${PROGRESS.overall}"></i></div>`;
+  } else {
+    const done = STAGES.filter(s => s.status === "done").length;
+    ov.innerHTML = `<div class="big"><b>${done} / ${STAGES.length}</b><span>stages completed · ${STAGES.filter(s => s.status === "current").length} in progress</span></div>
+      <div class="pbar"><i data-w="${Math.round(done / STAGES.length * 100)}"></i></div>`;
+  }
+  STAGES.forEach(s => {
+    const pct = PROGRESS.stages[s.title];
+    const chip = s.status === "done" ? ["done", "Completed"] : s.status === "current" ? ["current", "In progress"] : ["todo", "Not started"];
+    const el = document.createElement("div"); el.className = "prog-item";
+    el.innerHTML = `<div class="top"><span>${s.title}</span><span class="chip ${chip[0]}">${pct != null ? pct + "%" : chip[1]}</span></div>
+      <div class="pbar"><i data-w="${pct != null ? pct : (s.status === "done" ? 100 : 0)}"></i></div>`;
+    list.appendChild(el);
+  });
+  if (!hasNumbers) list.insertAdjacentHTML("afterend", `<p class="prog-note">Detailed percentages for each stage will be added soon.</p>`);
+  const grow = () => document.querySelectorAll("#progress-block .pbar i").forEach(i => i.style.width = i.dataset.w + "%");
+  "IntersectionObserver" in window
+    ? new IntersectionObserver((es, o) => { if (es.some(e => e.isIntersecting)) { grow(); o.disconnect(); } }, { threshold: .2 }).observe(document.getElementById("progress-block"))
+    : grow();
 }
 
 /* ---------- COST (10 main phases) ----------
