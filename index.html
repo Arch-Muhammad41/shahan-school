@@ -328,31 +328,33 @@ figcaption{padding:8px 10px;font-size:13px;font-weight:600}
 .prog-item .chip{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:999px;padding:3px 9px;white-space:nowrap}
 .prog-item .chip.done{background:var(--gold);color:#fff}.prog-item .chip.current{background:var(--maroon);color:#fff}.prog-item .chip.todo{background:#eee;color:#888}
 .prog-note{font-size:12px;color:#9a8a7a;font-style:italic;margin-top:8px}
-/* Site Videos gallery */
-.vfilter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.vfilter button{border:1.5px solid var(--gold);background:#fff;color:var(--ink);font:600 12px Inter,sans-serif;padding:6px 12px;border-radius:999px;cursor:pointer;transition:.25s var(--ease)}
-.vfilter button span{opacity:.6;font-weight:400;margin-left:4px}
-.vfilter button.on{background:var(--maroon);border-color:var(--maroon);color:#fff}
-.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
-.vcard{position:relative;border:0;padding:0;border-radius:10px;overflow:hidden;cursor:pointer;background:#000;aspect-ratio:16/10;text-align:left;
-  box-shadow:0 4px 14px rgba(42,29,34,.12);animation:figIn .5s var(--ease) both;animation-delay:calc(var(--i) * 40ms)}
-.vcard img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s var(--ease)}
-.vcard:hover img{transform:scale(1.05)}
-.vcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(30,8,14,.85))}
-.vcard .play{position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(162,41,72,.92);color:#fff;
-  display:flex;align-items:center;justify-content:center;font-size:16px;z-index:1;box-shadow:0 0 0 6px rgba(255,255,255,.25);transition:transform .3s var(--ease)}
-.vcard:hover .play{transform:scale(1.12)}
-.vcard .cap{position:absolute;left:12px;right:12px;bottom:10px;z-index:1;color:#fff;font-size:13px;font-weight:700;line-height:1.25}
-.vcard .cap small{display:block;font-weight:400;color:var(--gold-l);font-size:11px;margin-top:2px}
-#vplayer{position:fixed;inset:0;z-index:42;background:rgba(15,6,10,.94);display:none;align-items:center;justify-content:center}
-#vplayer.on{display:flex}
-#vplayer .vp-in{max-width:92vw;text-align:center}
-#vplayer video{max-width:92vw;max-height:80vh;border-radius:8px;background:#000;display:block;margin:auto}
-#vplayer .vp-cap{color:#fff;margin-top:12px;font-size:14px}
-#vplayer .vp-cap small{display:block;color:var(--gold-l);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
-#vplayer button{position:absolute;background:rgba(255,255,255,.12);border:0;color:#fff;font-size:26px;width:48px;height:48px;border-radius:50%;cursor:pointer}
-#vplayer .prev{left:16px;top:50%;transform:translateY(-50%)}#vplayer .next{right:16px;top:50%;transform:translateY(-50%)}
-#vplayer .close{top:16px;right:16px;font-size:22px}
+/* Construction options */
+.cx-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 14px;scroll-margin-top:80px}
+.cx-menu button{position:relative;aspect-ratio:4/3;border:0;padding:0;border-radius:14px;overflow:hidden;cursor:pointer;color:#fff;text-align:left;background:var(--maroon-d);
+  box-shadow:0 8px 22px rgba(42,29,34,.16);animation:figIn .6s var(--ease) both;animation-delay:calc(var(--i) * 90ms);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.cx-menu button .bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 1s var(--ease)}
+.cx-menu button::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,10,20,.1) 20%,rgba(40,10,20,.88))}
+.cx-menu button:hover{transform:translateY(-3px)}.cx-menu button:hover .bg{transform:scale(1.07)}
+.cx-menu .ic{position:absolute;top:12px;left:12px;z-index:1;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);color:var(--maroon);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px}
+.cx-menu .t{position:absolute;left:14px;right:14px;bottom:12px;z-index:1}
+.cx-menu .t b{display:block;font-family:Cinzel,serif;font-size:clamp(14px,1.7vw,18px);letter-spacing:.03em}
+.cx-menu .t small{display:block;font-size:12px;opacity:.85;margin-top:3px}
+.cx-menu button.on{box-shadow:0 0 0 3px var(--gold),0 10px 26px rgba(42,29,34,.25)}
+.cx-menu button.on .ic{background:var(--gold);color:#fff}
+.cx-menu.picked button{aspect-ratio:auto;height:92px}
+.cx-menu.picked .ic{top:50%;transform:translateY(-50%)}.cx-menu.picked .t{left:60px;top:50%;bottom:auto;transform:translateY(-50%)}
+.cx-menu.picked button::after{background:linear-gradient(90deg,rgba(40,10,20,.85),rgba(40,10,20,.5))}
+.cx-hint{text-align:center;color:#9a8a7a;font-size:13px;margin:4px 0 0}
+.cx-pane{display:none}.cx-pane.on{display:block;animation:figIn .55s var(--ease) both}
+.chapters{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.chapters button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 11px;text-align:left;cursor:pointer;font:inherit;color:var(--ink);transition:.25s var(--ease)}
+.chapters button small{display:block;font-size:10px;font-weight:800;letter-spacing:1.4px;color:var(--gold);text-transform:uppercase}
+.chapters button b{display:block;font-size:13px;margin:2px 0}
+.chapters button span{display:block;font-size:11px;color:#8a7a6c}
+.chapters button:hover{border-color:var(--gold)}
+.chapters button.on{background:var(--maroon);border-color:var(--maroon);color:#fff}.chapters button.on span,.chapters button.on small{color:var(--gold-l)}
+@media(max-width:760px){.cx-menu,.chapters{grid-template-columns:1fr 1fr}.cx-menu.picked button{height:64px}.cx-menu.picked .t small{display:none}
+  .cx-menu.picked .ic{width:30px;height:30px;font-size:13px;left:10px}.cx-menu.picked .t{left:48px;right:8px}.cx-menu.picked .t b{font-size:12px}}
 /* Construction timeline */
 .timeline{position:relative;padding-left:44px}
 .timeline::before{content:"";position:absolute;left:17px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--gold),var(--maroon))}
@@ -432,12 +434,6 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
     <span class="w-line"></span>
   </div>
 </div>
-<div id="vplayer" aria-hidden="true">
-  <button class="close" aria-label="Close video">✕</button>
-  <button class="prev" aria-label="Previous video">‹</button>
-  <div class="vp-in"><video playsinline controls></video><div class="vp-cap"></div></div>
-  <button class="next" aria-label="Next video">›</button>
-</div>
 <div id="curtain"><img src="img/logo.png" alt=""></div>
 
 <!-- =================== SITE =================== -->
@@ -497,7 +493,14 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
 
   <section id="construction">
     <div class="head"><span class="num">04</span><h2>Construction Stages</h2><p>From groundbreaking to handover</p></div>
-    <div class="cx-block" id="compare-block">
+    <div class="cx-menu" id="cx-menu">
+      <button type="button" data-pane="video-block"><span class="bg" style="background-image:url('video/construction-film.jpg')"></span><span class="ic">▶</span><span class="t"><b>Construction Film</b><small>The whole build in four chapters</small></span></button>
+      <button type="button" data-pane="compare-block"><span class="bg" style="background-image:url('img/compare/1-design.jpg')"></span><span class="ic">⟷</span><span class="t"><b>Design vs Today</b><small>The render beside the site</small></span></button>
+      <button type="button" data-pane="progress-block"><span class="bg" style="background-image:url('img/construction/s4/thumb/01.jpg')"></span><span class="ic">%</span><span class="t"><b>Project Progress</b><small>Progress of every stage</small></span></button>
+      <button type="button" data-pane="stages-block"><span class="bg" style="background-image:url('img/construction/s2/thumb/09.jpg')"></span><span class="ic">▦</span><span class="t"><b>Stages &amp; Site Photos</b><small id="cx-stage-sub">Every stage, in date order</small></span></button>
+    </div>
+    <p class="cx-hint" id="cx-hint">Choose one of the options above</p>
+    <div class="cx-block cx-pane" id="compare-block">
       <div class="cx-title"><h3>Design vs Today</h3><p>Drag the handle to compare the design render with the site</p></div>
       <div class="ba" id="ba">
         <img class="ba-site" alt="The building on site today">
@@ -508,22 +511,20 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
       </div>
       <div class="ba-dots" id="ba-dots"></div>
     </div>
-    <div class="cx-block" id="video-block" hidden>
+    <div class="cx-block cx-pane" id="video-block">
       <div class="cx-title"><h3>Construction Film</h3><p>From the first excavation to today</p></div>
       <video id="cfilm" controls playsinline preload="metadata"></video>
+      <div class="chapters" id="chapters"></div>
     </div>
-    <div class="cx-block" id="clips-block" hidden>
-      <div class="cx-title"><h3>Site Videos</h3><p>Short clips from the site, by stage</p></div>
-      <div class="vfilter" id="vfilter"></div>
-      <div class="vgrid" id="vgrid"></div>
-    </div>
-    <div class="cx-block" id="progress-block">
+    <div class="cx-block cx-pane" id="progress-block">
       <div class="cx-title"><h3>Project Progress</h3><p id="prog-sub">Progress of each construction stage</p></div>
       <div class="prog-overall" id="prog-overall"></div>
       <div class="prog-list" id="prog-list"></div>
     </div>
-    <div class="cx-title tl-title"><h3>Stages &amp; Site Photos</h3><p>Every stage with its photos, in date order</p></div>
-    <div id="timeline"></div>
+    <div class="cx-pane" id="stages-block">
+      <div class="cx-title tl-title"><h3>Stages &amp; Site Photos</h3><p>Every stage with its photos, in date order</p></div>
+      <div id="timeline"></div>
+    </div>
   </section>
 
   <section id="cost">
@@ -605,16 +606,14 @@ const INTERIOR_TABS = [
     { name: "Girls' Section Corridors", from: 35, to: 38 },
     { name: "Girls' Classroom", from: 39, to: 40 },
     { name: "Computer Lab", from: 43, to: 44 } ] },
-  // The second floor repeats the first-floor design (typical floor), so it shows the same renders.
-  { name: "Second Floor", note: "Typical floor — the Second Floor follows the same interior design as the First Floor.", areas: [
+  // The second floor repeats the first-floor classrooms and corridors; it has the Conference Hall instead of a computer lab.
+  { name: "Second Floor", note: "The Second Floor follows the First Floor design for corridors and classrooms, and holds the Conference Hall.", areas: [
     { name: "Boys' Section Corridors", from: 27, to: 30 },
     { name: "Boys' Classroom", from: 31, to: 32 },
     { name: "Girls' Section Corridors", from: 35, to: 38 },
     { name: "Girls' Classroom", from: 39, to: 40 },
-    { name: "Computer Lab", from: 43, to: 44 } ] },
-  { name: "Conference Hall", wide: true, areas: [
-    { name: "Shots", pick: [92, 93, 94, 97, 99, 100, 101] },
-    { name: "Set Drawing", from: 104, to: 110, contain: true } ] },
+    { name: "Conference Hall", pick: [92, 93, 94, 97, 99, 100, 101] },
+    { name: "Conference Hall · Set Drawing", from: 104, to: 110, contain: true } ] },
   { name: "Basement", areas: [
     { name: "Biology Lab", from: 45, to: 46 },
     { name: "Physics Lab", from: 47, to: 48 },
@@ -843,7 +842,7 @@ document.getElementById("mute").addEventListener("click", e => { e.stopPropagati
 document.addEventListener("click", e => {
   const el = e.target.closest("a, button, figure");
   if (!el || el.id === "mute" || el.classList.contains("sound-on")) return;
-  if (el.tagName === "FIGURE" || el.closest("#lb, #vplayer") || el.classList.contains("vcard")) return;   // images and videos have their own music
+  if (el.tagName === "FIGURE" || el.closest("#lb")) return;   // images and videos have their own music
   Sound.click(el.classList.contains("hub-card") || el.classList.contains("enter") ? "open" : "tap");
 });
 
@@ -1089,59 +1088,40 @@ const COMPARE = [
   load(0);
 }
 
-/* ---------- CONSTRUCTION FILM (shown once the video file exists) ---------- */
+/* ---------- CONSTRUCTION FILM + CHAPTERS ---------- */
 const FILM = "video/construction-film.mp4";
-fetch(FILM, { method: "HEAD" }).then(r => {
-  if (!r.ok) return;
-  const v = document.getElementById("cfilm"); v.src = FILM; v.poster = "video/construction-film.jpg";
-  document.getElementById("video-block").hidden = false;
+const cfilm = document.getElementById("cfilm");
+cfilm.src = FILM; cfilm.poster = "video/construction-film.jpg";
+fetch("video/film-chapters.json").then(r => r.ok ? r.json() : []).then(chs => {
+  const box = document.getElementById("chapters");
+  chs.forEach(c => {
+    const b = document.createElement("button"); b.type = "button";
+    b.innerHTML = `<small>Chapter ${c.n}</small><b>${c.title}</b><span>${c.dates}</span>`;
+    b.onclick = () => { cfilm.currentTime = c.t + 0.05; cfilm.play().catch(() => {}); };
+    box.appendChild(b);
+  });
+  cfilm.addEventListener("timeupdate", () => {
+    let k = -1; chs.forEach((c, i) => { if (cfilm.currentTime >= c.t) k = i; });
+    [...box.children].forEach((b, i) => b.classList.toggle("on", i === k));
+  });
 }).catch(() => {});
 
-/* ---------- SITE VIDEOS GALLERY ---------- */
-{
-  const STAGE_NAMES = { prep: "Site Preparation", struct: "Structure", wp: "Waterproofing", shell: "Building Shell",
-                        mep: "Mechanical & Electrical", ext: "External Works", facade: "Façade Today" };
-  fetch("video/clips/clips.json").then(r => r.ok ? r.json() : []).then(clips => {
-    if (!clips.length) return;
-    document.getElementById("clips-block").hidden = false;
-    const grid = document.getElementById("vgrid"), filt = document.getElementById("vfilter");
-    const vp = document.getElementById("vplayer"), vid = vp.querySelector("video"), cap = vp.querySelector(".vp-cap");
-    let shown = clips, cur = 0;
-    function render(stage) {
-      shown = stage ? clips.filter(c => c.stage === stage) : clips;
-      grid.innerHTML = "";
-      shown.forEach((c, i) => {
-        const b = document.createElement("button"); b.type = "button"; b.className = "vcard"; b.style.setProperty("--i", i % 12);
-        b.innerHTML = `<img src="${c.poster}" alt="${c.caption}" loading="lazy"><span class="play">▶</span><span class="cap">${c.caption}<small>${c.month}</small></span>`;
-        b.onclick = () => open(i); grid.appendChild(b);
-      });
-      [...filt.children].forEach(x => x.classList.toggle("on", (x.dataset.stage || "") === (stage || "")));
-    }
-    function show() {
-      const c = shown[cur]; vid.src = c.src; vid.poster = c.poster;
-      cap.innerHTML = `<small>${STAGE_NAMES[c.stage] || ""} · ${c.month}</small>${c.caption}`;
-      vid.play().catch(() => {});
-    }
-    function open(i) { cur = i; vp.classList.add("on"); vp.setAttribute("aria-hidden", "false"); Sound.openImage(); show(); }
-    function close() { vid.pause(); vid.removeAttribute("src"); vid.load(); vp.classList.remove("on"); vp.setAttribute("aria-hidden", "true"); Sound.closeImage(); }
-    function step(d) { cur = (cur + d + shown.length) % shown.length; Sound.stepImage(d); show(); }
-    vp.querySelector(".close").onclick = close;
-    vp.querySelector(".prev").onclick = () => step(-1);
-    vp.querySelector(".next").onclick = () => step(1);
-    vp.addEventListener("click", e => { if (e.target === vp) close(); });
-    vid.addEventListener("ended", () => step(1));                 // play the next clip automatically
-    addEventListener("keydown", e => {
-      if (!vp.classList.contains("on")) return;
-      if (e.key === "Escape") close(); if (e.key === "ArrowRight") step(1); if (e.key === "ArrowLeft") step(-1);
-    });
-    const counts = clips.reduce((m, c) => (m[c.stage] = (m[c.stage] || 0) + 1, m), {});
-    const mk = (stage, label, n) => { const b = document.createElement("button"); b.type = "button"; b.dataset.stage = stage;
-      b.innerHTML = `${label}<span>${n}</span>`; b.onclick = () => render(stage); filt.appendChild(b); };
-    mk("", "All", clips.length);
-    Object.keys(STAGE_NAMES).forEach(k => counts[k] && mk(k, STAGE_NAMES[k], counts[k]));
-    render("");
-  }).catch(() => {});
+/* ---------- CONSTRUCTION OPTIONS: film / design vs today / progress / stages ---------- */
+const cxMenu = document.getElementById("cx-menu");
+function cxShow(id) {
+  [...cxMenu.children].forEach(b => b.classList.toggle("on", b.dataset.pane === id));
+  cxMenu.classList.toggle("picked", !!id);
+  document.getElementById("cx-hint").hidden = !!id;
+  document.querySelectorAll("#construction .cx-pane").forEach(p => p.classList.toggle("on", p.id === id));
+  if (id !== "video-block") cfilm.pause();
+  if (!id) return;
+  dispatchEvent(new Event("resize"));
+  if (id === "compare-block") { const d = document.querySelector("#ba-dots button.on") || document.querySelector("#ba-dots button"); d && d.click(); }
+  setTimeout(() => cxMenu.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
 }
+window.cxShow = cxShow;
+[...cxMenu.children].forEach((b, i) => { b.style.setProperty("--i", i); b.onclick = () => cxShow(b.dataset.pane); });
+document.getElementById("cx-stage-sub").textContent = `${STAGES.length} stages · ${STAGES.reduce((n, s) => n + s.images.length, 0)} photos`;
 
 /* ---------- PROGRESS ----------
    Fill in percentages when known, e.g.  overall: 68  and  "Structure": 100
@@ -1300,12 +1280,12 @@ const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawin
   const CARDS = [
     { id: "exterior", title: "Exterior", sub: "Façades, entrance & courtyard",
       meta: `${shownCounts.exterior || EXTERIOR.length} renders`, img: EXTERIOR[0] && (EXTERIOR[0].thumb || EXTERIOR[0].src) },
-    { id: "interior", title: "Interior", sub: `${INTERIOR_TABS.filter(t => !t.wide).length} floors, conference hall & option 2`,
+    { id: "interior", title: "Interior", sub: `${INTERIOR_TABS.filter(t => !t.wide).length} floors & option 2`,
       meta: `${shownCounts.interior || INTERIOR.length} renders`, img: INTERIOR[0] && (INTERIOR[0].thumb || INTERIOR[0].src) },
     { id: "shop-drawing", title: "Shop Drawing", sub: "Plans, elevations, sections & details",
       meta: DRAWINGS.length ? `${DRAWINGS.length} drawings` : "Coming soon · under revision", glyph: "⌗" },
     { id: "construction", title: "Construction Stages", sub: "From groundbreaking to handover",
-      meta: `${STAGES.length} stages · ${totalPhotos} photos · film & videos`, img: "img/construction/s2/thumb/09.jpg" },
+      meta: `film · progress · ${totalPhotos} photos`, img: "img/construction/s2/thumb/09.jpg" },
     { id: "cost", title: "Cost", sub: "Estimated cost of the 10 main phases",
       meta: "IQD · USD", glyph: "$" },
   ];
@@ -1326,6 +1306,7 @@ const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawin
     document.body.classList.toggle("view-section", inSection);
     document.body.classList.toggle("view-home", !inSection);
     sections.forEach(s => s.classList.toggle("active", s.id === id));
+    if (window.cxShow) cxShow(null);
     links.forEach(a => a.classList.toggle("on", inSection && a.getAttribute("href") === "#" + id));
     if (inSection) {
       scrollTo(0, 0);
