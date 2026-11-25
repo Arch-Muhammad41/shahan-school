@@ -1,0 +1,182 @@
+[
+ {
+  "name": "Site Plan",
+  "out": "x00.pdf",
+  "box": [
+   220,
+   525,
+   378,
+   735
+  ]
+ },
+ {
+  "name": "General Structural Notes",
+  "out": "x01.pdf",
+  "box": [
+   385,
+   530,
+   552,
+   722
+  ]
+ },
+ {
+  "name": "Basement Column Key Plan",
+  "out": "x02.pdf",
+  "box": [
+   519,
+   530,
+   649,
+   722
+  ]
+ },
+ {
+  "name": "Ground Floor Column Key Plan",
+  "out": "x03.pdf",
+  "box": [
+   654,
+   530,
+   784,
+   722
+  ]
+ },
+ {
+  "name": "First Floor Column Key Plan",
+  "out": "x04.pdf",
+  "box": [
+   788,
+   530,
+   918,
+   722
+  ]
+ },
+ {
+  "name": "Second Floor Column Key Plan",
+  "out": "x05.pdf",
+  "box": [
+   925,
+   530,
+   1055,
+   722
+  ]
+ },
+ {
+  "name": "Foundation Plan",
+  "out": "x06.pdf",
+  "box": [
+   1093,
+   530,
+   1233,
+   722
+  ]
+ },
+ {
+  "name": "Basement Beam Layout Plan",
+  "out": "x07.pdf",
+  "box": [
+   1270,
+   530,
+   1420,
+   722
+  ]
+ },
+ {
+  "name": "Ground Floor Beam Layout Plan",
+  "out": "x08.pdf",
+  "box": [
+   1432,
+   530,
+   1572,
+   722
+  ]
+ },
+ {
+  "name": "First Floor Beam Layout Plan",
+  "out": "x09.pdf",
+  "box": [
+   1600,
+   530,
+   1750,
+   722
+  ]
+ },
+ {
+  "name": "Second Floor Beam Layout Plan",
+  "out": "x10.pdf",
+  "box": [
+   1755,
+   530,
+   1885,
+   722
+  ]
+ },
+ {
+  "name": "Slab, Stair & Expansion Joint Details",
+  "out": "x11.pdf",
+  "box": [
+   1955,
+   528,
+   2308,
+   752
+  ]
+ },
+ {
+  "name": "Beam Details & Schedule",
+  "out": "x12.pdf",
+  "box": [
+   2322,
+   528,
+   2615,
+   752
+  ]
+ },
+ {
+  "name": "Footing, Wall & Elevator Details",
+  "out": "x13.pdf",
+  "box": [
+   2630,
+   528,
+   2928,
+   752
+  ]
+ },
+ {
+  "name": "Steel Roof Truss Details",
+  "out": "x14.pdf",
+  "box": [
+   2978,
+   528,
+   3405,
+   752
+  ]
+ },
+ {
+  "name": "Additional Concrete Wall",
+  "out": "x15.pdf",
+  "box": [
+   2795,
+   778,
+   3118,
+   930
+  ]
+ },
+ {
+  "name": "Tie Beams of Joint 4 & Fence Plan",
+  "out": "x16.pdf",
+  "box": [
+   3124,
+   778,
+   3408,
+   930
+  ]
+ },
+ {
+  "name": "Exterior Elevations & Sections",
+  "out": "x17.pdf",
+  "box": [
+   1778,
+   265,
+   2394,
+   428
+  ]
+ }
+]

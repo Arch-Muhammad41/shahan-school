@@ -1,0 +1,639 @@
+[
+{
+"x": -246.0254122118294,
+"y": 8.880043224565725,
+"title": "Top view",
+"no": "A00",
+"scale": "1:100"
+},
+{
+"x": -246.0254122118294,
+"y": -127.886455932562,
+"title": "Top view",
+"no": "A00",
+"scale": "1:100"
+},
+{
+"x": -28.03165945727414,
+"y": 27.88003168884472,
+"title": "Top view",
+"no": "A01",
+"scale": "1:100"
+},
+{
+"x": -28.03165945727414,
+"y": -128.0514923154269,
+"title": "Top view",
+"no": "A02",
+"scale": "1:100"
+},
+{
+"x": 268.4127584831758,
+"y": 27.88003168884472,
+"title": "Basement -Furniture  plans",
+"no": "A03",
+"scale": "1:100"
+},
+{
+"x": 268.4127584831758,
+"y": -128.431238764909,
+"title": "Ground Floor - Furniture Plan",
+"no": "A04",
+"scale": "1:100"
+},
+{
+"x": 268.4127584831758,
+"y": -296.6336564685942,
+"title": "First Floor - Furniture Plan",
+"no": "A05",
+"scale": "1:100"
+},
+{
+"x": 268.4127584831758,
+"y": -478.0997519919535,
+"title": "Second Floor - Furniture Plan",
+"no": "A06",
+"scale": "1:100"
+},
+{
+"x": 268.4127584831758,
+"y": -658.6514339141293,
+"title": "Pent House Furniture Plan",
+"no": "A07",
+"scale": "1:100"
+},
+{
+"x": 585.7163707043037,
+"y": 28.15618353438913,
+"title": "Basement plan",
+"no": "A08",
+"scale": "1:100"
+},
+{
+"x": 585.7163707043037,
+"y": -128.431238764909,
+"title": "Ground Floor Plan",
+"no": "A9",
+"scale": "1:100"
+},
+{
+"x": 585.7163707043037,
+"y": -301.1608521860371,
+"title": "First Floor  Plan",
+"no": "A10",
+"scale": "1:100"
+},
+{
+"x": 585.7163707043037,
+"y": -478.1022321786713,
+"title": "Second Floor Plan",
+"no": "A11",
+"scale": "1:100"
+},
+{
+"x": 585.7163707043037,
+"y": -654.3607355111106,
+"title": "Pent House Plan",
+"no": "A12",
+"scale": "1:100"
+},
+{
+"x": 580.5379484902187,
+"y": -904.7217123228593,
+"title": "Architectural plan for exterior",
+"no": "A04",
+"scale": "1:100"
+},
+{
+"x": 580.5379484902187,
+"y": -1053.385254760085,
+"title": "Architectural plan for exterior",
+"no": "A04",
+"scale": "1:100"
+},
+{
+"x": 580.5379484902187,
+"y": -1208.805504032969,
+"title": "Architectural plan for exterior",
+"no": "A04",
+"scale": "1:100"
+},
+{
+"x": 822.9138807502713,
+"y": 28.15618353438913,
+"title": "Basement - Ceiling Plan",
+"no": "A13",
+"scale": "1:100"
+},
+{
+"x": 815.7022738745599,
+"y": -128.431238764909,
+"title": "Ground Floor - Ceiling Plan",
+"no": "A14",
+"scale": "1:100"
+},
+{
+"x": 815.7022738745599,
+"y": -301.1608521860371,
+"title": "First Floor - Ceiling Plan",
+"no": "A15",
+"scale": "1:100"
+},
+{
+"x": 815.7022738745599,
+"y": -478.1022321786713,
+"title": "Second Floor - Ceiling Plan",
+"no": "A16",
+"scale": "1:100"
+},
+{
+"x": 815.7022738745599,
+"y": -654.3607355111106,
+"title": "Pent House - Ceiling Plan",
+"no": "A17",
+"scale": "1:100"
+},
+{
+"x": 1068.187128386175,
+"y": 28.15618353438913,
+"title": "Basement- Dimension plan",
+"no": "A18",
+"scale": "1:100"
+},
+{
+"x": 1069.065990412566,
+"y": -128.431238764909,
+"title": "Ground floor -Dimension plan",
+"no": "A19",
+"scale": "1:100"
+},
+{
+"x": 1069.065990412566,
+"y": -301.1608521860371,
+"title": "First floor-Dimension plan",
+"no": "A20",
+"scale": "1:100"
+},
+{
+"x": 1069.065990412566,
+"y": -478.1022321786713,
+"title": "Second floor-Dimension plan",
+"no": "A21",
+"scale": "1:100"
+},
+{
+"x": 1069.065990412566,
+"y": -654.3607355111106,
+"title": "pent house-Dimension plan",
+"no": "A22",
+"scale": "1:100"
+},
+{
+"x": 1291.45912594179,
+"y": 28.15618353438913,
+"title": "Basement-Floor finishing plan",
+"no": "A23",
+"scale": "1:100"
+},
+{
+"x": 1292.391736965593,
+"y": -128.431238764909,
+"title": "Ground floor  -Floor finishing plan",
+"no": "A24",
+"scale": "1:100"
+},
+{
+"x": 1292.391736965593,
+"y": -301.1608521860371,
+"title": "First floor -Floor finishing plan",
+"no": "A25",
+"scale": "1:100"
+},
+{
+"x": 1292.391736965593,
+"y": -478.1022321786713,
+"title": "Second floor -Floor finishing plan",
+"no": "A26",
+"scale": "1:100"
+},
+{
+"x": 1292.391736965593,
+"y": -654.3607355111106,
+"title": "Pent house - Floor finishing plan",
+"no": "A27",
+"scale": "1:100"
+},
+{
+"x": 1501.351507970903,
+"y": 382.9486834610007,
+"title": "Ground floor -Floor tile finishing plan",
+"no": "A29",
+"scale": "1:100"
+},
+{
+"x": 1502.508205753971,
+"y": 246.4545875984304,
+"title": "Basement floor-Floor tile finishing plan",
+"no": "A28",
+"scale": "1:100"
+},
+{
+"x": 1502.508205753971,
+"y": 28.15618353438913,
+"title": "Basement floor-Floor tile finishing plan",
+"no": "A28",
+"scale": "1:100"
+},
+{
+"x": 1501.351507970903,
+"y": -128.431238764909,
+"title": "Ground floor -Floor tile finishing plan",
+"no": "A29",
+"scale": "1:100"
+},
+{
+"x": 1501.351507970903,
+"y": -301.1608521860371,
+"title": "First floor- Floor tile finishing plan",
+"no": "A30",
+"scale": "1:100"
+},
+{
+"x": 1501.351507970903,
+"y": -478.1022321786713,
+"title": "Second floor- Floor tile finishing plan",
+"no": "A31",
+"scale": "1:100"
+},
+{
+"x": 1501.351507970903,
+"y": -654.3607355111106,
+"title": "Pent house-Floor tile finishing plan",
+"no": "A32",
+"scale": "1:100"
+},
+{
+"x": 1501.351507970903,
+"y": -814.9454728624887,
+"title": "Area Tile for Vitra , Floor And Wall",
+"no": "A33",
+"scale": "1:100"
+},
+{
+"x": 1501.351507970903,
+"y": -968.8580128826952,
+"title": "Area Tile for Vitra , Floor And Wall",
+"no": "A34",
+"scale": "1:100"
+},
+{
+"x": 1505.362420851007,
+"y": -1172.545483061417,
+"title": "Area tile for vitra, floor &wall for vitra",
+"no": "A04",
+"scale": "1:100"
+},
+{
+"x": 1707.038394245084,
+"y": 28.15618353438913,
+"title": "Basement- Plastering plan",
+"no": "A35",
+"scale": "1:100"
+},
+{
+"x": 1711.617269997283,
+"y": -128.431238764909,
+"title": "Ground floor- Plastering plan",
+"no": "A36",
+"scale": "1:100"
+},
+{
+"x": 1711.617269997283,
+"y": -301.1608521860371,
+"title": "First floor-Plastering plan",
+"no": "A37",
+"scale": "1:100"
+},
+{
+"x": 1711.617269997283,
+"y": -478.1022321786713,
+"title": "Second floor- Plastering plan",
+"no": "A38",
+"scale": "1:100"
+},
+{
+"x": 1711.617269997283,
+"y": -654.3607355111106,
+"title": "Pent house- Plastering plan",
+"no": "A39",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": 28.15618353438913,
+"title": "Basement- Door and window plan",
+"no": "A40",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": -127.7707045037787,
+"title": "Groundfloor- Door and window plan",
+"no": "A41",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": -302.366824399417,
+"title": "First floor- Door and window plan",
+"no": "A42",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": -478.2512985586972,
+"title": "Second floor- Door and window plan",
+"no": "A43",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": -654.9781516440925,
+"title": "Pent house-  Door and window plan",
+"no": "A44",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": -811.1047415383335,
+"title": "Door and window details",
+"no": "A45",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": -972.202334778508,
+"title": "legends -window",
+"no": "A46",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": -1127.751243394773,
+"title": "Legends- window",
+"no": "A47",
+"scale": "1:100"
+},
+{
+"x": 1919.498653292017,
+"y": -1285.56035524882,
+"title": "Legends - door",
+"no": "A48",
+"scale": "1:100"
+},
+{
+"x": 2124.941807013547,
+"y": 28.15618353438913,
+"title": "Basement- Stair plan",
+"no": "A49",
+"scale": "1:100"
+},
+{
+"x": 2124.941807013547,
+"y": -128.1826017635635,
+"title": "Ground floor- Stair plan",
+"no": "A50",
+"scale": "1:100"
+},
+{
+"x": 2124.941807013547,
+"y": -302.1421894205373,
+"title": "First floor- Stair plan",
+"no": "A51",
+"scale": "1:100"
+},
+{
+"x": 2124.941807013547,
+"y": -479.7382159950926,
+"title": "Second floor- Stair plan",
+"no": "A52",
+"scale": "1:100"
+},
+{
+"x": 2124.941807013547,
+"y": -655.4895900084825,
+"title": "Pent house- Stair plan",
+"no": "A53",
+"scale": "1:100"
+},
+{
+"x": 2124.941807013547,
+"y": -811.1210200955514,
+"title": "Pent house- Stair plan",
+"no": "A54",
+"scale": "1:100"
+},
+{
+"x": 2341.849973439037,
+"y": 28.15618353438913,
+"title": "Basement floor - F.F Plan",
+"no": "A55",
+"scale": "1:100"
+},
+{
+"x": 2341.849973439037,
+"y": -127.6433587090977,
+"title": "Ground floor-F.F  plan",
+"no": "A56",
+"scale": "1:100"
+},
+{
+"x": 2341.849973439037,
+"y": -304.8165589201352,
+"title": "First floor -F.F plan",
+"no": "A57",
+"scale": "1:100"
+},
+{
+"x": 2341.849973439037,
+"y": -480.2575724754031,
+"title": "Second floor-F.F plan",
+"no": "A58",
+"scale": "1:100"
+},
+{
+"x": 2341.849973439037,
+"y": -652.077478209192,
+"title": "F.F all system",
+"no": "A59",
+"scale": "1:100"
+},
+{
+"x": 2548.817854534098,
+"y": 28.15618353438913,
+"title": "Basement VRF plan",
+"no": "A60",
+"scale": "1:100"
+},
+{
+"x": 2548.817854534098,
+"y": -127.3024012243377,
+"title": "Ground floor -VRF plan",
+"no": "A61",
+"scale": "1:100"
+},
+{
+"x": 2548.817854534098,
+"y": -304.9198211067933,
+"title": "First floor-VRF plan",
+"no": "A62",
+"scale": "1:100"
+},
+{
+"x": 2548.817854534098,
+"y": -481.4932496292358,
+"title": "Second floor-VRF plan",
+"no": "A63",
+"scale": "1:100"
+},
+{
+"x": 2548.817854534098,
+"y": -651.424936463758,
+"title": "Pent house-VRF plan",
+"no": "A64",
+"scale": "1:100"
+},
+{
+"x": 2548.817854534098,
+"y": -802.3549870455845,
+"title": "Table of unit",
+"no": "A65",
+"scale": "1:100"
+},
+{
+"x": 2747.594429297591,
+"y": 28.15618353438913,
+"title": "HVAC system",
+"no": "A66",
+"scale": "1:100"
+},
+{
+"x": 2747.594429297591,
+"y": -126.8700885260518,
+"title": "HVAC system",
+"no": "A67",
+"scale": "1:100"
+},
+{
+"x": 2747.594429297591,
+"y": -302.2953035343594,
+"title": "HVAC system",
+"no": "A68",
+"scale": "1:100"
+},
+{
+"x": 2747.594429297591,
+"y": -479.7257050560797,
+"title": "HVAC system",
+"no": "A69",
+"scale": "1:100"
+},
+{
+"x": 2747.594429297591,
+"y": -650.3865790576424,
+"title": "HVAC system",
+"no": "A70",
+"scale": "1:100"
+},
+{
+"x": 2942.849376439193,
+"y": 28.15618353438913,
+"title": "Elevation",
+"no": "A80",
+"scale": "1:100"
+},
+{
+"x": 2942.849376439193,
+"y": -128.2661425521675,
+"title": "Elevation",
+"no": "A81",
+"scale": "1:100"
+},
+{
+"x": 2942.849376439193,
+"y": -300.430693487486,
+"title": "Elevation",
+"no": "A82",
+"scale": "1:100"
+},
+{
+"x": 2942.849376439193,
+"y": -478.7807946561463,
+"title": "Elevation",
+"no": "A83",
+"scale": "1:100"
+},
+{
+"x": 3169.098549030303,
+"y": 28.1561835343891,
+"title": "Basement -Electrical plan",
+"no": "A84",
+"scale": "1:100"
+},
+{
+"x": 3169.098549030303,
+"y": -127.7457952112113,
+"title": "Ground floor-Electrical plan",
+"no": "A85",
+"scale": "1:100"
+},
+{
+"x": 3169.098549030303,
+"y": -301.8793263088887,
+"title": "Fisrt floor-Electrical plan",
+"no": "A86",
+"scale": "1:100"
+},
+{
+"x": 3169.098549030303,
+"y": -480.1837170172088,
+"title": "Second floor -Electrical plan",
+"no": "A87",
+"scale": "1:100"
+},
+{
+"x": 3169.098549030303,
+"y": -643.8900875148361,
+"title": "Pent house-Electrical plan",
+"no": "A88",
+"scale": "1:100"
+},
+{
+"x": 3379.077804562019,
+"y": 28.15618353438913,
+"title": "Basment-Pipe plan",
+"no": "A89",
+"scale": "1:100"
+},
+{
+"x": 3379.077804562019,
+"y": -127.2221972791417,
+"title": "Ground floor-Pipe plan",
+"no": "A90",
+"scale": "1:100"
+},
+{
+"x": 3379.077804562019,
+"y": -305.5265879874619,
+"title": "First floor -Pipe plan",
+"no": "A91",
+"scale": "1:100"
+},
+{
+"x": 3379.077804562019,
+"y": -484.8736947557868,
+"title": "Second floor-Pipe plan",
+"no": "A92",
+"scale": "1:100"
+}
+]
