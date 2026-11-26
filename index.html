@@ -686,6 +686,11 @@ html[dir=rtl] .wk-feature:hover .go{transform:scaleX(-1) translateX(3px)}
 .wk-photos.reports{grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:16px}
 .wk-photos.reports figure{display:flex;flex-direction:column;border-radius:14px}
 .wk-photos.reports figure img{aspect-ratio:4/3;object-fit:cover}
+.wk-imgs{display:grid;grid-template-columns:repeat(var(--n,1),1fr);gap:3px;background:#fff}
+.wk-imgs img{width:100%;display:block;cursor:zoom-in}
+.wk-rep.multi .wk-imgs img{aspect-ratio:3/4}
+.wk-photos.reports{grid-template-columns:1fr}
+@media (min-width:700px){.wk-photos.reports{grid-template-columns:repeat(2,1fr)}}
 .wk-photos.reports figcaption{position:relative;padding:14px 16px 16px;font-weight:400}
 .wk-photos.reports figcaption .wk-k{position:absolute;top:-17px;inset-inline-start:14px;width:32px;height:32px;border-radius:50%;background:var(--maroon);color:#fff;
   font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;border:3px solid #fff}
@@ -2606,29 +2611,29 @@ const weekPhotos = (f, list) => (typeof list === "number" ? Array.from({ length:
 const WEEKLY = [
   {
     week: 1, from: "2026-11-22", to: "2026-11-28",
-    title: { en: "Façade cladding, ceilings and building services",
-             ku: "داپۆشینی ڕووکار، سەقف و خزمەتگوزارییەکانی بینا",
-             ar: "تكسية الواجهات والأسقف وخدمات المبنى" },
-    photos: weekPhotos("w01", [
-      { en: ["Façade cladding on two sides", "Cladding panels are being fixed on the front and side façades. The aluminium window frames are installed and still wrapped in their protective film."],
-        ku: ["داپۆشینی ڕووکار لە دوو لاوە", "پانێڵەکانی داپۆشین لەسەر ڕووکاری پێشەوە و لاتەنیشت دادەنرێن. چوارچێوەی پەنجەرە ئەلەمنیۆمەکان دانراون و هێشتا بە پەڕەی پاراستن داپۆشراون."],
-        ar: ["تكسية الواجهات من جهتين", "يجري تثبيت ألواح التكسية على الواجهتين الأمامية والجانبية. إطارات النوافذ الألمنيوم مركّبة وما زالت مغلّفة بغشاء الحماية."] },
-      { en: ["Front façade: window recesses", "From the scaffolding, workers are preparing and plastering the deep window recesses before the cladding is closed around them."],
-        ku: ["ڕووکاری پێشەوە: قوڵایی پەنجەرەکان", "کرێکاران لەسەر سکافۆڵدەکە قوڵایی پەنجەرەکان ئامادە دەکەن و سواخیان دەکەن، پێش ئەوەی داپۆشینەکە لە دەوریان تەواو بکرێت."],
-        ar: ["الواجهة الأمامية: تجاويف النوافذ", "يقوم العمال من على السقالات بتجهيز ولياسة تجاويف النوافذ العميقة قبل إكمال التكسية حولها."] },
-      { en: ["Corridor ceiling framing", "The galvanised steel grid for the suspended gypsum ceiling is installed along the corridor, below the cable trays and the fire-fighting pipes."],
-        ku: ["چوارچێوەی سەقفی ڕاڕەو", "تۆڕی ئاسنی گەلڤەنایزی سەقفی جبسی هەڵواسراو بە درێژایی ڕاڕەوەکە دانرا، لە ژێر ڕێڕەوی کەیبڵ و بۆرییەکانی ئاگرکوژێنەوە."],
-        ar: ["هيكل سقف الممر", "تم تركيب الهيكل الحديدي المجلفن للسقف الجبسي المعلّق على طول الممر، أسفل حوامل الكابلات وأنابيب مكافحة الحريق."] },
-      { en: ["Classroom gypsum ceiling", "Moisture-resistant gypsum boards are fixed and the joints are being filled. Openings are left for the air-conditioning units and the lights."],
-        ku: ["سەقفی جبسی پۆل", "تەختەی جبسی دژە شێ دانران و جومگەکان پڕ دەکرێنەوە. شوێن بۆ یەکەکانی فێنککەرەوە و ڕووناکییەکان بەجێهێڵراوە."],
-        ar: ["السقف الجبسي في الصف", "تم تثبيت ألواح الجبس المقاومة للرطوبة ويجري ملء الفواصل، مع ترك فتحات لوحدات التكييف والإنارة."] },
-      { en: ["Electrical cabling", "Cables are being pulled through the cable trays in the corridor, next to the insulated air-conditioning ducts."],
-        ku: ["ڕاکێشانی کەیبڵی کارەبا", "کەیبڵەکان بە ناو ڕێڕەوی کەیبڵەکانی ڕاڕەوەکەدا ڕادەکێشرێن، لە تەنیشت دەکتە عازلکراوەکانی فێنککەرەوە."],
-        ar: ["تمديد الكابلات الكهربائية", "يجري سحب الكابلات عبر حوامل الكابلات في الممر، بجانب مجاري التكييف المعزولة."] },
-      { en: ["Concrete wall formwork", "Timber formwork is set up for a concrete wall at the end of a corridor, while metal is cut on site."],
-        ku: ["قاڵبی دیواری کۆنکرێت", "قاڵبی تەختە بۆ دیوارێکی کۆنکرێتی لە کۆتایی ڕاڕەوێک دانراوە، و ئاسن لە سایتەکەدا دەبڕدرێت."],
-        ar: ["قوالب جدار خرساني", "تم نصب قوالب خشبية لجدار خرساني في نهاية أحد الممرات، مع قصّ المعادن في الموقع."] },
-    ]),
+    title: { en: "Façade, ceilings and services",
+             ku: "ڕووکار، سەقف و خزمەتگوزارییەکان",
+             ar: "الواجهات والأسقف والخدمات" },
+    // photos that share one report object are shown together as one report
+    photos: (() => {
+      const facade = {
+        en: ["Exterior façade work", "Façade work from the scaffolding, around the aluminium windows."],
+        ku: ["کاری مەنتۆسیڤای ڕووکار", "کاری ڕووکاری دەرەوە لەسەر سکافۆڵد، لە دەوری پەنجەرە ئەلەمنیۆمەکان."],
+        ar: ["أعمال الواجهات", "أعمال الواجهات الخارجية من السقالات حول نوافذ الألمنيوم."] };
+      const ceiling = {
+        en: ["Gypsum ceilings", "Steel grid in the corridors; gypsum boards in the classrooms."],
+        ku: ["سەقفی جبس", "تۆڕی ئاسن لە ڕاڕەوەکان؛ تەختەی جبس لە پۆلەکان."],
+        ar: ["الأسقف الجبسية", "هيكل حديدي في الممرات وألواح جبس في الصفوف."] };
+      const cables = {
+        en: ["Electrical cabling", "Pulling cables through the corridor cable trays."],
+        ku: ["کەیبڵی کارەبا", "ڕاکێشانی کەیبڵ بە ناو ڕێڕەوی کەیبڵی ڕاڕەوەکاندا."],
+        ar: ["الكابلات الكهربائية", "سحب الكابلات عبر حوامل الكابلات في الممرات."] };
+      const elevator = {
+        en: ["Elevator shaft", "Timber formwork for the elevator shaft walls."],
+        ku: ["شوێنی مەسعەد", "قاڵبی تەختە بۆ دیوارەکانی شوێنی مەسعەدی بەرزکەرەوە."],
+        ar: ["بئر المصعد", "قوالب خشبية لجدران بئر المصعد."] };
+      return weekPhotos("w01", [facade, facade, ceiling, ceiling, cables, elevator]);
+    })(),
   },
 ];
 {
@@ -2649,11 +2654,19 @@ const WEEKLY = [
     el.innerHTML = `<div class="wk-top"><span class="wk-num">${tr("Week {n}", { n: w.week })}</span>${latest ? `<span class="wk-latest">${tr("Latest")}</span>` : ""}<span class="wk-date">${range(w)}</span></div>
       ${pick(w.title) ? `<h3>${pick(w.title)}</h3>` : ""}${notes.length ? `<ul>${notes.map(n => `<li>${n}</li>`).join("")}</ul>` : ""}<div class="wk-photos${groups[key].some(x => x.cap) ? " reports" : ""}"></div>`;
     const ph = el.querySelector(".wk-photos");
+    const reports = [];
     groups[key].forEach((it, k) => {
+      const last = reports[reports.length - 1];
+      if (last && it.caption && last.caption === it.caption) last.items.push(k);
+      else reports.push({ caption: it.caption, cap: it.cap, items: [k] });
+    });
+    reports.forEach((r, ri) => {
       const f = document.createElement("figure");
-      f.innerHTML = `<img src="${it.thumb || it.src}" alt="${it.cap ? it.cap[0] : tr("Week {n}", { n: w.week }) + " · " + (k + 1)}" loading="lazy">`
-        + (it.cap ? `<figcaption><span class="wk-k">${k + 1}</span><b>${it.cap[0]}</b><p>${it.cap[1]}</p></figcaption>` : "");
-      f.addEventListener("click", () => openLb(key, k));
+      f.className = "wk-rep" + (r.items.length > 1 ? " multi" : "");
+      f.style.setProperty("--n", r.items.length);
+      f.innerHTML = `<div class="wk-imgs">${r.items.map(k => `<img src="${groups[key][k].thumb || groups[key][k].src}" data-k="${k}" alt="${r.cap ? r.cap[0] : tr("Week {n}", { n: w.week }) + " · " + (k + 1)}" loading="lazy">`).join("")}</div>`
+        + (r.cap ? `<figcaption><span class="wk-k">${ri + 1}</span><b>${r.cap[0]}</b><p>${r.cap[1]}</p></figcaption>` : "");
+      f.querySelectorAll("img").forEach(img => img.addEventListener("click", () => openLb(key, +img.dataset.k)));
       ph.appendChild(f);
     });
     return el;
