@@ -201,6 +201,7 @@ figure:hover img{transform:scale(1.035)}
 }
 nav{position:sticky;top:0;z-index:5;background:rgba(251,247,239,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1100px;margin:auto;padding:10px 20px;display:flex;gap:8px;overflow-x:auto}
+nav{padding-right:62px}
 nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px;padding:8px 16px;border:1.5px solid var(--gold);border-radius:999px;transition:.2s}
 nav a:hover{background:#f3ead6}
 nav a.on{background:var(--maroon);border-color:var(--maroon);color:#fff}
@@ -215,6 +216,62 @@ nav a.home span{opacity:1;margin:0;font-weight:700}
 nav a.home:hover{background:#ead9b8}
 body.view-home nav, body.view-home main{display:none}
 body.view-section .hero, body.view-section .hub{display:none}
+/* ===== Corner menu (drawer) ===== */
+#menu-btn{position:fixed;top:14px;right:14px;z-index:46;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--gold);
+  background:rgba(251,247,239,.95);box-shadow:0 4px 14px rgba(42,29,34,.12);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:background .25s}
+#menu-btn span{display:block;width:18px;height:2px;border-radius:2px;background:var(--maroon);transition:transform .3s var(--ease)}
+#menu-btn:hover{background:#f1e8d6}
+#menu-btn:hover span:nth-child(2){transform:scaleX(.7)}
+#drawer-shade{position:fixed;inset:0;z-index:56;background:rgba(42,29,34,.55);opacity:0;transition:opacity .35s var(--ease)}
+#drawer-shade.show{opacity:1}
+#drawer{position:fixed;top:0;right:0;bottom:0;z-index:57;width:min(360px,86vw);background:var(--bg);box-shadow:-10px 0 40px rgba(42,29,34,.25);
+  padding:76px 26px 26px;display:flex;flex-direction:column;overflow-y:auto;transform:translateX(105%);transition:transform .45s var(--ease),visibility 0s .45s;visibility:hidden}
+#drawer.open{transform:none;visibility:visible;transition:transform .45s var(--ease)}
+#drawer::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,var(--maroon) 0 70%,var(--gold) 70% 100%)}
+#drawer .d-close{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ink);background:none;font-size:16px;cursor:pointer;color:var(--ink);transition:.25s}
+#drawer .d-close:hover{background:var(--maroon);border-color:var(--maroon);color:#fff;transform:rotate(90deg)}
+#drawer .d-logo{width:96px;height:auto;margin:0 0 22px}
+.d-links{list-style:none;margin:0;padding:0}
+.d-links li{border-bottom:1px solid var(--line);opacity:0;transform:translateX(18px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#drawer.open .d-links li{opacity:1;transform:none}
+#drawer.open .d-links li:nth-child(1){transition-delay:.08s}#drawer.open .d-links li:nth-child(2){transition-delay:.12s}
+#drawer.open .d-links li:nth-child(3){transition-delay:.16s}#drawer.open .d-links li:nth-child(4){transition-delay:.2s}
+#drawer.open .d-links li:nth-child(5){transition-delay:.24s}#drawer.open .d-links li:nth-child(6){transition-delay:.28s}
+#drawer.open .d-links li:nth-child(7){transition-delay:.32s}
+.d-links a{display:block;padding:15px 2px;font-family:Cinzel,serif;font-size:17px;letter-spacing:.04em;color:var(--ink);text-decoration:none;transition:color .2s,padding .25s var(--ease)}
+.d-links a:hover{color:var(--maroon);padding-left:8px}
+.d-links a.on{color:var(--maroon);font-weight:700}
+.d-links a.on::after{content:"";display:block;width:34px;height:2px;margin-top:5px;background:var(--gold)}
+.d-foot{margin-top:auto;padding-top:24px;font-size:12px;line-height:1.6;color:#7a6a5c}
+body.menu-open{overflow:hidden}
+@media (prefers-reduced-motion:reduce){#drawer,#drawer-shade,.d-links li{transition:none}}
+
+/* ===== About the school ===== */
+.about{max-width:1100px;margin:auto;padding:30px 20px 6px}
+.about-head{text-align:center;margin-bottom:18px}
+.about-head small{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:#9a7f55}
+.about-head h2{margin:2px 0 0;font-family:Cinzel,serif;font-size:clamp(20px,3vw,26px);color:var(--maroon);letter-spacing:.06em}
+.about-lead{max-width:760px;margin:0 auto 22px;text-align:center;font-size:15px;line-height:1.7;color:#4a3a40}
+.about-lead b{color:var(--maroon)}
+.about-grid{display:grid;grid-template-columns:3fr 2fr;gap:16px}
+.about-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;box-shadow:0 6px 18px rgba(42,29,34,.06)}
+.about-card h3{margin:0 0 14px;font-family:Cinzel,serif;font-size:16px;color:var(--maroon);letter-spacing:.05em;display:flex;align-items:center;gap:10px}
+.about-card h3::before{content:"";width:22px;height:2px;background:var(--gold)}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 20px;margin:0}
+.facts div{border-left:2px solid var(--gold-l);padding-left:12px}
+.facts dt{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9a7f55;margin-bottom:3px}
+.facts dd{margin:0;font-weight:600;font-size:14px;color:var(--ink)}
+.about-card.new{background:linear-gradient(160deg,var(--maroon) 0%,var(--maroon-d) 100%);border:0;color:#fff}
+.about-card.new h3{color:#fff}
+.about-card.new .facts{grid-template-columns:1fr}
+.about-card.new .facts div{border-color:rgba(227,207,138,.55)}
+.about-card.new dt{color:var(--gold-l)}
+.about-card.new dd{color:#fff}
+.status{display:inline-flex;align-items:center;gap:7px}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold-l);box-shadow:0 0 0 0 rgba(227,207,138,.7);animation:pulseDot 2s ease-out infinite}
+@keyframes pulseDot{0%{box-shadow:0 0 0 0 rgba(227,207,138,.7)}100%{box-shadow:0 0 0 9px rgba(227,207,138,0)}}
+@media (max-width:760px){.about-grid{grid-template-columns:1fr}.about{padding:24px 16px 4px}}
+@media (max-width:420px){.facts{grid-template-columns:1fr}}
 main > section:not(#video){display:none}
 main > section.active:not(#video){display:block;animation:viewIn .5s var(--ease)}
 @keyframes viewIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
@@ -435,6 +492,24 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
   <div class="bar"></div>
 </div>
 <button id="mute" type="button" aria-label="Sound on/off" title="Sound on/off">🔊</button>
+
+<!-- Corner menu: ☰ button opens a side drawer -->
+<button id="menu-btn" type="button" aria-label="Open menu" aria-controls="drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+<div id="drawer-shade" hidden></div>
+<aside id="drawer" aria-label="Site menu" aria-hidden="true">
+  <button class="d-close" type="button" aria-label="Close menu">✕</button>
+  <img class="d-logo" src="img/logo.png" alt="Shahan Schools &amp; Kindergarten">
+  <ul class="d-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#about">About the School</a></li>
+    <li><a href="#exterior">Exterior</a></li>
+    <li><a href="#interior">Interior</a></li>
+    <li><a href="#shop-drawing">Shop Drawing</a></li>
+    <li><a href="#construction">Construction Stages</a></li>
+    <li><a href="#cost">Cost</a></li>
+  </ul>
+  <p class="d-foot">Shahan Schools &amp; Kindergarten<br>New Campus · Erbil</p>
+</aside>
 <div id="welcome" aria-live="polite" hidden>
   <div class="w-card">
     <img src="img/logo.png" alt="">
@@ -476,6 +551,7 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
 
 <nav><div class="in">
   <a href="#" class="home" aria-label="Back to the project home"><img src="img/logo.png" alt=""><span>Home</span></a>
+  <a href="#about">About</a>
   <a href="#exterior">Exterior<span id="c-exterior"></span></a>
   <a href="#interior">Interior<span id="c-interior"></span></a>
   <a href="#shop-drawing">Shop Drawing<span id="c-drawings"></span></a>
@@ -485,6 +561,34 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
 
 <main>
   <section id="video" hidden><video controls playsinline muted preload="metadata"></video></section>
+
+  <!-- About the school (opened from the corner menu: #about) -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="about-head"><small>About</small><h2 id="about-title">Shahan Schools &amp; Kindergarten</h2></div>
+    <p class="about-lead">Established in <b>2014</b>, Shahan Schools &amp; Kindergarten is a private educational institution affiliated with <b>Khoshnaw Company</b>. It provides English-medium education from kindergarten to Grade 12, serving over <b>600 students</b>.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>School Information</h3>
+        <dl class="facts">
+          <div><dt>Established</dt><dd>2014</dd></div>
+          <div><dt>Affiliation</dt><dd>Khoshnaw Company</dd></div>
+          <div><dt>First Campus</dt><dd>Future City, Masif Road, Erbil</dd></div>
+          <div><dt>Education Levels</dt><dd>Kindergarten to Grade 12</dd></div>
+          <div><dt>Language of Instruction</dt><dd>English</dd></div>
+          <div><dt>Number of Students</dt><dd>600+</dd></div>
+        </dl>
+      </div>
+      <div class="about-card new">
+        <h3>New Campus</h3>
+        <dl class="facts">
+          <div><dt>Location</dt><dd>Opposite Aram Village 2, Erbil, Kurdistan Region, Iraq</dd></div>
+          <div><dt>Project Status</dt><dd><span class="status">Under construction</span></dd></div>
+          <div><dt>Expected Completion</dt><dd>June 2027 (tentative)</dd></div>
+          <div><dt>Opening Date</dt><dd>To be confirmed</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
 
   <section id="exterior">
     <div class="head"><span class="num">01</span><h2>Exterior</h2><p>Façades, entrance &amp; landscape</p></div>
@@ -1789,7 +1893,7 @@ lb.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - 
 
 /* ---------- ACTIVE NAV ---------- */
 const links = [...document.querySelectorAll("nav a")];
-const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawing,#construction,#cost")];
+const sections = [...document.querySelectorAll("#about,#exterior,#interior,#shop-drawing,#construction,#cost")];
 /* ---------- HOME HUB + ONE SECTION AT A TIME ----------
    No hash  -> home (hero + section cards)
    #exterior, #interior, #shop-drawing, #construction, #cost -> only that section */
@@ -1840,6 +1944,28 @@ const sections = [...document.querySelectorAll("#exterior,#interior,#shop-drawin
   }
   window.route = route;
   addEventListener("hashchange", route);
+
+  /* corner menu */
+  const mBtn = document.getElementById("menu-btn"), drawer = document.getElementById("drawer"),
+        shade = document.getElementById("drawer-shade"), dLinks = [...drawer.querySelectorAll("a")];
+  function markMenu() {
+    const h = location.hash.slice(1);
+    dLinks.forEach(a => a.classList.toggle("on", a.getAttribute("href").slice(1) === (ids.includes(h) ? h : "")));
+  }
+  function setMenu(open) {
+    drawer.classList.toggle("open", open);
+    drawer.setAttribute("aria-hidden", String(!open));
+    mBtn.setAttribute("aria-expanded", String(open));
+    document.body.classList.toggle("menu-open", open);
+    if (open) { markMenu(); shade.hidden = false; requestAnimationFrame(() => shade.classList.add("show")); drawer.querySelector(".d-close").focus(); }
+    else { shade.classList.remove("show"); setTimeout(() => { if (!drawer.classList.contains("open")) shade.hidden = true; }, 350); }
+  }
+  mBtn.addEventListener("click", () => setMenu(true));
+  drawer.querySelector(".d-close").addEventListener("click", () => setMenu(false));
+  shade.addEventListener("click", () => setMenu(false));
+  addEventListener("keydown", e => { if (e.key === "Escape" && drawer.classList.contains("open")) setMenu(false); });
+  dLinks.forEach(a => a.addEventListener("click", () => setMenu(false)));
+  addEventListener("hashchange", markMenu);
 }
 
 /* ---------- SCROLL-REVEAL ANIMATIONS ---------- */
