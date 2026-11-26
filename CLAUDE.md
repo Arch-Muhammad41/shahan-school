@@ -18,7 +18,7 @@ The owner is the project's architect. They write in Kurdish (Sorani), so reply i
 1. Intro: logo animation and generated music, plus the credits.
 2. Welcome card, then the home page: a big banner (Explore the Project / About the School), the section cards, and the Project Team (credits + Home Engineering Consultancy logo `img/home-engineering.png`) at the bottom.
    A ☰ menu and a language button sit in the top-left corner on every page.
-3. A hash router shows one section at a time: `#about`, `#exterior`, `#interior`, `#shop-drawing`, `#construction`, `#cost`, `#location`. `#hub` scrolls to the hub. With no hash, the home page shows.
+3. A hash router shows one section at a time: `#about`, `#weekly`, `#exterior`, `#interior`, `#shop-drawing`, `#construction`, `#cost`, `#location`. `#hub` scrolls to the hub. With no hash, the home page shows.
 
 ### Where the data is in `index.html` (search for these names)
 | What | Constant | Files |
@@ -30,12 +30,13 @@ The owner is the project's architect. They write in Kurdish (Sorani), so reply i
 | Design vs Today slider | `COMPARE` | `img/compare/N-design.jpg`, `N-site.jpg` |
 | Construction film | `FILM` + `video/film-chapters.json` | `video/construction-film.mp4` (+ `.jpg` poster) |
 | Progress | `PROGRESS` (estimated percentages, `asOf`) | |
-| Map of the new campus | `LOCATION` (`lat`, `lng`, `link`; empty until the owner sends it) | |
+| Weekly updates (`#weekly`, newest last) | `WEEKLY` (`week`, `from`, `to`, `title`/`notes` per language, `photos: weekPhotos(folder, n)`) | `img/weekly/<folder>/NN.jpg` (+ `thumb/`) |
+| Maps | `LOCATIONS.newCampus` (empty until the owner sends it) and `LOCATIONS.firstCampus` (Google place "Shahan Schools & Kindergarten, Pirmam St, Erbil" + the owner's share link) | |
 | Cost | `COST` (10 phases, `iqd`/`usd`, `RATE` = 1310 IQD per USD) | |
 
 Tabs support `wide`, `contain` and `note`. An area takes either `from`/`to` or `pick: [...]`.
 Construction opens with 4 option cards: Film, Design vs Today, Project Progress, and Stages & Site Photos (`cxShow(id)`).
-Sound is generated live with Web Audio (`Sound` module). The mute state is stored in `localStorage.shahanMuted`.
+Sound: no music any more (owner's choice). The `Sound` module only plays a short, soft generated "tock" on every tap (Web Audio; the owner found a sharp noise click unpleasant). The mute state is stored in `localStorage.shahanMuted`.
 
 ## Rules from the owner (keep following these)
 - Credits, exactly: Prepared by **Arch. Muhammad Mudhafer** · Supervised by **Home Engineering** · Project Manager **Eng. Sherzad Jahfar** · Site Manager **Eng. Ako Ahmed**.
@@ -55,3 +56,11 @@ These are the scripts used to make the site's media. `tools/README.md` explains 
 - `tools/film/`: build the construction film (FFmpeg + generated music + chapter cards).
 - `tools/photos/`: sort, deduplicate and convert site photos and renders into web JPGs and thumbnails.
 - `tools/drawings/`: turn the DXF into sheet images, using AutoCAD COM plotting.
+
+- Developer line "Website developed by Arch. Muhammad Mudhafer" sits at the bottom of the ☰ side menu (not in the footer). Home blocks (banner, weekly card, section cards, team) share the same width: 1060px content, 20px side gutter (16px on phones).
+- Entry page (no hash) shows only the logo + banner (and the team/footer below). The section cards open as their own page at `#hub` ("Explore the Project"); the Exterior card uses render 05 so it differs from the banner (render 01).
+- Side menu (☰) lists only: Home, Explore the Project, About the School, Weekly Updates, Location. The design sections are reached from the Explore page and the top nav.
+- About the School shows two photos: `img/about/campus.jpg` (first campus) and `img/about/classroom.jpg`.
+- Cost is hidden from the visitor's way through the site (no Explore card, no nav link); the #cost page still exists. Location is only in the ☰ side menu, not in the top nav. Explore shows 4 cards in a 2×2 grid.
+- Weekly updates: `weekPhotos(folder, [captions])` — each caption is { en/ku/ar: [title, report] } and shows as a numbered report under the photo. Week 1 = 22–28 Nov 2026 (6 photos in img/weekly/w01).
+- Careful: function declarations inside { } blocks leak to the whole script (sloppy mode). A block's `function show()` once replaced the lightbox's `show()`; give block functions unique names.
