@@ -15,6 +15,17 @@
 <meta property="og:url" content="https://arch-muhammad41.github.io/shahan-school/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<script>
+/* language: ?lang=en|ku|ar, remembered in localStorage */
+(function () {
+  var q = new URLSearchParams(location.search).get("lang"), l = q;
+  try { if (q === "en" || q === "ku" || q === "ar") localStorage.shahanLang = q; else l = localStorage.shahanLang; } catch (e) {}
+  if (l !== "ku" && l !== "ar") l = "en";
+  var h = document.documentElement;
+  h.lang = { en: "en", ku: "ckb", ar: "ar" }[l]; h.dir = l === "en" ? "ltr" : "rtl"; window.LANG = l;
+  if (l !== "en") document.write('<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700&family=Noto+Sans+Arabic:wght@400;600;800&display=swap" rel="stylesheet">');
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -201,7 +212,8 @@ figure:hover img{transform:scale(1.035)}
 }
 nav{position:sticky;top:0;z-index:5;background:rgba(251,247,239,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1100px;margin:auto;padding:10px 20px;display:flex;gap:8px;overflow-x:auto}
-nav{padding-right:62px}
+nav{padding-left:184px}
+@media (max-width:600px){nav{padding-left:132px}}
 nav a{flex:0 0 auto;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px;padding:8px 16px;border:1.5px solid var(--gold);border-radius:999px;transition:.2s}
 nav a:hover{background:#f3ead6}
 nav a.on{background:var(--maroon);border-color:var(--maroon);color:#fff}
@@ -217,15 +229,15 @@ nav a.home:hover{background:#ead9b8}
 body.view-home nav, body.view-home main{display:none}
 body.view-section .hero, body.view-section .hub{display:none}
 /* ===== Corner menu (drawer) ===== */
-#menu-btn{position:fixed;top:14px;right:14px;z-index:46;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--gold);
+#menu-btn{position:fixed;top:14px;left:14px;z-index:46;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--gold);
   background:rgba(251,247,239,.95);box-shadow:0 4px 14px rgba(42,29,34,.12);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:background .25s}
 #menu-btn span{display:block;width:18px;height:2px;border-radius:2px;background:var(--maroon);transition:transform .3s var(--ease)}
 #menu-btn:hover{background:#f1e8d6}
 #menu-btn:hover span:nth-child(2){transform:scaleX(.7)}
 #drawer-shade{position:fixed;inset:0;z-index:56;background:rgba(42,29,34,.55);opacity:0;transition:opacity .35s var(--ease)}
 #drawer-shade.show{opacity:1}
-#drawer{position:fixed;top:0;right:0;bottom:0;z-index:57;width:min(360px,86vw);background:var(--bg);box-shadow:-10px 0 40px rgba(42,29,34,.25);
-  padding:76px 26px 26px;display:flex;flex-direction:column;overflow-y:auto;transform:translateX(105%);transition:transform .45s var(--ease),visibility 0s .45s;visibility:hidden}
+#drawer{position:fixed;top:0;left:0;bottom:0;z-index:57;width:min(360px,86vw);background:var(--bg);box-shadow:10px 0 40px rgba(42,29,34,.25);
+  padding:76px 26px 26px;display:flex;flex-direction:column;overflow-y:auto;transform:translateX(-105%);transition:transform .45s var(--ease),visibility 0s .45s;visibility:hidden}
 #drawer.open{transform:none;visibility:visible;transition:transform .45s var(--ease)}
 #drawer::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,var(--maroon) 0 70%,var(--gold) 70% 100%)}
 #drawer .d-close{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ink);background:none;font-size:16px;cursor:pointer;color:var(--ink);transition:.25s}
@@ -245,6 +257,123 @@ body.view-section .hero, body.view-section .hub{display:none}
 .d-foot{margin-top:auto;padding-top:24px;font-size:12px;line-height:1.6;color:#7a6a5c}
 body.menu-open{overflow:hidden}
 @media (prefers-reduced-motion:reduce){#drawer,#drawer-shade,.d-links li{transition:none}}
+
+/* ===== Language switch ===== */
+.lang{position:fixed;top:14px;left:66px;z-index:46}
+.lang-btn{height:44px;width:112px;display:flex;align-items:center;justify-content:center;gap:7px;border-radius:12px;border:1.5px solid var(--gold);
+  background:rgba(251,247,239,.95);box-shadow:0 4px 14px rgba(42,29,34,.12);cursor:pointer;color:var(--maroon);font:600 13px Inter,sans-serif}
+.lang-btn:hover{background:#f1e8d6}
+.lang-btn svg{width:17px;height:17px;flex:0 0 auto}
+.lang-btn .short{display:none}
+.lang-menu{position:absolute;top:50px;left:0;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(42,29,34,.18);padding:6px;animation:figIn .25s var(--ease) both}
+.lang-menu[hidden]{display:none}
+.lang-menu a{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
+.lang-menu a:hover{background:#f6efe0}
+.lang-menu a.on{color:var(--maroon)}
+.lang-menu a.on::after{content:"✓";color:var(--gold)}
+.d-lang{display:flex;gap:6px;margin-top:22px}
+.d-lang a{flex:1;text-align:center;padding:9px 6px;border:1.5px solid var(--gold);border-radius:999px;color:var(--ink);text-decoration:none;font-weight:600;font-size:13px}
+.d-lang a.on{background:var(--maroon);border-color:var(--maroon);color:#fff}
+@media (max-width:600px){.lang-btn{width:62px}.lang-btn .long{display:none}.lang-btn .short{display:inline}}
+
+/* ===== Home banner ===== */
+.hero{padding:0;background:var(--bg);border-bottom:0}
+.hero-bar{display:flex;justify-content:flex-end;align-items:center;min-height:72px;padding:14px 20px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;max-width:calc(100% - 170px)}
+.brand img{width:44px;height:auto;filter:drop-shadow(0 4px 8px rgba(110,26,49,.2))}
+.brand span{font-family:Cinzel,serif;font-weight:700;color:var(--maroon);font-size:clamp(14px,2vw,18px);letter-spacing:.05em;line-height:1.2}
+.hero-banner{position:relative;max-width:1180px;margin:0 auto;border-radius:18px;overflow:hidden;min-height:min(74vh,640px);display:flex;align-items:flex-end;
+  margin-left:max(20px,calc((100% - 1180px) / 2));margin-right:max(20px,calc((100% - 1180px) / 2));box-shadow:0 18px 40px rgba(42,29,34,.18)}
+.hb-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.06);animation:hbZoom 14s ease-out forwards}
+@keyframes hbZoom{to{transform:scale(1)}}
+.hero-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,10,20,.05) 30%,rgba(40,10,20,.78) 100%)}
+.hb-in{position:relative;z-index:1;padding:clamp(24px,5vw,56px);color:#fff;max-width:760px}
+.hb-in > *{opacity:0;animation:up .8s var(--ease) forwards}
+.hb-in > :nth-child(1){animation-delay:.15s}.hb-in > :nth-child(2){animation-delay:.3s}.hb-in > :nth-child(3){animation-delay:.45s}.hb-in > :nth-child(4){animation-delay:.6s}
+.hb-kick{display:inline-block;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold-l);border:1px solid rgba(227,207,138,.55);border-radius:999px;padding:5px 12px}
+.hb-in h1{margin:14px 0 8px;font-family:Cinzel,serif;font-size:clamp(30px,6vw,60px);line-height:1.1;letter-spacing:.04em;color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.3)}
+.hb-in p{margin:0 0 22px;font-size:clamp(14px,1.8vw,17px);line-height:1.6;opacity:.92}
+.hb-btns{display:flex;flex-wrap:wrap;gap:10px}
+.hb-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;transition:.25s var(--ease)}
+.hb-btn i{font-style:normal;display:inline-block;transition:transform .25s var(--ease)}
+.hb-btn.primary{background:var(--maroon);color:#fff;box-shadow:0 8px 20px rgba(162,41,72,.35)}
+.hb-btn.primary:hover{background:var(--maroon-d)}
+.hb-btn.primary:hover i{transform:translateX(4px)}
+.hb-btn.ghost{border:1.5px solid rgba(255,255,255,.75);color:#fff;background:rgba(255,255,255,.08);backdrop-filter:blur(4px)}
+.hb-btn.ghost:hover{background:rgba(255,255,255,.2)}
+@media (max-width:600px){.hero-banner{min-height:68vh;margin-left:12px;margin-right:12px}.hb-btn{flex:1 1 100%}}
+.hub{padding-top:44px}
+
+/* ===== Project team (bottom of every page) ===== */
+.team{max-width:1100px;margin:0 auto;padding:28px 20px 0;text-align:center}
+.team h2{margin:0 0 14px;font-family:Cinzel,serif;font-size:15px;letter-spacing:.12em;color:#9a7f55;font-weight:500;text-transform:uppercase}
+.team .by{justify-content:center;margin:0 auto;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+.team-co{display:inline-flex;align-items:center;gap:16px;margin:0 auto 18px;padding:12px 22px 12px 12px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 18px rgba(42,29,34,.06);text-align:start}
+html[dir=rtl] .team-co{padding:12px 12px 12px 22px}
+.team-co img{width:84px;height:84px;object-fit:contain;border-radius:50%;background:#fff;border:1px solid var(--line)}
+.team-co small{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9a7f55;margin-bottom:3px}
+.team-co b{font-size:15px;color:var(--ink)}
+
+/* ===== Location ===== */
+.loc-grid{display:grid;grid-template-columns:3fr 2fr;gap:16px}
+.loc-map{position:relative;min-height:360px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#f1e8d6}
+.loc-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.loc-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:20px;
+  background:repeating-linear-gradient(0deg,transparent 0 31px,rgba(190,161,69,.18) 31px 32px),repeating-linear-gradient(90deg,transparent 0 31px,rgba(190,161,69,.18) 31px 32px),#f8f1e3}
+.loc-ph .pin{width:54px;height:54px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--maroon);box-shadow:0 10px 22px rgba(162,41,72,.3);margin-bottom:14px;position:relative;animation:pinBob 2.4s ease-in-out infinite}
+.loc-ph .pin::after{content:"";position:absolute;inset:17px;border-radius:50%;background:#fff}
+@keyframes pinBob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+.loc-ph b{color:var(--maroon);font-size:16px}
+.loc-ph small{color:#7a6a5c;font-size:13px}
+.loc-info{display:flex;flex-direction:column;gap:12px}
+.loc-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.loc-card.main{background:linear-gradient(160deg,var(--maroon),var(--maroon-d));border:0;color:#fff}
+.loc-card small{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#9a7f55;margin-bottom:6px}
+.loc-card.main small{color:var(--gold-l)}
+.loc-card b{display:block;font-size:15px;line-height:1.5}
+.loc-card .hb-btn{margin-top:14px;background:#fff;color:var(--maroon);padding:10px 18px}
+.loc-card .hb-btn[hidden]{display:none}
+@media (max-width:760px){.loc-grid{grid-template-columns:1fr}.loc-map{min-height:280px}}
+
+/* ===== Right-to-left (Kurdish, Arabic) ===== */
+html[dir=rtl] body *{font-family:"Noto Sans Arabic",Inter,sans-serif!important;letter-spacing:0!important}
+html[dir=rtl] body h1,html[dir=rtl] body h2,html[dir=rtl] body h3,html[dir=rtl] body .d-links a,html[dir=rtl] body .w-big,html[dir=rtl] body .cx-menu .t b,
+html[dir=rtl] body .cost-sum b,html[dir=rtl] body .brand span,html[dir=rtl] body .tl-stage h3{font-family:"Noto Kufi Arabic","Noto Sans Arabic",sans-serif!important}
+html[dir=rtl] .cost-sum b{font-size:clamp(16px,2.1vw,20px);line-height:1.6}
+html[dir=rtl] .cx-menu .t b{font-size:clamp(13px,1.45vw,16px);line-height:1.45}
+html[dir=rtl] .cx-menu .t small{line-height:1.5}
+html[dir=rtl] .cx-menu.picked .t small{display:none}
+html[dir=rtl] .hub-card h3,html[dir=rtl] .hb-in h1{line-height:1.45}
+html[dir=rtl] #intro h1.letters.whole{opacity:0;animation:up .9s ease-out 1.9s forwards}
+html[dir=rtl] .hero-bar{justify-content:flex-start}
+html[dir=rtl] .hb-btn i,html[dir=rtl] .cost-row .dates i{display:inline-block;transform:scaleX(-1)}
+html[dir=rtl] .hb-btn.primary:hover i{transform:scaleX(-1) translateX(4px)}
+html[dir=rtl] .head p{margin:0 auto 0 0}
+html[dir=rtl] .head.rv::before{left:auto;right:0}
+html[dir=rtl] .tabs button small{margin:0 6px 0 0}
+html[dir=rtl] nav a span{margin:0 4px 0 0}
+html[dir=rtl] .area:not(.in) h3{transform:translateX(10px)}
+html[dir=rtl] .facts div{border-left:0;border-right:2px solid var(--gold-l);padding:0 12px 0 0}
+html[dir=rtl] .about-card.new .facts div{border-color:rgba(227,207,138,.55)}
+html[dir=rtl] .tab-note{border-left:0;border-right:3px solid var(--gold);border-radius:8px 0 0 8px}
+html[dir=rtl] .cost-sum .card::before{left:auto;right:0}
+html[dir=rtl] .hub-card .tag{left:auto;right:14px}
+html[dir=rtl] .hub-card .go{margin-left:0;margin-right:auto;transform:scaleX(-1)}
+html[dir=rtl] .hub-card:hover .go{transform:scaleX(-1) translateX(3px)}
+html[dir=rtl] .hub-card .bg .glyph{right:auto;left:18px}
+html[dir=rtl] .cx-menu button,html[dir=rtl] .chapters button{text-align:right}
+html[dir=rtl] .cx-menu .ic{left:auto;right:12px}
+html[dir=rtl] .cx-menu.picked .t{left:14px;right:60px}
+html[dir=rtl] .cx-menu.picked button::after{background:linear-gradient(270deg,rgba(40,10,20,.85),rgba(40,10,20,.5))}
+html[dir=rtl] .timeline{padding-left:0;padding-right:44px}
+html[dir=rtl] .timeline::before{left:auto;right:17px}
+html[dir=rtl] .tl-stage .dot{left:auto;right:-44px}
+html[dir=rtl] .by span,html[dir=rtl] #intro .credit span{border-left:0;border-right:1px solid #dccfb5}
+html[dir=rtl] .by span:first-child,html[dir=rtl] #intro .credit span:first-child{border-right:0}
+html[dir=rtl] .d-links a:hover{padding-left:2px;padding-right:8px}
+@media (max-width:760px){html[dir=rtl] .cx-menu.picked .ic{left:auto;right:10px}html[dir=rtl] .cx-menu.picked .t{left:8px;right:48px}}
+@media (max-width:600px){html[dir=rtl] .by span,html[dir=rtl] #intro .credit span{border-right:0}}
 
 /* ===== About the school ===== */
 .about{max-width:1100px;margin:auto;padding:30px 20px 6px}
@@ -478,44 +607,54 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
     </div>
     <div class="rule"></div>
     <h1 class="letters" aria-label="Shahan School">SHAHAN SCHOOL</h1>
-    <div class="tag up" style="animation-delay:2.3s">Exterior · Interior · Shop Drawing · Construction</div>
+    <div class="tag up" style="animation-delay:2.3s" data-t>Exterior · Interior · Shop Drawing · Construction</div>
     <div class="credit up" style="animation-delay:2.7s">
-      <span><small>Prepared by</small><b>Arch. Muhammad Mudhafer</b></span>
-      <span><small>Supervised by</small><b>Home Engineering</b></span>
-      <span><small>Project Manager</small><b>Eng. Sherzad Jahfar</b></span>
-      <span><small>Site Manager</small><b>Eng. Ako Ahmed</b></span>
+      <span><small data-t>Prepared by</small><b data-t>Arch. Muhammad Mudhafer</b></span>
+      <span><small data-t>Supervised by</small><b>Home Engineering</b></span>
+      <span><small data-t>Project Manager</small><b data-t>Eng. Sherzad Jahfar</b></span>
+      <span><small data-t>Site Manager</small><b data-t>Eng. Ako Ahmed</b></span>
     </div>
-    <button class="enter up" style="animation-delay:3.1s">Explore the project</button>
+    <button class="enter up" style="animation-delay:3.1s" data-t>Explore the project</button>
   </div>
-  <button class="sound-on" type="button" aria-label="Play intro music"><span>♪</span> Tap for sound</button>
-  <button class="skip">SKIP ›</button>
+  <button class="sound-on" type="button" aria-label="Play intro music"><span>♪</span> <em data-t style="font-style:normal">Tap for sound</em></button>
+  <button class="skip" data-t>SKIP ›</button>
   <div class="bar"></div>
 </div>
 <button id="mute" type="button" aria-label="Sound on/off" title="Sound on/off">🔊</button>
 
 <!-- Corner menu: ☰ button opens a side drawer -->
 <button id="menu-btn" type="button" aria-label="Open menu" aria-controls="drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+<div class="lang" id="lang">
+  <button type="button" class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-label="Language"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.8 3.9 6 3.9 9.5s-1.3 6.7-3.9 9.5c-2.6-2.8-3.9-6-3.9-9.5s1.3-6.7 3.9-9.5z"/></svg><span class="long" id="lang-long">English</span><span class="short" id="lang-short">EN</span></button>
+  <div class="lang-menu" hidden>
+    <a href="?lang=en" data-l="en" lang="en">English</a>
+    <a href="?lang=ku" data-l="ku" lang="ckb" dir="rtl">کوردی</a>
+    <a href="?lang=ar" data-l="ar" lang="ar" dir="rtl">العربية</a>
+  </div>
+</div>
 <div id="drawer-shade" hidden></div>
 <aside id="drawer" aria-label="Site menu" aria-hidden="true">
   <button class="d-close" type="button" aria-label="Close menu">✕</button>
   <img class="d-logo" src="img/logo.png" alt="Shahan Schools &amp; Kindergarten">
   <ul class="d-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#about">About the School</a></li>
-    <li><a href="#exterior">Exterior</a></li>
-    <li><a href="#interior">Interior</a></li>
-    <li><a href="#shop-drawing">Shop Drawing</a></li>
-    <li><a href="#construction">Construction Stages</a></li>
-    <li><a href="#cost">Cost</a></li>
+    <li><a href="#" data-t>Home</a></li>
+    <li><a href="#about" data-t>About the School</a></li>
+    <li><a href="#exterior" data-t>Exterior</a></li>
+    <li><a href="#interior" data-t>Interior</a></li>
+    <li><a href="#shop-drawing" data-t>Shop Drawing</a></li>
+    <li><a href="#construction" data-t>Construction Stages</a></li>
+    <li><a href="#cost" data-t>Cost</a></li>
+    <li><a href="#location" data-t>Location</a></li>
   </ul>
-  <p class="d-foot">Shahan Schools &amp; Kindergarten<br>New Campus · Erbil</p>
+  <div class="d-lang"><a href="?lang=en" data-l="en">English</a><a href="?lang=ku" data-l="ku" dir="rtl">کوردی</a><a href="?lang=ar" data-l="ar" dir="rtl">العربية</a></div>
+  <p class="d-foot"><span data-t>Shahan Schools &amp; Kindergarten</span><br><span data-t>New Campus · Erbil</span></p>
 </aside>
 <div id="welcome" aria-live="polite" hidden>
   <div class="w-card">
     <img src="img/logo.png" alt="">
-    <div class="w-big">Welcome</div>
-    <h2>to the Shahan School Project</h2>
-    <p>Explore the designs and follow the construction of the school, step by step.</p>
+    <div class="w-big" data-t>Welcome</div>
+    <h2 data-t>to the Shahan School Project</h2>
+    <p data-t>Explore the designs and follow the construction of the school, step by step.</p>
     <span class="w-line"></span>
   </div>
 </div>
@@ -524,39 +663,38 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
 <!-- =================== SITE =================== -->
 <div class="band"></div>
 <header class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-in">
-    <div class="hero-logo">
-      <img src="img/logo.png" alt="Shahan Schools &amp; Kindergarten logo">
-      <span class="gleam"></span>
-    </div>
-    <div class="hero-txt">
-      <h1>Shahan School Project</h1>
-      <div class="sub">Schools &amp; Kindergarten · Architecture &amp; Interior Design</div>
-    </div>
-    <div class="by">
-      <span><small>Prepared by</small><b>Arch. Muhammad Mudhafer</b></span>
-      <span><small>Supervised by</small><b>Home Engineering</b></span>
-      <span><small>Project Manager</small><b>Eng. Sherzad Jahfar</b></span>
-      <span><small>Site Manager</small><b>Eng. Ako Ahmed</b></span>
+  <div class="hero-bar">
+    <a class="brand" href="#"><img src="img/logo.png" alt=""><span data-t>Shahan School Project</span></a>
+  </div>
+  <div class="hero-banner">
+    <div class="hb-bg" style="background-image:url('img/exterior/01.jpg')"></div>
+    <div class="hb-in">
+      <span class="hb-kick" data-t>Schools &amp; Kindergarten · Erbil</span>
+      <h1 data-t>Shahan School Project</h1>
+      <p data-t>The new campus — architecture, interior design and construction, step by step.</p>
+      <div class="hb-btns">
+        <a class="hb-btn primary" href="#hub"><span data-t>Explore the Project</span><i>→</i></a>
+        <a class="hb-btn ghost" href="#about" data-t>About the School</a>
+      </div>
     </div>
   </div>
 </header>
 
 <!-- Home: one card per section; a click opens that section on its own -->
 <section id="hub" class="hub">
-  <div class="hub-head"><h2>Explore the Project</h2><p>Choose a section to open it</p></div>
+  <div class="hub-head"><h2 data-t>Explore the Project</h2><p data-t>Choose a section to open it</p></div>
   <div class="hub-grid" id="hub-grid"></div>
 </section>
 
 <nav><div class="in">
-  <a href="#" class="home" aria-label="Back to the project home"><img src="img/logo.png" alt=""><span>Home</span></a>
-  <a href="#about">About</a>
-  <a href="#exterior">Exterior<span id="c-exterior"></span></a>
-  <a href="#interior">Interior<span id="c-interior"></span></a>
-  <a href="#shop-drawing">Shop Drawing<span id="c-drawings"></span></a>
-  <a href="#construction">Construction Stages<span id="c-stages"></span></a>
-  <a href="#cost">Cost</a>
+  <a href="#" class="home" aria-label="Back to the project home"><img src="img/logo.png" alt=""><span data-t>Home</span></a>
+  <a href="#about" data-t>About</a>
+  <a href="#exterior" data-t="Exterior">Exterior<span id="c-exterior"></span></a>
+  <a href="#interior" data-t="Interior">Interior<span id="c-interior"></span></a>
+  <a href="#shop-drawing" data-t="Shop Drawing">Shop Drawing<span id="c-drawings"></span></a>
+  <a href="#construction" data-t="Construction Stages">Construction Stages<span id="c-stages"></span></a>
+  <a href="#cost" data-t>Cost</a>
+  <a href="#location" data-t>Location</a>
 </div></nav>
 
 <main>
@@ -564,96 +702,123 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
 
   <!-- About the school (opened from the corner menu: #about) -->
   <section class="about" id="about" aria-labelledby="about-title">
-    <div class="about-head"><small>About</small><h2 id="about-title">Shahan Schools &amp; Kindergarten</h2></div>
-    <p class="about-lead">Established in <b>2014</b>, Shahan Schools &amp; Kindergarten is a private educational institution affiliated with <b>Khoshnaw Company</b>. It provides English-medium education from kindergarten to Grade 12, serving over <b>600 students</b>.</p>
+    <div class="about-head"><small data-t>About</small><h2 id="about-title" data-t>Shahan Schools &amp; Kindergarten</h2></div>
+    <p class="about-lead" data-t="about-lead" data-html>Established in <b>2014</b>, Shahan Schools &amp; Kindergarten is a private educational institution affiliated with <b>Khoshnaw Company</b>. It provides English-medium education from kindergarten to Grade 12, serving over <b>600 students</b>.</p>
     <div class="about-grid">
       <div class="about-card">
-        <h3>School Information</h3>
+        <h3 data-t>School Information</h3>
         <dl class="facts">
-          <div><dt>Established</dt><dd>2014</dd></div>
-          <div><dt>Affiliation</dt><dd>Khoshnaw Company</dd></div>
-          <div><dt>First Campus</dt><dd>Future City, Masif Road, Erbil</dd></div>
-          <div><dt>Education Levels</dt><dd>Kindergarten to Grade 12</dd></div>
-          <div><dt>Language of Instruction</dt><dd>English</dd></div>
-          <div><dt>Number of Students</dt><dd>600+</dd></div>
+          <div><dt data-t>Established</dt><dd>2014</dd></div>
+          <div><dt data-t>Affiliation</dt><dd data-t>Khoshnaw Company</dd></div>
+          <div><dt data-t>First Campus</dt><dd data-t>Future City, Masif Road, Erbil</dd></div>
+          <div><dt data-t>Education Levels</dt><dd data-t>Kindergarten to Grade 12</dd></div>
+          <div><dt data-t>Language of Instruction</dt><dd data-t>English</dd></div>
+          <div><dt data-t>Number of Students</dt><dd>600+</dd></div>
         </dl>
       </div>
       <div class="about-card new">
-        <h3>New Campus</h3>
+        <h3 data-t>New Campus</h3>
         <dl class="facts">
-          <div><dt>Location</dt><dd>Opposite Aram Village 2, Erbil, Kurdistan Region, Iraq</dd></div>
-          <div><dt>Project Status</dt><dd><span class="status">Under construction</span></dd></div>
-          <div><dt>Expected Completion</dt><dd>June 2027 (tentative)</dd></div>
-          <div><dt>Opening Date</dt><dd>To be confirmed</dd></div>
+          <div><dt data-t>Location</dt><dd data-t>Opposite Aram Village 2, Erbil, Kurdistan Region, Iraq</dd></div>
+          <div><dt data-t>Project Status</dt><dd><span class="status" data-t>Under construction</span></dd></div>
+          <div><dt data-t>Expected Completion</dt><dd data-t>June 2027 (tentative)</dd></div>
+          <div><dt data-t>Opening Date</dt><dd data-t>To be confirmed</dd></div>
         </dl>
       </div>
     </div>
   </section>
 
   <section id="exterior">
-    <div class="head"><span class="num">01</span><h2>Exterior</h2><p>Façades, entrance &amp; landscape</p></div>
+    <div class="head"><span class="num">01</span><h2 data-t>Exterior</h2><p data-t>Façades, entrance &amp; landscape</p></div>
     <div class="grid" data-group="exterior"></div>
   </section>
 
   <section id="interior">
-    <div class="head"><span class="num">02</span><h2>Interior</h2><p>Classrooms, halls &amp; details</p></div>
+    <div class="head"><span class="num">02</span><h2 data-t>Interior</h2><p data-t>Classrooms, halls &amp; details</p></div>
     <div class="grid" data-group="interior"></div>
   </section>
 
   <section id="shop-drawing">
-    <div class="head"><span class="num">03</span><h2>Shop Drawing</h2><p>Architectural, finishes, structural &amp; mechanical drawings</p></div>
+    <div class="head"><span class="num">03</span><h2 data-t>Shop Drawing</h2><p data-t>Architectural, finishes, structural &amp; mechanical drawings</p></div>
     <div class="grid" data-group="drawings"></div>
   </section>
 
   <section id="construction">
-    <div class="head"><span class="num">04</span><h2>Construction Stages</h2><p>From groundbreaking to handover</p></div>
+    <div class="head"><span class="num">04</span><h2 data-t>Construction Stages</h2><p data-t>From groundbreaking to handover</p></div>
     <div class="cx-menu" id="cx-menu">
-      <button type="button" data-pane="video-block"><span class="bg" style="background-image:url('video/construction-film.jpg')"></span><span class="ic">▶</span><span class="t"><b>Construction Film</b><small>The whole build in four chapters</small></span></button>
-      <button type="button" data-pane="compare-block"><span class="bg" style="background-image:url('img/compare/1-design.jpg')"></span><span class="ic">⟷</span><span class="t"><b>Design vs Today</b><small>The render beside the site</small></span></button>
-      <button type="button" data-pane="progress-block"><span class="bg" style="background-image:url('img/construction/s4/thumb/01.jpg')"></span><span class="ic">%</span><span class="t"><b>Project Progress</b><small>Progress of every stage</small></span></button>
-      <button type="button" data-pane="stages-block"><span class="bg" style="background-image:url('img/construction/s2/thumb/09.jpg')"></span><span class="ic">▦</span><span class="t"><b>Stages &amp; Site Photos</b><small id="cx-stage-sub">Every stage, in date order</small></span></button>
+      <button type="button" data-pane="video-block"><span class="bg" style="background-image:url('video/construction-film.jpg')"></span><span class="ic">▶</span><span class="t"><b data-t>Construction Film</b><small data-t>The whole build in four chapters</small></span></button>
+      <button type="button" data-pane="compare-block"><span class="bg" style="background-image:url('img/compare/1-design.jpg')"></span><span class="ic">⟷</span><span class="t"><b data-t>Design vs Today</b><small data-t>The render beside the site</small></span></button>
+      <button type="button" data-pane="progress-block"><span class="bg" style="background-image:url('img/construction/s4/thumb/01.jpg')"></span><span class="ic">%</span><span class="t"><b data-t>Project Progress</b><small data-t>Progress of every stage</small></span></button>
+      <button type="button" data-pane="stages-block"><span class="bg" style="background-image:url('img/construction/s2/thumb/09.jpg')"></span><span class="ic">▦</span><span class="t"><b data-t>Stages &amp; Site Photos</b><small id="cx-stage-sub">Every stage, in date order</small></span></button>
     </div>
-    <p class="cx-hint" id="cx-hint">Choose one of the options above</p>
+    <p class="cx-hint" id="cx-hint" data-t>Choose one of the options above</p>
     <div class="cx-block cx-pane" id="compare-block">
-      <div class="cx-title"><h3>Design vs Today</h3><p>Drag the handle to compare the design render with the site</p></div>
-      <div class="ba" id="ba">
+      <div class="cx-title"><h3 data-t>Design vs Today</h3><p data-t>Drag the handle to compare the design render with the site</p></div>
+      <div class="ba" id="ba" dir="ltr">
         <img class="ba-site" alt="The building on site today">
         <div class="ba-top"><img class="ba-design" alt="Design render"></div>
-        <span class="ba-tag l">Design</span><span class="ba-tag r">On site</span>
+        <span class="ba-tag l" data-t>Design</span><span class="ba-tag r" data-t>On site</span>
         <div class="ba-handle" aria-hidden="true"><span>⟷</span></div>
         <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare design and site">
       </div>
       <div class="ba-dots" id="ba-dots"></div>
     </div>
     <div class="cx-block cx-pane" id="video-block">
-      <div class="cx-title"><h3>Construction Film</h3><p>From the first excavation to today</p></div>
+      <div class="cx-title"><h3 data-t>Construction Film</h3><p data-t>From the first excavation to today</p></div>
       <video id="cfilm" controls playsinline preload="metadata"></video>
       <div class="chapters" id="chapters"></div>
     </div>
     <div class="cx-block cx-pane" id="progress-block">
-      <div class="cx-title"><h3>Project Progress</h3><p id="prog-sub">Progress of each construction stage</p></div>
+      <div class="cx-title"><h3 data-t>Project Progress</h3><p id="prog-sub" data-t>Progress of each construction stage</p></div>
       <div class="prog-overall" id="prog-overall"></div>
       <div class="prog-list" id="prog-list"></div>
     </div>
     <div class="cx-pane" id="stages-block">
-      <div class="cx-title tl-title"><h3>Stages &amp; Site Photos</h3><p>Every stage with its photos, in date order</p></div>
+      <div class="cx-title tl-title"><h3 data-t>Stages &amp; Site Photos</h3><p data-t>Every stage with its photos, in date order</p></div>
       <div id="timeline"></div>
     </div>
   </section>
 
   <section id="cost">
-    <div class="head"><span class="num">05</span><h2>Cost</h2><p>Estimated cost of the 10 main phases</p></div>
+    <div class="head"><span class="num">05</span><h2 data-t>Cost</h2><p data-t>Estimated cost of the 10 main phases</p></div>
     <div class="cost-sum">
-      <div class="card"><small>Total estimated cost</small><b id="tot-iqd">—</b><span>Iraqi Dinar (IQD)</span></div>
-      <div class="card"><small>Total estimated cost</small><b id="tot-usd">—</b><span>US Dollar (USD)</span></div>
-      <div class="card"><small>Project period</small><b id="tot-dates">—</b><span id="rate-note"></span></div>
+      <div class="card"><small data-t>Total estimated cost</small><b id="tot-iqd">—</b><span data-t>Iraqi Dinar (IQD)</span></div>
+      <div class="card"><small data-t>Total estimated cost</small><b id="tot-usd">—</b><span data-t>US Dollar (USD)</span></div>
+      <div class="card"><small data-t>Project period</small><b id="tot-dates">—</b><span id="rate-note"></span></div>
     </div>
     <div id="cost-list"></div>
-    <p class="cost-note">All figures are estimates and may change as the project progresses.</p>
+    <p class="cost-note" data-t>All figures are estimates and may change as the project progresses.</p>
+  </section>
+
+  <section id="location">
+    <div class="head"><span class="num">06</span><h2 data-t>Location</h2><p data-t>Where the new campus is being built</p></div>
+    <div class="loc-grid">
+      <div class="loc-map" id="loc-map">
+        <div class="loc-ph"><span class="pin"></span><b data-t>Map coming soon</b><small data-t>The exact map location will be added here.</small></div>
+      </div>
+      <div class="loc-info">
+        <div class="loc-card main"><small data-t>New Campus</small><b data-t>Opposite Aram Village 2, Erbil, Kurdistan Region, Iraq</b>
+          <a class="hb-btn" id="loc-open" target="_blank" rel="noopener" hidden><span data-t>Open in Google Maps</span></a></div>
+        <div class="loc-card"><small data-t>First Campus</small><b data-t>Future City, Masif Road, Erbil</b></div>
+      </div>
+    </div>
   </section>
 </main>
 
-<footer>© Shahan Schools &amp; Kindergarten · Design by Arch. Muhammad Mudhafer<br><button id="replay">Replay intro</button></footer>
+<section class="team" aria-labelledby="team-title">
+  <h2 id="team-title" data-t>Project Team</h2>
+  <div class="team-co" id="team-co">
+    <img src="img/home-engineering.png" alt="Home Engineering Consultancy" onerror="document.getElementById('team-co').remove()">
+    <span><small data-t>Supervising consultant</small><b>Home Engineering Consultancy</b></span>
+  </div>
+  <div class="by">
+    <span><small data-t>Prepared by</small><b data-t>Arch. Muhammad Mudhafer</b></span>
+    <span><small data-t>Supervised by</small><b>Home Engineering</b></span>
+    <span><small data-t>Project Manager</small><b data-t>Eng. Sherzad Jahfar</b></span>
+    <span><small data-t>Site Manager</small><b data-t>Eng. Ako Ahmed</b></span>
+  </div>
+</section>
+<footer><span data-t>© Shahan Schools &amp; Kindergarten · Design by Arch. Muhammad Mudhafer</span><br><button id="replay" data-t>Replay intro</button></footer>
 <div class="band"></div>
 
 <div id="lb" aria-hidden="true">
@@ -665,6 +830,369 @@ footer button{background:none;border:0;color:var(--maroon);font:600 12px Inter,s
 </div>
 
 <script>
+/* ---------- LANGUAGES: English (default), Kurdish Sorani, Arabic ----------
+   window.LANG is set in <head> from ?lang= or the saved choice.
+   Text in the HTML marked with data-t is looked up here by its English wording;
+   JS-made text calls tr("English text").  A missing translation shows the English.
+   {n} {m} {p} {r} are filled in by tr(key, { n: ... }). */
+const LANG = window.LANG || "en";
+const I18N = {
+  ku: {
+    "Shahan School Project — Exterior · Interior · Shop Drawing": "پڕۆژەی قوتابخانەی شاهان",
+    "SHAHAN SCHOOL": "قوتابخانەی شاهان",
+    "Exterior · Interior · Shop Drawing · Construction": "دەرەوە · ناوەوە · نەخشەی جێبەجێکردن · دروستکردن",
+    "Prepared by": "ئامادەکردنی",
+    "Supervised by": "سەرپەرشتیاری",
+    "Project Manager": "بەڕێوەبەری پڕۆژە",
+    "Site Manager": "بەڕێوەبەری سایت",
+    "Arch. Muhammad Mudhafer": "تەلارساز محەمەد موزەفەر",
+    "Eng. Sherzad Jahfar": "ئەندازیار شێرزاد جەعفەر",
+    "Eng. Ako Ahmed": "ئەندازیار ئاکۆ ئەحمەد",
+    "Explore the project": "پڕۆژەکە ببینە",
+    "Tap for sound": "بۆ دەنگ لێی بدە",
+    "SKIP ›": "تێپەڕاندن",
+    "Welcome": "بەخێربێن",
+    "to the Shahan School Project": "بۆ پڕۆژەی قوتابخانەی شاهان",
+    "Explore the designs and follow the construction of the school, step by step.": "دیزاینەکان ببینە و هەنگاو بە هەنگاو بەدواداچوون بۆ دروستکردنی قوتابخانەکە بکە.",
+    "Shahan School Project": "پڕۆژەی قوتابخانەی شاهان",
+    "Schools & Kindergarten · Erbil": "قوتابخانە و باخچەی ساوایان · هەولێر",
+    "The new campus — architecture, interior design and construction, step by step.": "لقی نوێ — تەلارسازی، دیزاینی ناوەوە و دروستکردن، هەنگاو بە هەنگاو.",
+    "Explore the Project": "پڕۆژەکە ببینە",
+    "About the School": "دەربارەی قوتابخانە",
+    "Choose a section to open it": "بەشێک هەڵبژێرە بۆ ئەوەی بیکەیتەوە",
+    "Home": "سەرەکی",
+    "About": "دەربارە",
+    "Exterior": "دەرەوە",
+    "Interior": "ناوەوە",
+    "Shop Drawing": "نەخشەی جێبەجێکردن",
+    "Construction Stages": "قۆناغەکانی دروستکردن",
+    "Cost": "تێچوون",
+    "Location": "شوێن",
+    "Shahan Schools & Kindergarten": "قوتابخانە و باخچەی ساوایانی شاهان",
+    "New Campus · Erbil": "لقی نوێ · هەولێر",
+    "about-lead": "قوتابخانە و باخچەی ساوایانی شاهان لە ساڵی <b>2014</b> دامەزراوە و دامەزراوەیەکی پەروەردەیی تایبەتە سەر بە <b>کۆمپانیای خۆشناو</b>. خوێندن بە زمانی ئینگلیزی پێشکەش دەکات لە باخچەی ساوایانەوە تا پۆلی 12، و زیاتر لە <b>600 قوتابی</b> تێیدا دەخوێنن.",
+    "School Information": "زانیاری قوتابخانە",
+    "New Campus": "لقی نوێ",
+    "Established": "ساڵی دامەزراندن",
+    "Affiliation": "سەر بە",
+    "Khoshnaw Company": "کۆمپانیای خۆشناو",
+    "First Campus": "لقی یەکەم",
+    "Future City, Masif Road, Erbil": "فیوچەر سیتی، ڕێگای مەسیف، هەولێر",
+    "Education Levels": "قۆناغەکانی خوێندن",
+    "Kindergarten to Grade 12": "باخچەی ساوایان تا پۆلی 12",
+    "Language of Instruction": "زمانی خوێندن",
+    "English": "ئینگلیزی",
+    "Number of Students": "ژمارەی قوتابیان",
+    "Opposite Aram Village 2, Erbil, Kurdistan Region, Iraq": "بەرامبەر ئارام ڤیلێجی 2، هەولێر، هەرێمی کوردستان، عێراق",
+    "Project Status": "دۆخی پڕۆژە",
+    "Under construction": "لە قۆناغی دروستکردندایە",
+    "Expected Completion": "کاتی چاوەڕوانکراوی تەواوبوون",
+    "June 2027 (tentative)": "حوزەیرانی 2027 (نزیکەیی)",
+    "Opening Date": "کاتی کردنەوە",
+    "To be confirmed": "دواتر ڕادەگەیەنرێت",
+    "Façades, entrance & landscape": "ڕووکارەکان، دەروازە و دەوروبەر",
+    "Classrooms, halls & details": "پۆلەکان، هۆڵەکان و وردەکارییەکان",
+    "Architectural, finishes, structural & mechanical drawings": "نەخشەکانی تەلارسازی، تەواوکاری، ستراکچەر و میکانیکی",
+    "From groundbreaking to handover": "لە دەستپێکردنەوە تا ڕادەستکردن",
+    "Construction Film": "فیلمی دروستکردن",
+    "The whole build in four chapters": "هەموو دروستکردنەکە لە چوار بەشدا",
+    "Design vs Today": "دیزاین بەرامبەر ئەمڕۆ",
+    "The render beside the site": "ڕێندەر لە تەنیشت سایتەکە",
+    "Project Progress": "پێشکەوتنی پڕۆژە",
+    "Progress of every stage": "پێشکەوتنی هەموو قۆناغەکان",
+    "Stages & Site Photos": "قۆناغەکان و وێنەکانی سایت",
+    "Choose one of the options above": "یەکێک لەم هەڵبژاردنانەی سەرەوە هەڵبژێرە",
+    "Drag the handle to compare the design render with the site": "دەستەکە ڕابکێشە بۆ بەراوردکردنی ڕێندەری دیزاین لەگەڵ سایتەکە",
+    "Design": "دیزاین",
+    "On site": "لە سایت",
+    "From the first excavation to today": "لە یەکەم هەڵکەندنەوە تا ئەمڕۆ",
+    "Progress of each construction stage": "پێشکەوتنی هەر قۆناغێکی دروستکردن",
+    "Every stage with its photos, in date order": "هەموو قۆناغێک لەگەڵ وێنەکانی، بە ڕیزی بەروار",
+    "Estimated cost of the 10 main phases": "تێچووی خەمڵێنراوی 10 قۆناغە سەرەکییەکە",
+    "Total estimated cost": "کۆی تێچووی خەمڵێنراو",
+    "Iraqi Dinar (IQD)": "دیناری عێراقی (IQD)",
+    "US Dollar (USD)": "دۆلاری ئەمریکی (USD)",
+    "Project period": "ماوەی پڕۆژە",
+    "All figures are estimates and may change as the project progresses.": "هەموو ژمارەکان خەمڵێنراون و لەوانەیە لەگەڵ پێشکەوتنی پڕۆژەکە بگۆڕێن.",
+    "Where the new campus is being built": "ئەو شوێنەی لقە نوێیەکەی تێدا دروست دەکرێت",
+    "Map coming soon": "نەخشە بەم زووانە",
+    "The exact map location will be added here.": "شوێنی ورد لەسەر نەخشە لێرە زیاد دەکرێت.",
+    "Open in Google Maps": "لە Google Maps بیکەرەوە",
+    "Project Team": "تیمی پڕۆژە",
+    "Supervising consultant": "ڕاوێژکاری سەرپەرشتیار",
+    "© Shahan Schools & Kindergarten · Design by Arch. Muhammad Mudhafer": "© قوتابخانە و باخچەی ساوایانی شاهان · دیزاینی تەلارساز محەمەد موزەفەر",
+    "Replay intro": "دووبارە پیشاندانەوەی سەرەتا",
+    "Click the drawing to zoom in": "کلیک لە نەخشەکە بکە بۆ گەورەکردن",
+    "renders": "ڕێندەر",
+    "drawings": "نەخشە",
+    "{n} floors & option 2": "{n} نهۆم و بژاردەی 2",
+    "Façades, entrance & courtyard": "ڕووکارەکان، دەروازە و حەوشە",
+    "Plans, elevations, sections & details": "پلان، ڕووکار، بڕگە و وردەکاری",
+    "film · progress · {n} photos": "فیلم · پێشکەوتن · {n} وێنە",
+    "Stage": "قۆناغی",
+    "In progress": "لە کاردایە",
+    "Completed": "تەواوبووە",
+    "Not started": "دەستی پێنەکردووە",
+    "Photos coming soon": "وێنەکان بەم زووانە",
+    "Chapter {n}": "بەشی {n}",
+    "{n} stages · {m} photos": "{n} قۆناغ · {m} وێنە",
+    "overall progress": "پێشکەوتنی گشتی",
+    "estimated": "خەمڵێنراو",
+    "Percentages are estimates based on the latest site photos and will be updated as work continues.": "ڕێژەکان لەسەر بنەمای دوایین وێنەکانی سایت خەمڵێنراون و لەگەڵ بەردەوامی کارەکە نوێ دەکرێنەوە.",
+    "To be announced": "دواتر ڕادەگەیەنرێت",
+    "Start to handover": "لە دەستپێکەوە تا ڕادەستکردن",
+    "Converted at 1 USD = {r} IQD": "گۆڕدراوە بە نرخی 1 دۆلار = {r} دینار",
+    "Dates to be announced": "بەروارەکان دواتر ڕادەگەیەنرێن",
+    "Cost to be announced": "تێچوون دواتر ڕادەگەیەنرێت",
+    "{p}% of total": "{p}% ی کۆی گشتی",
+    // tabs & areas
+    "Façades": "ڕووکارەکان", "Street & Façade Views": "دیمەنی شەقام و ڕووکار", "Courtyard": "حەوشە", "Courtyard & Playground": "حەوشە و یاریگا",
+    "Ground Floor": "نهۆمی زەوی", "Reception": "پێشوازی", "Kindergarten Corridors": "ڕاڕەوەکانی باخچەی ساوایان",
+    "Kindergarten Classroom 1": "پۆلی باخچەی ساوایان 1", "Kindergarten Classroom 2": "پۆلی باخچەی ساوایان 2", "Kindergarten Classroom 3": "پۆلی باخچەی ساوایان 3",
+    "Indoor Game Room": "ژووری یاری ناوەوە", "Kurdish Classroom": "پۆلی کوردی", "Drama Room": "ژووری شانۆ", "Primary Classroom": "پۆلی سەرەتایی",
+    "First Floor": "نهۆمی یەکەم", "Boys' Section Corridors": "ڕاڕەوەکانی بەشی کوڕان", "Boys' Classroom": "پۆلی کوڕان",
+    "Girls' Section Corridors": "ڕاڕەوەکانی بەشی کچان", "Girls' Classroom": "پۆلی کچان", "Computer Lab": "تاقیگەی کۆمپیوتەر",
+    "Second Floor": "نهۆمی دووەم",
+    "The Second Floor follows the First Floor design for corridors and classrooms, and holds the Conference Hall.": "نهۆمی دووەم بۆ ڕاڕەو و پۆلەکان هەمان دیزاینی نهۆمی یەکەمی هەیە، و هۆڵی کۆنفرانسی تێدایە.",
+    "Conference Hall": "هۆڵی کۆنفرانس", "Conference Hall · Set Drawing": "هۆڵی کۆنفرانس · نەخشەی جێبەجێکردن",
+    "Basement": "ژێرزەمین", "Biology Lab": "تاقیگەی بایەلۆجی", "Physics Lab": "تاقیگەی فیزیا", "Chemistry Lab": "تاقیگەی کیمیا",
+    "Music Hall": "هۆڵی مۆسیقا", "Drawing Hall": "هۆڵی وێنەکێشان", "Swimming Pool": "مەلەوانگە", "School Restaurant": "چێشتخانەی قوتابخانە",
+    "Option 2 · Receptions": "بژاردەی 2 · پێشوازییەکان",
+    "Option 2 — an alternative design for the main lobby, the receptions and the corridors.": "بژاردەی 2 — دیزاینێکی جێگرەوە بۆ هۆڵی سەرەکی، پێشوازییەکان و ڕاڕەوەکان.",
+    "Main Lobby": "هۆڵی سەرەکی", "Kindergarten Reception & Corridor": "پێشوازی و ڕاڕەوی باخچەی ساوایان",
+    "Primary School Reception & Corridor": "پێشوازی و ڕاڕەوی قوتابخانەی سەرەتایی", "Primary Activity Room": "ژووری چالاکی سەرەتایی",
+    "Architectural": "تەلارسازی", "Index & Site": "پێڕست و سایت", "Architectural Plans": "پلانی تەلارسازی", "Furniture Plans": "پلانی کەلوپەل",
+    "Elevations": "ڕووکارەکان", "Exterior Plans": "پلانی دەرەوە", "Dimension Plans": "پلانی پێوانەکان", "Stair Plans": "پلانی پلیکانەکان",
+    "Finishes": "تەواوکاری", "Ceiling Plans": "پلانی سەقف", "Floor Finishing": "تەواوکاری زەوی", "Floor Tile Finishing": "کاشی زەوی",
+    "Floor & Wall Tile Areas": "ڕووبەری کاشی زەوی و دیوار", "Plastering Plans": "پلانی سواخ", "Doors & Windows": "دەرگا و پەنجەرەکان",
+    "Structural": "ستراکچەر", "General Notes": "تێبینییە گشتییەکان", "Foundation": "بناغە", "Column Key Plans": "پلانی کۆڵەکەکان",
+    "Beam Layout Plans": "پلانی بیمەکان", "Structural Details": "وردەکاری ستراکچەر", "Retaining Walls & Fence": "دیواری ڕاگر و شوورە",
+    "Mechanical": "میکانیکی", "Fire Fighting": "ئاگرکوژێنەوە", "VRF Air Conditioning": "فێنککەرەوەی VRF", "HVAC Ventilation": "هەواگۆڕکێی HVAC", "Plumbing": "ئاو و ئاوەڕۆ",
+    // construction stages
+    "Site Preparation": "ئامادەکردنی سایت",
+    "Site survey, clearing and levelling, excavation and setting out the building lines.": "ڕووپێوی سایت، پاککردنەوە و تەختکردن، هەڵکەندن و دیاریکردنی هێڵەکانی بیناکە.",
+    "Structure": "ستراکچەر",
+    "Foundations, columns, beams and concrete slabs — the load-bearing frame of the school.": "بناغە، کۆڵەکە، بیم و سلابی کۆنکرێت — چوارچێوەی هەڵگری قوتابخانەکە.",
+    "Waterproofing & Backfilling": "دژەئاو و پڕکردنەوە",
+    "Bitumen waterproofing membrane on the basement walls, protection layer, then backfilling and compacting the soil around the building.": "چینی دژەئاوی قیر لەسەر دیوارەکانی ژێرزەمین، چینی پاراستن، پاشان پڕکردنەوە و کوتانی خۆڵی دەوری بیناکە.",
+    "Building Shell Development": "پەرەپێدانی بیناکە",
+    "Developing the school from its structural frame: block walls, partitions, steel roof framing and openings.": "پەرەپێدانی قوتابخانەکە لە چوارچێوە ستراکچەرییەکەیەوە: دیواری بلۆک، دیوارە ناوەکییەکان، چوارچێوەی ئاسنی سەربان و کراوەکان.",
+    "Exterior Finishing": "تەواوکاری دەرەوە",
+    "Façade cladding, stone and paint, and the main entrance.": "داپۆشینی ڕووکار، بەرد و بۆیە، و دەروازەی سەرەکی.",
+    "Windows & Curtain Wall": "پەنجەرە و کێرتن وۆڵ",
+    "Aluminium windows and aluminium curtain-wall system: profiles, frames and glazing of the façade openings.": "پەنجەرەی ئەلەمنیۆم و سیستەمی کێرتن وۆڵی ئەلەمنیۆم: پرۆفایل، چوارچێوە و شووشەی کراوەکانی ڕووکار.",
+    "Interior Finishing": "تەواوکاری ناوەوە",
+    "Plastering, floor screed, gypsum false ceilings, paint, doors and the fit-out of classrooms, labs and halls.": "سواخ، ڕێکخستنی زەوی، سەقفی جبس، بۆیە، دەرگاکان و ئامادەکردنی پۆل و تاقیگە و هۆڵەکان.",
+    "Mechanical & Electrical Works": "کاری میکانیکی و کارەبایی",
+    "HVAC ducts and units, plumbing and drainage, fire fighting, cable trays, power, lighting and low-current systems.": "دەکت و یەکەکانی HVAC، ئاو و ئاوەڕۆ، ئاگرکوژێنەوە، ڕێڕەوی کەیبڵ، کارەبا، ڕووناکی و سیستەمەکانی کارەبای لاواز.",
+    "External Works & Site Development": "کاری دەرەوە و پەرەپێدانی سایت",
+    "Site access road, boundary wall and fence foundations, earthworks, drainage, ramps and channels, courtyards and landscape.": "ڕێگای گەیشتن بە سایت، بناغەی دیوار و شوورەی دەوروبەر، کاری خۆڵ، ئاوەڕۆ، ڕامپ و جۆگەکان، حەوشەکان و باخچەسازی.",
+    // design vs today, film chapters
+    "Corner block": "بلۆکی گۆشە", "Classroom wing": "باڵی پۆلەکان", "Whole site": "هەموو سایتەکە",
+    "Site Preparation & Foundations": "ئامادەکردنی سایت و بناغە", "Basement & Ground Floor": "ژێرزەمین و نهۆمی زەوی",
+    "The Frame Rises": "بەرزبوونەوەی چوارچێوە", "Walls, Services & Façade": "دیوار، خزمەتگوزارییەکان و ڕووکار",
+    // cost phases
+    "Site Preparation & Earthworks": "ئامادەکردنی سایت و کاری خۆڵ", "Foundations & Basement": "بناغە و ژێرزەمین",
+    "Superstructure — Columns, Beams & Slabs": "ستراکچەری سەرەوە — کۆڵەکە، بیم و سلاب", "Masonry & Building Shell": "بلۆک و بیناکە",
+    "Roofing & Waterproofing": "سەربان و دژەئاو", "Mechanical Works — HVAC, Plumbing & Fire": "کاری میکانیکی — HVAC، ئاو و ئاوەڕۆ و ئاگرکوژێنەوە",
+    "Electrical & Low-Current Works": "کاری کارەبا و کارەبای لاواز", "Exterior Finishing, Windows & Curtain Wall": "تەواوکاری دەرەوە، پەنجەرە و کێرتن وۆڵ",
+    "Interior Finishing & Fit-out": "تەواوکاری و ئامادەکاری ناوەوە", "External Works & Landscape": "کاری دەرەوە و باخچەسازی",
+  },
+  ar: {
+    "Shahan School Project — Exterior · Interior · Shop Drawing": "مشروع مدارس شاهان",
+    "SHAHAN SCHOOL": "مدارس شاهان",
+    "Exterior · Interior · Shop Drawing · Construction": "الخارجي · الداخلي · المخططات التنفيذية · الإنشاء",
+    "Prepared by": "إعداد",
+    "Supervised by": "إشراف",
+    "Project Manager": "مدير المشروع",
+    "Site Manager": "مدير الموقع",
+    "Arch. Muhammad Mudhafer": "المعماري محمد مظفر",
+    "Eng. Sherzad Jahfar": "المهندس شيرزاد جعفر",
+    "Eng. Ako Ahmed": "المهندس آكو أحمد",
+    "Explore the project": "استكشف المشروع",
+    "Tap for sound": "اضغط لتشغيل الصوت",
+    "SKIP ›": "تخطٍّ",
+    "Welcome": "أهلاً وسهلاً",
+    "to the Shahan School Project": "في مشروع مدارس شاهان",
+    "Explore the designs and follow the construction of the school, step by step.": "تصفّح التصاميم وتابع بناء المدرسة خطوة بخطوة.",
+    "Shahan School Project": "مشروع مدارس شاهان",
+    "Schools & Kindergarten · Erbil": "مدارس وروضة أطفال · أربيل",
+    "The new campus — architecture, interior design and construction, step by step.": "الفرع الجديد — العمارة والتصميم الداخلي والإنشاء، خطوة بخطوة.",
+    "Explore the Project": "استكشف المشروع",
+    "About the School": "عن المدرسة",
+    "Choose a section to open it": "اختر قسماً لفتحه",
+    "Home": "الرئيسية",
+    "About": "عن المدرسة",
+    "Exterior": "التصميم الخارجي",
+    "Interior": "التصميم الداخلي",
+    "Shop Drawing": "المخططات التنفيذية",
+    "Construction Stages": "مراحل البناء",
+    "Cost": "التكلفة",
+    "Location": "الموقع",
+    "Shahan Schools & Kindergarten": "مدارس وروضة شاهان",
+    "New Campus · Erbil": "الفرع الجديد · أربيل",
+    "about-lead": "تأسست مدارس وروضة شاهان عام <b>2014</b>، وهي مؤسسة تعليمية خاصة تابعة لـ<b>شركة خوشناو</b>. تقدّم تعليماً باللغة الإنجليزية من الروضة حتى الصف الثاني عشر، وتخدم أكثر من <b>600 طالب</b>.",
+    "School Information": "معلومات المدرسة",
+    "New Campus": "الفرع الجديد",
+    "Established": "سنة التأسيس",
+    "Affiliation": "الجهة التابعة لها",
+    "Khoshnaw Company": "شركة خوشناو",
+    "First Campus": "الفرع الأول",
+    "Future City, Masif Road, Erbil": "فيوتشر سيتي، طريق مصيف، أربيل",
+    "Education Levels": "المراحل الدراسية",
+    "Kindergarten to Grade 12": "من الروضة حتى الصف الثاني عشر",
+    "Language of Instruction": "لغة التدريس",
+    "English": "الإنجليزية",
+    "Number of Students": "عدد الطلاب",
+    "Opposite Aram Village 2, Erbil, Kurdistan Region, Iraq": "مقابل آرام فيلج 2، أربيل، إقليم كوردستان، العراق",
+    "Project Status": "حالة المشروع",
+    "Under construction": "قيد الإنشاء",
+    "Expected Completion": "موعد الإنجاز المتوقع",
+    "June 2027 (tentative)": "حزيران 2027 (مبدئياً)",
+    "Opening Date": "موعد الافتتاح",
+    "To be confirmed": "يُحدَّد لاحقاً",
+    "Façades, entrance & landscape": "الواجهات والمدخل والمحيط",
+    "Classrooms, halls & details": "الصفوف والقاعات والتفاصيل",
+    "Architectural, finishes, structural & mechanical drawings": "المخططات المعمارية والتشطيبات والإنشائية والميكانيكية",
+    "From groundbreaking to handover": "من وضع الأساس حتى التسليم",
+    "Construction Film": "فيلم البناء",
+    "The whole build in four chapters": "البناء كاملاً في أربعة فصول",
+    "Design vs Today": "التصميم مقابل اليوم",
+    "The render beside the site": "التصميم بجانب الموقع",
+    "Project Progress": "تقدّم المشروع",
+    "Progress of every stage": "تقدّم كل مرحلة",
+    "Stages & Site Photos": "المراحل وصور الموقع",
+    "Choose one of the options above": "اختر أحد الخيارات أعلاه",
+    "Drag the handle to compare the design render with the site": "اسحب المقبض لمقارنة التصميم بالموقع",
+    "Design": "التصميم",
+    "On site": "في الموقع",
+    "From the first excavation to today": "من أول حفر حتى اليوم",
+    "Progress of each construction stage": "تقدّم كل مرحلة من مراحل البناء",
+    "Every stage with its photos, in date order": "كل مرحلة مع صورها، حسب التاريخ",
+    "Estimated cost of the 10 main phases": "التكلفة التقديرية للمراحل الرئيسية العشر",
+    "Total estimated cost": "إجمالي التكلفة التقديرية",
+    "Iraqi Dinar (IQD)": "دينار عراقي (IQD)",
+    "US Dollar (USD)": "دولار أمريكي (USD)",
+    "Project period": "مدة المشروع",
+    "All figures are estimates and may change as the project progresses.": "جميع الأرقام تقديرية وقد تتغيّر مع تقدّم المشروع.",
+    "Where the new campus is being built": "موقع بناء الفرع الجديد",
+    "Map coming soon": "الخريطة قريباً",
+    "The exact map location will be added here.": "سيُضاف الموقع الدقيق على الخريطة هنا.",
+    "Open in Google Maps": "افتح في خرائط Google",
+    "Project Team": "فريق المشروع",
+    "Supervising consultant": "الاستشاري المشرف",
+    "© Shahan Schools & Kindergarten · Design by Arch. Muhammad Mudhafer": "© مدارس وروضة شاهان · تصميم المعماري محمد مظفر",
+    "Replay intro": "إعادة عرض المقدمة",
+    "Click the drawing to zoom in": "انقر على المخطط للتكبير",
+    "renders": "صورة",
+    "drawings": "مخطط",
+    "{n} floors & option 2": "{n} طوابق والخيار 2",
+    "Façades, entrance & courtyard": "الواجهات والمدخل والساحة",
+    "Plans, elevations, sections & details": "المساقط والواجهات والمقاطع والتفاصيل",
+    "film · progress · {n} photos": "فيلم · التقدّم · {n} صورة",
+    "Stage": "المرحلة",
+    "In progress": "قيد التنفيذ",
+    "Completed": "مكتملة",
+    "Not started": "لم تبدأ",
+    "Photos coming soon": "الصور قريباً",
+    "Chapter {n}": "الفصل {n}",
+    "{n} stages · {m} photos": "{n} مراحل · {m} صورة",
+    "overall progress": "التقدّم الإجمالي",
+    "estimated": "تقديري",
+    "Percentages are estimates based on the latest site photos and will be updated as work continues.": "النسب تقديرية بناءً على أحدث صور الموقع، وسيتم تحديثها مع استمرار العمل.",
+    "To be announced": "يُعلن لاحقاً",
+    "Start to handover": "من البدء حتى التسليم",
+    "Converted at 1 USD = {r} IQD": "محوّل بسعر 1 دولار = {r} دينار",
+    "Dates to be announced": "التواريخ تُعلن لاحقاً",
+    "Cost to be announced": "التكلفة تُعلن لاحقاً",
+    "{p}% of total": "{p}% من الإجمالي",
+    "Façades": "الواجهات", "Street & Façade Views": "مناظر الشارع والواجهات", "Courtyard": "الساحة", "Courtyard & Playground": "الساحة والملعب",
+    "Ground Floor": "الطابق الأرضي", "Reception": "الاستقبال", "Kindergarten Corridors": "ممرات الروضة",
+    "Kindergarten Classroom 1": "صف الروضة 1", "Kindergarten Classroom 2": "صف الروضة 2", "Kindergarten Classroom 3": "صف الروضة 3",
+    "Indoor Game Room": "غرفة الألعاب الداخلية", "Kurdish Classroom": "صف اللغة الكردية", "Drama Room": "غرفة المسرح", "Primary Classroom": "صف المرحلة الابتدائية",
+    "First Floor": "الطابق الأول", "Boys' Section Corridors": "ممرات قسم البنين", "Boys' Classroom": "صف البنين",
+    "Girls' Section Corridors": "ممرات قسم البنات", "Girls' Classroom": "صف البنات", "Computer Lab": "مختبر الحاسوب",
+    "Second Floor": "الطابق الثاني",
+    "The Second Floor follows the First Floor design for corridors and classrooms, and holds the Conference Hall.": "يتبع الطابق الثاني تصميم الطابق الأول في الممرات والصفوف، ويضم قاعة المؤتمرات.",
+    "Conference Hall": "قاعة المؤتمرات", "Conference Hall · Set Drawing": "قاعة المؤتمرات · المخططات التنفيذية",
+    "Basement": "الطابق السفلي", "Biology Lab": "مختبر الأحياء", "Physics Lab": "مختبر الفيزياء", "Chemistry Lab": "مختبر الكيمياء",
+    "Music Hall": "قاعة الموسيقى", "Drawing Hall": "قاعة الرسم", "Swimming Pool": "المسبح", "School Restaurant": "مطعم المدرسة",
+    "Option 2 · Receptions": "الخيار 2 · الاستقبالات",
+    "Option 2 — an alternative design for the main lobby, the receptions and the corridors.": "الخيار 2 — تصميم بديل للردهة الرئيسية والاستقبالات والممرات.",
+    "Main Lobby": "الردهة الرئيسية", "Kindergarten Reception & Corridor": "استقبال وممر الروضة",
+    "Primary School Reception & Corridor": "استقبال وممر المدرسة الابتدائية", "Primary Activity Room": "غرفة أنشطة الابتدائية",
+    "Architectural": "معماري", "Index & Site": "الفهرس والموقع", "Architectural Plans": "المساقط المعمارية", "Furniture Plans": "مساقط الأثاث",
+    "Elevations": "الواجهات", "Exterior Plans": "المخططات الخارجية", "Dimension Plans": "مخططات الأبعاد", "Stair Plans": "مخططات السلالم",
+    "Finishes": "التشطيبات", "Ceiling Plans": "مخططات الأسقف", "Floor Finishing": "تشطيب الأرضيات", "Floor Tile Finishing": "بلاط الأرضيات",
+    "Floor & Wall Tile Areas": "مساحات بلاط الأرضيات والجدران", "Plastering Plans": "مخططات اللياسة", "Doors & Windows": "الأبواب والنوافذ",
+    "Structural": "إنشائي", "General Notes": "ملاحظات عامة", "Foundation": "الأساسات", "Column Key Plans": "مخططات الأعمدة",
+    "Beam Layout Plans": "مخططات الجسور", "Structural Details": "التفاصيل الإنشائية", "Retaining Walls & Fence": "الجدران الساندة والسياج",
+    "Mechanical": "ميكانيكي", "Fire Fighting": "مكافحة الحريق", "VRF Air Conditioning": "تكييف VRF", "HVAC Ventilation": "تهوية HVAC", "Plumbing": "الأعمال الصحية",
+    "Site Preparation": "تهيئة الموقع",
+    "Site survey, clearing and levelling, excavation and setting out the building lines.": "مسح الموقع وتنظيفه وتسويته، والحفر وتحديد خطوط المبنى.",
+    "Structure": "الهيكل الإنشائي",
+    "Foundations, columns, beams and concrete slabs — the load-bearing frame of the school.": "الأساسات والأعمدة والجسور والبلاطات الخرسانية — الهيكل الحامل للمدرسة.",
+    "Waterproofing & Backfilling": "العزل المائي والردم",
+    "Bitumen waterproofing membrane on the basement walls, protection layer, then backfilling and compacting the soil around the building.": "غشاء عزل مائي بيتوميني على جدران الطابق السفلي وطبقة حماية، ثم الردم ودكّ التربة حول المبنى.",
+    "Building Shell Development": "تطوير هيكل المبنى",
+    "Developing the school from its structural frame: block walls, partitions, steel roof framing and openings.": "تطوير المدرسة انطلاقاً من هيكلها الإنشائي: جدران البلوك والقواطع وهيكل السقف الحديدي والفتحات.",
+    "Exterior Finishing": "التشطيبات الخارجية",
+    "Façade cladding, stone and paint, and the main entrance.": "تكسية الواجهات والحجر والدهان والمدخل الرئيسي.",
+    "Windows & Curtain Wall": "النوافذ والواجهات الزجاجية",
+    "Aluminium windows and aluminium curtain-wall system: profiles, frames and glazing of the façade openings.": "نوافذ ألمنيوم ونظام واجهات زجاجية من الألمنيوم: المقاطع والإطارات وتزجيج فتحات الواجهة.",
+    "Interior Finishing": "التشطيبات الداخلية",
+    "Plastering, floor screed, gypsum false ceilings, paint, doors and the fit-out of classrooms, labs and halls.": "اللياسة وتسوية الأرضيات والأسقف الجبسية المعلّقة والدهان والأبواب وتجهيز الصفوف والمختبرات والقاعات.",
+    "Mechanical & Electrical Works": "الأعمال الميكانيكية والكهربائية",
+    "HVAC ducts and units, plumbing and drainage, fire fighting, cable trays, power, lighting and low-current systems.": "مجاري ووحدات التكييف، والتمديدات الصحية والصرف، ومكافحة الحريق، وحوامل الكابلات، والقوى والإنارة وأنظمة التيار الخفيف.",
+    "External Works & Site Development": "الأعمال الخارجية وتطوير الموقع",
+    "Site access road, boundary wall and fence foundations, earthworks, drainage, ramps and channels, courtyards and landscape.": "طريق الوصول إلى الموقع، وأساسات السور والسياج، وأعمال الحفر والردم، والتصريف، والمنحدرات والقنوات، والساحات وتنسيق الحدائق.",
+    "Corner block": "المبنى الركني", "Classroom wing": "جناح الصفوف", "Whole site": "الموقع بالكامل",
+    "Site Preparation & Foundations": "تهيئة الموقع والأساسات", "Basement & Ground Floor": "الطابق السفلي والأرضي",
+    "The Frame Rises": "ارتفاع الهيكل", "Walls, Services & Façade": "الجدران والخدمات والواجهة",
+    "Site Preparation & Earthworks": "تهيئة الموقع وأعمال الحفر والردم", "Foundations & Basement": "الأساسات والطابق السفلي",
+    "Superstructure — Columns, Beams & Slabs": "الهيكل العلوي — الأعمدة والجسور والبلاطات", "Masonry & Building Shell": "أعمال البناء والهيكل",
+    "Roofing & Waterproofing": "السقوف والعزل المائي", "Mechanical Works — HVAC, Plumbing & Fire": "الأعمال الميكانيكية — التكييف والصحية والحريق",
+    "Electrical & Low-Current Works": "الأعمال الكهربائية والتيار الخفيف", "Exterior Finishing, Windows & Curtain Wall": "التشطيبات الخارجية والنوافذ والواجهات الزجاجية",
+    "Interior Finishing & Fit-out": "التشطيبات والتجهيزات الداخلية", "External Works & Landscape": "الأعمال الخارجية وتنسيق الحدائق",
+  },
+};
+const MONTHS = {
+  ku: ["کانوونی دووەم", "شوبات", "ئازار", "نیسان", "ئایار", "حوزەیران", "تەممووز", "ئاب", "ئەیلوول", "تشرینی یەکەم", "تشرینی دووەم", "کانوونی یەکەم"],
+  ar: ["كانون الثاني", "شباط", "آذار", "نيسان", "أيار", "حزيران", "تموز", "آب", "أيلول", "تشرين الأول", "تشرين الثاني", "كانون الأول"],
+};
+const EN_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const normKey = s => s.replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+function tr(key, vars) {
+  let s = (I18N[LANG] && I18N[LANG][key]) || key;
+  if (vars) s = s.replace(/\{(\w+)\}/g, (m, k) => k in vars ? vars[k] : m);
+  return s;
+}
+// "July – August 2025", "Jul 2025", "April 2026 – Today" -> the chosen language
+function trDate(s) {
+  if (LANG === "en" || !s) return s;
+  return s.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\b/g,
+    m => MONTHS[LANG][EN_MONTHS.findIndex(f => f.startsWith(m.slice(0, 3)))])
+    .replace(/\bToday\b/g, LANG === "ku" ? "ئەمڕۆ" : "اليوم");
+}
+// translate the static page: data-t="key" swaps the element's own text (keeps child counters);
+// a bare data-t uses the element's English text as the key and swaps all its content
+function applyStatic() {
+  if (LANG === "en") return;
+  document.title = tr("Shahan School Project — Exterior · Interior · Shop Drawing");
+  document.querySelectorAll("[data-t]").forEach(el => {
+    const named = el.getAttribute("data-t");
+    const key = named || normKey(el.innerHTML);
+    const v = tr(key);
+    if (v === key) return;
+    if (named && el.children.length && !el.hasAttribute("data-html")) {
+      const n = [...el.childNodes].find(x => x.nodeType === 3 && x.textContent.trim());
+      if (n) n.textContent = v;
+    } else if (el.hasAttribute("data-html")) el.innerHTML = v;
+    else el.textContent = v;
+  });
+}
+applyStatic();
+
 /* ---------- CONTENT ----------
    Exterior / Interior images go in img/exterior and img/interior.
    Shop drawings (PDF, JPG, PNG) go in drawings/.
@@ -1462,6 +1990,7 @@ document.addEventListener("click", e => {
 // title letters appear one by one
 (() => {
   const t = document.querySelector("#intro h1.letters"); let k = 0;
+  if (LANG !== "en") { t.textContent = tr("SHAHAN SCHOOL"); t.setAttribute("aria-label", t.textContent); t.classList.add("whole"); return; }
   t.innerHTML = [...t.textContent].map(ch => ch === " " ? '<span class="sp"> </span>' : `<span style="--k:${k++}">${ch}</span>`).join("");
 })();
 // gold dust drifting up behind the logo
@@ -1515,7 +2044,7 @@ function endIntro() {
     intro.style.display = "none"; document.body.classList.remove("locked"); scrollTo(0, 0);
     if (!location.hash) showWelcome();
     // replay the hero entrance so visitors see it after the curtain
-    document.querySelectorAll(".hero .hero-logo,.hero h1,.hero .sub,.hero .by,.hub-card").forEach(el => {
+    document.querySelectorAll(".hb-in > *,.hb-bg,.hub-card").forEach(el => {
       el.style.animation = "none"; void el.offsetWidth; el.style.animation = "";
     });
   }, 550);
@@ -1545,7 +2074,7 @@ else startIntro();
 /* ---------- RENDER ---------- */
 if (VIDEO) { const v = document.querySelector("#video"); v.hidden = false; v.querySelector("video").src = VIDEO; if (EXTERIOR[0]) v.querySelector("video").poster = EXTERIOR[0].src; }
 const groups = { exterior: EXTERIOR, interior: INTERIOR, drawings: DRAWINGS };
-const labels = { exterior: "Exterior", interior: "Interior", drawings: "Shop Drawing" };
+const labels = { exterior: tr("Exterior"), interior: tr("Interior"), drawings: tr("Shop Drawing") };
 const emptyText = {
   exterior: ["Exterior renders coming soon", "Façades, entrance and landscape views will be added here."],
   interior: ["Interior renders coming soon", "Classrooms, halls and interior details will be added here."],
@@ -1573,16 +2102,16 @@ function buildTabbed(key) {
     const count = t.areas.reduce((n, a) => n + areaNums(a).length, 0);
     const b = document.createElement("button");
     b.type = "button"; b.setAttribute("role", "tab");
-    b.innerHTML = `${t.name}<small>${count}</small>`;
+    b.innerHTML = `${tr(t.name)}<small>${count}</small>`;
     bar.appendChild(b); buttons.push(b);
     const p = document.createElement("div"); p.className = "panel"; p.setAttribute("role", "tabpanel");
-    if (t.note) p.innerHTML = `<p class="tab-note">${t.note}</p>`;
+    if (t.note) p.innerHTML = `<p class="tab-note">${tr(t.note)}</p>`;
     t.areas.forEach((a, ai) => {
       const akey = `${key}-${ti}-${ai}`;
       groups[akey] = areaNums(a).map(n => list[n - 1]);
-      labels[akey] = `${labels[key]} · ${t.name} · ${a.name}`;
+      labels[akey] = `${labels[key]} · ${tr(t.name)} · ${tr(a.name)}`;
       const area = document.createElement("div"); area.className = "area";
-      area.innerHTML = `<h3>${a.name}<span>${groups[akey].length}</span></h3>`;
+      area.innerHTML = `<h3>${tr(a.name)}<span>${groups[akey].length}</span></h3>`;
       const g = document.createElement("div"); g.className = "grid" + (t.wide ? " wide" : "") + (t.contain || a.contain ? " contain" : ""); g.dataset.group = key;
       groups[akey].forEach((it, i) => {
         const f = document.createElement("figure");
@@ -1653,17 +2182,17 @@ for (const [key, items] of Object.entries(groups)) {
     STAGES.forEach((s, si) => {
       const key = "stage" + si;
       groups[key] = (s.images || []).map(x => typeof x === "string" ? { src: x } : x);
-      labels[key] = `Stage ${si + 1} · ${s.title}`;
+      labels[key] = `${tr("Stage")} ${si + 1} · ${tr(s.title)}`;
       const el = document.createElement("div");
       el.className = "tl-stage" + (s.status ? " " + s.status : "");
       el.innerHTML = `<div class="dot">${si + 1}</div>
         <div class="body">
-          <div class="meta">${s.date ? `<span class="date">${s.date}</span>` : ""}${s.status === "current" ? `<span class="badge">In progress</span>` : ""}</div>
-          <h3>${s.title}</h3>${s.note ? `<p>${s.note}</p>` : ""}
+          <div class="meta">${s.date ? `<span class="date">${trDate(s.date)}</span>` : ""}${s.status === "current" ? `<span class="badge">${tr("In progress")}</span>` : ""}</div>
+          <h3>${tr(s.title)}</h3>${s.note ? `<p>${tr(s.note)}</p>` : ""}
           <div class="photos"></div>
         </div>`;
       const ph = el.querySelector(".photos");
-      if (!groups[key].length) ph.outerHTML = `<div class="soon">Photos coming soon</div>`;
+      if (!groups[key].length) ph.outerHTML = `<div class="soon">${tr("Photos coming soon")}</div>`;
       groups[key].forEach((it, i) => {
         const f = document.createElement("figure");
         f.innerHTML = `<img src="${it.thumb || it.src}" alt="${s.title} photo ${i + 1}" loading="lazy">`;
@@ -1694,7 +2223,7 @@ const COMPARE = [
     setTimeout(() => { set(50); range.value = 50; ba.classList.remove("hint"); }, 1400);
   }
   COMPARE.forEach((c, i) => {
-    const b = document.createElement("button"); b.type = "button"; b.title = c.name;
+    const b = document.createElement("button"); b.type = "button"; b.title = tr(c.name);
     b.innerHTML = `<img src="${c.design}" alt="${c.name}">`; b.onclick = () => load(i); dots.appendChild(b);
   });
   range.addEventListener("input", () => set(range.value));
@@ -1709,7 +2238,7 @@ fetch("video/film-chapters.json").then(r => r.ok ? r.json() : []).then(chs => {
   const box = document.getElementById("chapters");
   chs.forEach(c => {
     const b = document.createElement("button"); b.type = "button";
-    b.innerHTML = `<small>Chapter ${c.n}</small><b>${c.title}</b><span>${c.dates}</span>`;
+    b.innerHTML = `<small>${tr("Chapter {n}", { n: c.n })}</small><b>${tr(c.title)}</b><span>${trDate(c.dates)}</span>`;
     b.onclick = () => { cfilm.currentTime = c.t + 0.05; cfilm.play().catch(() => {}); };
     box.appendChild(b);
   });
@@ -1734,7 +2263,7 @@ function cxShow(id) {
 }
 window.cxShow = cxShow;
 [...cxMenu.children].forEach((b, i) => { b.style.setProperty("--i", i); b.onclick = () => cxShow(b.dataset.pane); });
-document.getElementById("cx-stage-sub").textContent = `${STAGES.length} stages · ${STAGES.reduce((n, s) => n + s.images.length, 0)} photos`;
+document.getElementById("cx-stage-sub").textContent = tr("{n} stages · {m} photos", { n: STAGES.length, m: STAGES.reduce((n, s) => n + s.images.length, 0) });
 
 /* ---------- PROGRESS ----------
    Fill in percentages when known, e.g.  overall: 68  and  "Structure": 100
@@ -1765,7 +2294,7 @@ PROGRESS.overall = Math.round(Object.entries(PROGRESS.weights).reduce((s, [k, w]
   const ov = document.getElementById("prog-overall"), list = document.getElementById("prog-list");
   const hasNumbers = PROGRESS.overall != null || Object.keys(PROGRESS.stages).length > 0;
   if (PROGRESS.overall != null) {
-    ov.innerHTML = `<div class="big"><b>${PROGRESS.overall}%</b><span>overall progress${PROGRESS.estimated ? " · estimated" : ""}${PROGRESS.asOf ? " · " + PROGRESS.asOf : ""}</span></div><div class="pbar"><i data-w="${PROGRESS.overall}"></i></div>`;
+    ov.innerHTML = `<div class="big"><b>${PROGRESS.overall}%</b><span>${tr("overall progress")}${PROGRESS.estimated ? " · " + tr("estimated") : ""}${PROGRESS.asOf ? " · " + trDate(PROGRESS.asOf) : ""}</span></div><div class="pbar"><i data-w="${PROGRESS.overall}"></i></div>`;
   } else {
     const done = STAGES.filter(s => s.status === "done").length;
     ov.innerHTML = `<div class="big"><b>${done} / ${STAGES.length}</b><span>stages completed · ${STAGES.filter(s => s.status === "current").length} in progress</span></div>
@@ -1773,14 +2302,14 @@ PROGRESS.overall = Math.round(Object.entries(PROGRESS.weights).reduce((s, [k, w]
   }
   STAGES.forEach(s => {
     const pct = PROGRESS.stages[s.title];
-    const chip = s.status === "done" ? ["done", "Completed"] : s.status === "current" ? ["current", "In progress"] : ["todo", "Not started"];
+    const chip = s.status === "done" ? ["done", tr("Completed")] : s.status === "current" ? ["current", tr("In progress")] : ["todo", tr("Not started")];
     const el = document.createElement("div"); el.className = "prog-item";
-    el.innerHTML = `<div class="top"><span>${s.title}</span><span class="chip ${chip[0]}">${pct != null ? pct + "%" : chip[1]}</span></div>
+    el.innerHTML = `<div class="top"><span>${tr(s.title)}</span><span class="chip ${chip[0]}">${pct != null ? pct + "%" : chip[1]}</span></div>
       <div class="pbar"><i data-w="${pct != null ? pct : (s.status === "done" ? 100 : 0)}"></i></div>`;
     list.appendChild(el);
   });
   list.insertAdjacentHTML("afterend", hasNumbers
-    ? (PROGRESS.estimated ? `<p class="prog-note">Percentages are estimates based on the latest site photos and will be updated as work continues.</p>` : "")
+    ? (PROGRESS.estimated ? `<p class="prog-note">${tr("Percentages are estimates based on the latest site photos and will be updated as work continues.")}</p>` : "")
     : `<p class="prog-note">Detailed percentages for each stage will be added soon.</p>`);
   const grow = () => document.querySelectorAll("#progress-block .pbar i").forEach(i => i.style.width = i.dataset.w + "%");
   "IntersectionObserver" in window
@@ -1814,7 +2343,7 @@ const COST = [
     if (!s) return "";
     const [y, m, d] = s.split("-").map(Number);
     const dt = new Date(y, (m || 1) - 1, d || 1);
-    return dt.toLocaleDateString("en-GB", d ? { day: "numeric", month: "short", year: "numeric" } : { month: "short", year: "numeric" });
+    return trDate(dt.toLocaleDateString("en-GB", d ? { day: "numeric", month: "short", year: "numeric" } : { month: "short", year: "numeric" }));
   };
   const rows = COST.map(c => {
     let iqd = c.iqd, usd = c.usd, calc = "";
@@ -1825,11 +2354,11 @@ const COST = [
   const totIqd = rows.reduce((s, r) => s + (r.iqd || 0), 0);
   const totUsd = rows.reduce((s, r) => s + (r.usd || 0), 0);
   const anyCalc = rows.some(r => r.calc);
-  document.getElementById("tot-iqd").textContent = totIqd ? fmt(totIqd) + " IQD" : "To be announced";
-  document.getElementById("tot-usd").textContent = totUsd ? "$ " + fmt(totUsd) : "To be announced";
+  document.getElementById("tot-iqd").textContent = totIqd ? fmt(totIqd) + " IQD" : tr("To be announced");
+  document.getElementById("tot-usd").textContent = totUsd ? "$ " + fmt(totUsd) : tr("To be announced");
   const starts = rows.map(r => r.from).filter(Boolean).sort(), ends = rows.map(r => r.to).filter(Boolean).sort();
-  document.getElementById("tot-dates").textContent = starts.length && ends.length ? `${fmtDate(starts[0])} – ${fmtDate(ends[ends.length - 1])}` : "To be announced";
-  document.getElementById("rate-note").textContent = anyCalc ? `Converted at 1 USD = ${fmt(RATE)} IQD` : "Start to handover";
+  document.getElementById("tot-dates").textContent = starts.length && ends.length ? `${fmtDate(starts[0])} – ${fmtDate(ends[ends.length - 1])}` : tr("To be announced");
+  document.getElementById("rate-note").textContent = anyCalc ? tr("Converted at 1 USD = {r} IQD", { r: fmt(RATE) }) : tr("Start to handover");
   const list = document.getElementById("cost-list");
   rows.forEach((r, i) => {
     const share = totIqd && r.iqd ? r.iqd / totIqd : 0;
@@ -1837,12 +2366,12 @@ const COST = [
     el.className = "cost-row";
     const dates = r.from || r.to
       ? `<span>${fmtDate(r.from) || "—"}</span><i>→</i><span>${fmtDate(r.to) || "—"}</span>`
-      : `<span class="tba">Dates to be announced</span>`;
+      : `<span class="tba">${tr("Dates to be announced")}</span>`;
     const amt = r.iqd != null
-      ? `<b>${fmt(r.iqd)} IQD</b><span>$ ${fmt(r.usd)}</span>${share ? `<em>${(share * 100).toFixed(1)}% of total${r.calc ? " · converted" : ""}</em>` : ""}`
-      : `<span class="tba">Cost to be announced</span>`;
+      ? `<b>${fmt(r.iqd)} IQD</b><span>$ ${fmt(r.usd)}</span>${share ? `<em>${tr("{p}% of total", { p: (share * 100).toFixed(1) })}</em>` : ""}`
+      : `<span class="tba">${tr("Cost to be announced")}</span>`;
     el.innerHTML = `<div class="n">${i + 1}</div>
-      <div><h3>${r.name}</h3><div class="dates">${dates}</div>${share ? `<div class="bar"><span data-w="${(share * 100).toFixed(2)}"></span></div>` : ""}</div>
+      <div><h3>${tr(r.name)}</h3><div class="dates">${dates}</div>${share ? `<div class="bar"><span data-w="${(share * 100).toFixed(2)}"></span></div>` : ""}</div>
       <div class="amt">${amt}</div>`;
     list.appendChild(el);
   });
@@ -1867,7 +2396,7 @@ function openLb(key, i) {
 function show() { const it = cur.list[cur.i]; lbImg.src = it.src; lbImg.alt = it.title || "";
   lb.classList.toggle("drawing", cur.key.startsWith("drawings")); lb.classList.remove("zoom");
   lbImg.classList.remove("swap"); void lbImg.offsetWidth; lbImg.classList.add("swap");
-  lbCap.innerHTML = `<small>${labels[cur.key]} · ${cur.i + 1} / ${cur.list.length}</small>${it.title || ""}<span class="lb-hint">Click the drawing to zoom in</span>`;
+  lbCap.innerHTML = `<small>${labels[cur.key]} · ${cur.i + 1} / ${cur.list.length}</small>${it.title || ""}<span class="lb-hint">${tr("Click the drawing to zoom in")}</span>`;
   const nx = cur.list[(cur.i + 1) % cur.list.length]; if (nx) new Image().src = nx.src; }
 function step(d) { cur.i = (cur.i + d + cur.list.length) % cur.list.length; show(); Sound.stepImage(d); }
 function closeLb() { lb.classList.remove("zoom"); if (lb.classList.contains("on")) Sound.closeImage(); lb.classList.remove("on"); lb.setAttribute("aria-hidden", "true"); }
@@ -1893,22 +2422,22 @@ lb.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - 
 
 /* ---------- ACTIVE NAV ---------- */
 const links = [...document.querySelectorAll("nav a")];
-const sections = [...document.querySelectorAll("#about,#exterior,#interior,#shop-drawing,#construction,#cost")];
+const sections = [...document.querySelectorAll("#about,#exterior,#interior,#shop-drawing,#construction,#cost,#location")];
 /* ---------- HOME HUB + ONE SECTION AT A TIME ----------
    No hash  -> home (hero + section cards)
    #exterior, #interior, #shop-drawing, #construction, #cost -> only that section */
 {
   const totalPhotos = STAGES.reduce((n, s) => n + (s.images || []).length, 0);
   const CARDS = [
-    { id: "exterior", title: "Exterior", sub: "Façades, entrance & courtyard",
-      meta: `${shownCounts.exterior || EXTERIOR.length} renders`, img: EXTERIOR[0] && (EXTERIOR[0].thumb || EXTERIOR[0].src) },
-    { id: "interior", title: "Interior", sub: `${INTERIOR_TABS.filter(t => !t.wide).length} floors & option 2`,
-      meta: `${shownCounts.interior || INTERIOR.length} renders`, img: INTERIOR[0] && (INTERIOR[0].thumb || INTERIOR[0].src) },
-    { id: "shop-drawing", title: "Shop Drawing", sub: "Plans, elevations, sections & details",
-      meta: DRAWINGS.length ? `${DRAWINGS.length} drawings` : "Coming soon · under revision", glyph: "⌗" },
-    { id: "construction", title: "Construction Stages", sub: "From groundbreaking to handover",
-      meta: `film · progress · ${totalPhotos} photos`, img: "img/construction/s2/thumb/09.jpg" },
-    { id: "cost", title: "Cost", sub: "Estimated cost of the 10 main phases",
+    { id: "exterior", title: tr("Exterior"), sub: tr("Façades, entrance & courtyard"),
+      meta: `${shownCounts.exterior || EXTERIOR.length} ${tr("renders")}`, img: EXTERIOR[0] && (EXTERIOR[0].thumb || EXTERIOR[0].src) },
+    { id: "interior", title: tr("Interior"), sub: tr("{n} floors & option 2", { n: INTERIOR_TABS.filter(t => !t.wide).length }),
+      meta: `${shownCounts.interior || INTERIOR.length} ${tr("renders")}`, img: INTERIOR[0] && (INTERIOR[0].thumb || INTERIOR[0].src) },
+    { id: "shop-drawing", title: tr("Shop Drawing"), sub: tr("Plans, elevations, sections & details"),
+      meta: DRAWINGS.length ? `${DRAWINGS.length} ${tr("drawings")}` : "Coming soon · under revision", glyph: "⌗" },
+    { id: "construction", title: tr("Construction Stages"), sub: tr("From groundbreaking to handover"),
+      meta: tr("film · progress · {n} photos", { n: totalPhotos }), img: "img/construction/s2/thumb/09.jpg" },
+    { id: "cost", title: tr("Cost"), sub: tr("Estimated cost of the 10 main phases"),
       meta: "IQD · USD", glyph: "$" },
   ];
   const grid = document.getElementById("hub-grid");
@@ -1947,7 +2476,7 @@ const sections = [...document.querySelectorAll("#about,#exterior,#interior,#shop
 
   /* corner menu */
   const mBtn = document.getElementById("menu-btn"), drawer = document.getElementById("drawer"),
-        shade = document.getElementById("drawer-shade"), dLinks = [...drawer.querySelectorAll("a")];
+        shade = document.getElementById("drawer-shade"), dLinks = [...drawer.querySelectorAll(".d-links a")];
   function markMenu() {
     const h = location.hash.slice(1);
     dLinks.forEach(a => a.classList.toggle("on", a.getAttribute("href").slice(1) === (ids.includes(h) ? h : "")));
@@ -1966,6 +2495,44 @@ const sections = [...document.querySelectorAll("#about,#exterior,#interior,#shop
   addEventListener("keydown", e => { if (e.key === "Escape" && drawer.classList.contains("open")) setMenu(false); });
   dLinks.forEach(a => a.addEventListener("click", () => setMenu(false)));
   addEventListener("hashchange", markMenu);
+
+  /* "Explore the Project" scrolls down to the cards, even when the address already says #hub */
+  document.querySelectorAll('a[href="#hub"]').forEach(a => a.addEventListener("click", e => {
+    e.preventDefault(); history.pushState(null, "", "#hub"); route();
+  }));
+
+  /* language switch: reload in the chosen language, keep the open section, skip the intro */
+  const langBox = document.getElementById("lang"), langBtn = langBox.querySelector(".lang-btn"), langMenu = langBox.querySelector(".lang-menu");
+  document.getElementById("lang-long").textContent = { en: "English", ku: "کوردی", ar: "العربية" }[LANG];
+  document.getElementById("lang-short").textContent = { en: "EN", ku: "KU", ar: "AR" }[LANG];
+  const openLang = open => { langMenu.hidden = !open; langBtn.setAttribute("aria-expanded", String(open)); };
+  langBtn.addEventListener("click", e => { e.stopPropagation(); openLang(langMenu.hidden); });
+  addEventListener("click", e => { if (!langBox.contains(e.target)) openLang(false); });
+  addEventListener("keydown", e => { if (e.key === "Escape") openLang(false); });
+  document.querySelectorAll("a[data-l]").forEach(a => {
+    a.classList.toggle("on", a.dataset.l === LANG);
+    a.addEventListener("click", e => {
+      e.preventDefault();
+      try { localStorage.shahanLang = a.dataset.l; sessionStorage.setItem("shahanIntroSeen", "1"); } catch (err) {}
+      location.href = location.pathname + "?lang=" + a.dataset.l + location.hash;
+    });
+  });
+}
+
+/* ---------- LOCATION ----------
+   Paste the new campus position when it is known:
+     lat / lng : from Google Maps (right-click the spot -> the numbers at the top), e.g. lat: 36.1234, lng: 44.0123
+     link      : the Google Maps share link, e.g. "https://maps.app.goo.gl/..."
+   With lat/lng the map shows on the page; the link opens Google Maps. */
+const LOCATION = { lat: null, lng: null, link: "" };
+{
+  const map = document.getElementById("loc-map"), open = document.getElementById("loc-open");
+  if (LOCATION.lat != null && LOCATION.lng != null) {
+    map.innerHTML = `<iframe title="${tr("Location")}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://maps.google.com/maps?q=${LOCATION.lat},${LOCATION.lng}&z=16&hl=${LANG === "en" ? "en" : LANG === "ar" ? "ar" : "ckb"}&output=embed"></iframe>`;
+  }
+  const link = LOCATION.link || (LOCATION.lat != null && LOCATION.lng != null ? `https://www.google.com/maps?q=${LOCATION.lat},${LOCATION.lng}` : "");
+  if (link) { open.href = link; open.hidden = false; }
 }
 
 /* ---------- SCROLL-REVEAL ANIMATIONS ---------- */
